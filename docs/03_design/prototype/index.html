@@ -1,20 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="hound-dock clickable UI prototype — mock data only, not production.">
+  <meta name="color-scheme" content="light dark">
   <title>hound-dock — prototype</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
     <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4v-15Z"/><path d="M8 10h8M8 13h5"/></symbol>
     <symbol id="i-tasks" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="m8 9 1.5 1.5L12 8M8 15h6"/></symbol>
     <symbol id="i-skills" viewBox="0 0 24 24"><path d="m12 3 2.4 5.2L20 10l-4.2 4.1.9 6.4L12 17.8 7.3 20.5l.9-6.4L4 10l5.6-1.8L12 3Z"/></symbol>
     <symbol id="i-mcp" viewBox="0 0 24 24"><path d="M8 4v5M16 4v5M6 9h12v4a6 6 0 0 1-12 0V9ZM12 19v3"/></symbol>
     <symbol id="i-runs" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></symbol>
-    <symbol id="i-admin" viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-4 6 4v11"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-usage" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-audit" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 4.5-3.4 7.8-8 9-4.6-1.2-8-4.5-8-9V6l8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
     <symbol id="i-send" viewBox="0 0 24 24"><path d="m4 12 16-7-4.5 14L11 13l-7-1Z"/></symbol>
@@ -27,6 +32,7 @@
     <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M14 7l5 5-5 5"/></symbol>
     <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m5 9 7 7 7-7"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 6M20 5v6h-6"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 4.5-3.4 7.8-8 9-4.6-1.2-8-4.5-8-9V6l8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
@@ -36,289 +42,377 @@
     <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></symbol>
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M10 7l-5 5 5 5"/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 3h6l-1 6 4 3v2H6v-2l4-3-1-6ZM12 14v7"/></symbol>
-    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v6H4V6h6"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h10v10H9z"/><path d="M5 15V5h10"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16l-1 4Z"/><path d="m13 7 3 3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M15 4v16"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v5l-4 2v-7L3 5Z"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol>
   </svg>
 
-  <div class="grain" aria-hidden="true"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Workspace navigation">
+      <div class="sidebar-head">
+        <button class="brand" type="button" data-view="chat" aria-label="hound-dock — go to chat">
+          <span class="brand-mark" aria-hidden="true"><span>H</span><i></i></span>
+          <span class="brand-word">hound<span>/</span>dock</span>
+        </button>
 
-  <div class="app">
-    <aside class="sidebar" aria-label="Workspace navigation">
-      <button class="brand" type="button" data-view="chat" aria-label="Go to chat">
-        <span class="brand-mark" aria-hidden="true"><span>H</span><i></i></span>
-        <span class="brand-word">hound<span>/</span>dock</span>
-      </button>
+        <button class="workspace-switch" type="button" data-toast="Workspace switching is out of scope for this mock.">
+          <span class="workspace-dot" aria-hidden="true"></span>
+          <span class="workspace-copy">
+            <strong>Platform team</strong>
+            <small>Internal workspace</small>
+          </span>
+          <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+        </button>
 
-      <button class="workspace-switch" type="button" data-toast="Workspace switching is out of scope for this mock.">
-        <span class="workspace-dot"></span>
-        <span>
-          <strong>Platform team</strong>
-          <small>Internal workspace</small>
-        </span>
-        <svg class="icon"><use href="#i-chevron"/></svg>
-      </button>
+        <button class="new-chat-btn" type="button" data-action="new-chat">
+          <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+          <span>New chat</span>
+          <span class="new-chat-hint" aria-hidden="true">N</span>
+        </button>
 
-      <button class="new-chat-btn" type="button" data-action="new-chat">
-        <svg class="icon"><use href="#i-plus"/></svg>
-        <span>New chat</span>
-      </button>
+        <nav class="sidebar-nav" aria-label="Daily workspace">
+          <button class="nav-link" type="button" data-view="tasks">
+            <svg class="icon" aria-hidden="true"><use href="#i-tasks"/></svg>
+            <span>Tasks</span>
+            <span class="nav-count" id="daily-task-count">2</span>
+          </button>
+        </nav>
+      </div>
 
-      <button class="daily-link" type="button" data-view="tasks">
-        <svg class="icon"><use href="#i-tasks"/></svg>
-        <span>Tasks</span>
-        <span class="daily-count" id="daily-task-count">2</span>
-      </button>
-
-      <nav class="history" aria-label="Chat history">
-        <div class="history-head">
-          <p class="sidebar-label">Chats</p>
+      <div class="history">
+        <div class="sidebar-section-head">
+          <span>Chats</span>
           <span class="history-count" id="history-count"></span>
         </div>
-        <label class="history-search">
-          <svg class="icon"><use href="#i-search"/></svg>
-          <input id="chat-search" type="search" placeholder="Search chats…" autocomplete="off" aria-label="Search chats">
+        <label class="sidebar-search">
+          <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <span class="visually-hidden">Search chats</span>
+          <input id="chat-search" type="search" placeholder="Search chats…" autocomplete="off">
         </label>
-        <div id="chat-history"></div>
-      </nav>
+        <nav class="history-scroll" id="chat-history" aria-label="Chat history"></nav>
+      </div>
 
       <div class="sidebar-foot">
         <div class="stamp">Prototype<br><span>Mock data</span></div>
-        <div class="sidebar-user">
-          <span class="avatar avatar-sm">AC</span>
-          <span><strong>Alex Chen</strong><small>Admin · Platform</small></span>
-        </div>
+        <button class="user-card" type="button" data-toast="Account menu is out of scope for this mock.">
+          <span class="avatar avatar-sm" aria-hidden="true">AC</span>
+          <span class="user-copy"><strong>Alex Chen</strong><small>Admin · Platform</small></span>
+          <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
       </div>
     </aside>
 
-    <main class="main">
+    <div class="app-main">
       <header class="topbar">
-        <button class="icon-btn menu-btn" type="button" data-toggle-nav aria-label="Toggle navigation">
-          <svg class="icon"><use href="#i-menu"/></svg>
+        <button class="icon-btn menu-btn" type="button" data-toggle-nav aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
         </button>
-        <button class="back-btn" id="back-to-chat" type="button" data-view="chat" hidden>
-          <svg class="icon"><use href="#i-back"/></svg> Chat
-        </button>
-        <div class="crumb">
-          <span class="crumb-kicker">HOUND-DOCK</span>
-          <span class="crumb-sep">/</span>
-          <span class="crumb-current" id="crumb-current">Chat</span>
-        </div>
+        <nav class="crumb" aria-label="Breadcrumb">
+          <span class="crumb-root">Workspace</span>
+          <span class="crumb-sep" aria-hidden="true">/</span>
+          <span class="crumb-current" id="crumb-current" aria-current="page">Chat</span>
+        </nav>
         <div class="topbar-right">
-          <button class="manage-top-btn" type="button" data-open-manage aria-label="Manage workspace" title="Manage workspace">
-            <svg class="icon"><use href="#i-grid"/></svg>
+          <button class="icon-btn new-chat-top" type="button" data-action="new-chat" aria-label="New chat">
+            <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+          </button>
+          <button class="btn btn-secondary btn-sm manage-btn" type="button" data-open-manage aria-label="Manage workspace">
+            <svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>
             <span>Manage</span>
           </button>
-          <span class="mock-pill">MOCK</span>
-          <span class="avatar">AC</span>
+          <button class="icon-btn theme-btn" type="button" id="theme-toggle" aria-pressed="false" aria-label="Switch to dark theme" title="Switch theme">
+            <svg class="icon theme-icon-light" aria-hidden="true"><use href="#i-moon"/></svg>
+            <svg class="icon theme-icon-dark" aria-hidden="true"><use href="#i-sun"/></svg>
+          </button>
+          <span class="mock-pill" title="Synthetic data only">Mock</span>
+          <button class="avatar-btn" type="button" data-toast="Account menu is out of scope for this mock.">
+            <span class="avatar" aria-hidden="true">AC</span>
+            <span class="visually-hidden">Account: Alex Chen, Admin</span>
+          </button>
         </div>
       </header>
 
-      <div class="viewport">
+      <main class="main" id="main" tabindex="-1">
         <!-- CHAT -->
-        <section class="view is-active" id="view-chat" data-view-panel="chat" aria-labelledby="chat-title">
-          <div class="view-head">
-            <div>
-              <p class="kicker">Workspace / Conversation</p>
-              <h1 class="page-title">Ask the room.</h1>
-              <p class="page-sub">Chat with a skill, search the workspace, or pick up a conversation.</p>
-            </div>
-          </div>
-
+        <section class="view view-chat is-active" id="view-chat" data-view-panel="chat" aria-labelledby="chat-title">
           <div class="chat-layout">
-            <div class="chat-card">
-              <div class="chat-head">
-                <div>
-                  <p class="kicker">Conversation</p>
-                  <h2 class="chat-title" id="chat-title">Release notes &amp; blockers</h2>
-                </div>
-                <span class="live"><i></i>Mock session</span>
-              </div>
-
-              <div class="chat-thread" id="chat-thread" aria-live="polite"></div>
-
-              <div class="suggestions" id="chat-suggestions">
-                <button type="button" data-prompt="Summarize this week's release notes and list Jira blockers for Platform.">Summarize this week's release</button>
-                <button type="button" data-prompt="Search Confluence for the onboarding checklist and cite the source.">Search Confluence</button>
-                <button type="button" data-prompt="Triage the new Jira tickets and propose owners.">Triage new tickets</button>
-              </div>
-
-              <div class="composer" id="composer">
-                <div class="composer-context" id="composer-context"></div>
-                <textarea id="chat-input" rows="2" placeholder="Ask, search, or use a skill…" aria-label="Message"></textarea>
-                <div class="composer-bar">
-                  <div class="composer-tools">
-                    <button class="chip" type="button" data-menu="slash"><span class="slash">/</span> Skills</button>
-                    <button class="chip" type="button" data-menu="mention"><span class="at">@</span> Files</button>
-                    <button class="chip" type="button" id="search-toggle" aria-pressed="false"><svg class="icon"><use href="#i-search"/></svg> Search</button>
-                    <button class="chip chip-muted" type="button" data-toast="Model selection is a mock in this prototype.">gpt-4.1 · internal</button>
+            <section class="chat-panel" aria-label="Conversation workspace">
+              <header class="chat-head">
+                <div class="chat-head-main">
+                  <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Conversation</p>
+                  <div class="chat-title-row">
+                    <h1 class="chat-title" id="chat-title">Release notes &amp; blockers</h1>
+                    <span class="live"><i aria-hidden="true"></i>Mock session</span>
                   </div>
-                  <button class="send-btn" type="button" id="send-btn" aria-label="Send message">
-                    <svg class="icon"><use href="#i-send"/></svg>
+                  <p class="chat-sub" id="chat-sub">Release Notes Writer v3 · 2 messages · updated 2h ago</p>
+                </div>
+                <div class="chat-head-actions">
+                  <button class="icon-btn rail-toggle" type="button" data-open-context aria-label="Show run context" title="Run context">
+                    <svg class="icon" aria-hidden="true"><use href="#i-panel"/></svg>
+                  </button>
+                  <button class="icon-btn" type="button" data-open-chat-actions aria-label="Conversation actions" title="Conversation actions">
+                    <svg class="icon" aria-hidden="true"><use href="#i-more"/></svg>
                   </button>
                 </div>
-                <div class="popover" id="slash-menu" hidden>
-                  <p class="popover-label">Published skills</p>
-                  <div id="slash-items"></div>
-                </div>
-                <div class="popover" id="mention-menu" hidden>
-                  <p class="popover-label">Workspace files</p>
-                  <div id="mention-items"></div>
-                </div>
-              </div>
-            </div>
+              </header>
 
-            <aside class="context-rail" aria-label="Run context">
-              <div class="rail-card">
-                <p class="kicker">Active skill</p>
-                <h3>Release Notes Writer</h3>
-                <p class="muted small">Turns merged PRs and Jira issues into a weekly brief.</p>
-                <button class="link-btn" type="button" data-open-skill="skill-release">View manifest <svg class="icon"><use href="#i-arrow"/></svg></button>
-              </div>
-              <div class="rail-card">
-                <p class="kicker">Tools in this run</p>
-                <ul class="tool-list">
-                  <li><span class="dot ok"></span><code>confluence.search</code><span class="mono">1.2s</span></li>
-                  <li><span class="dot ok"></span><code>jira.search</code><span class="mono">0.8s</span></li>
-                  <li><span class="dot idle"></span><code>web.search</code><span class="mono">off</span></li>
-                </ul>
-              </div>
-              <div class="rail-card rail-note">
-                <svg class="icon"><use href="#i-shield"/></svg>
-                <div>
-                  <p class="kicker">Guardrail</p>
-                  <p class="small">Read-only tools only. Write-capable tools are disabled in v1.</p>
+              <div class="chat-thread" id="chat-thread"></div>
+              <div class="visually-hidden" id="chat-status" role="status" aria-live="polite"></div>
+
+              <div class="composer-dock">
+                <div class="composer" id="composer">
+                  <div class="composer-context" id="composer-context"></div>
+                  <label class="visually-hidden" for="chat-input">Message</label>
+                  <textarea id="chat-input" rows="2" placeholder="Ask, search, or use a skill…"></textarea>
+                  <div class="composer-bar">
+                    <div class="composer-tools">
+                      <button class="tool-chip" type="button" data-menu="slash" aria-haspopup="menu">
+                        <span class="slash" aria-hidden="true">/</span> Skills
+                      </button>
+                      <button class="tool-chip" type="button" data-menu="mention" aria-haspopup="menu">
+                        <span class="at" aria-hidden="true">@</span> Files
+                      </button>
+                      <button class="tool-chip" type="button" id="search-toggle" aria-pressed="false">
+                        <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg> Search
+                      </button>
+                      <button class="tool-chip tool-chip-quiet" type="button" data-toast="Model selection is a mock in this prototype.">
+                        <svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg> gpt-4.1
+                      </button>
+                    </div>
+                    <div class="composer-actions">
+                      <span class="composer-hint">Enter to send</span>
+                      <button class="send-btn" type="button" id="send-btn" aria-label="Send message">
+                        <svg class="icon" aria-hidden="true"><use href="#i-send"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="popover" id="slash-menu" role="menu" aria-label="Published skills" hidden>
+                    <p class="popover-label">Published skills</p>
+                    <div id="slash-items"></div>
+                  </div>
+                  <div class="popover" id="mention-menu" role="menu" aria-label="Workspace files" hidden>
+                    <p class="popover-label">Workspace files</p>
+                    <div id="mention-items"></div>
+                  </div>
                 </div>
+                <p class="composer-note">
+                  <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+                  Read-only tools only · Write-capable actions are disabled in v1
+                </p>
               </div>
+            </section>
+
+            <aside class="context-rail" id="context-rail" aria-label="Run context">
+              <div class="rail-head">
+                <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Run context</p>
+                <span class="rail-model">gpt-4.1 · internal</span>
+              </div>
+              <div class="rail-content" id="rail-content"></div>
             </aside>
           </div>
         </section>
 
         <!-- SKILLS -->
-        <section class="view" id="view-skills" data-view-panel="skills" aria-labelledby="skills-title" hidden>
-          <div class="view-head">
-            <div>
-              <p class="kicker">Registry / Skills</p>
-              <h1 class="page-title" id="skills-title">Skills.</h1>
-              <p class="page-sub">Versioned instructions your team can invoke.</p>
+        <section class="view view-page" id="view-skills" data-view-panel="skills" aria-labelledby="skills-title" hidden>
+          <header class="page-head">
+            <div class="page-head-copy">
+              <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Registry / Skills</p>
+              <div class="page-title-row">
+                <h1 class="page-title" id="skills-title">Skills</h1>
+                <span class="count-pill" id="skill-count">0</span>
+              </div>
+              <p class="page-sub">Versioned instructions your team can invoke. <span class="page-summary" id="skill-summary"></span></p>
             </div>
             <div class="head-actions">
-              <button class="btn btn-primary" type="button" data-open-modal="skill"><svg class="icon"><use href="#i-plus"/></svg> New skill</button>
+              <button class="btn btn-primary" type="button" data-open-modal="skill">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg> New skill
+              </button>
             </div>
-          </div>
+          </header>
           <div class="toolbar">
             <label class="search-box">
-              <svg class="icon"><use href="#i-search"/></svg>
+              <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+              <span class="visually-hidden">Search skills</span>
               <input id="skill-search" type="search" placeholder="Search skills, owners, dependencies…" autocomplete="off">
             </label>
             <div class="filter-chips" id="skill-filters" role="group" aria-label="Filter skills by category"></div>
           </div>
-          <div class="skill-grid" id="skill-grid"></div>
+          <div class="grid skill-grid" id="skill-grid"></div>
         </section>
 
         <!-- MCP -->
-        <section class="view" id="view-mcp" data-view-panel="mcp" aria-labelledby="mcp-title" hidden>
-          <div class="view-head">
-            <div>
-              <p class="kicker">Registry / MCP</p>
-              <h1 class="page-title" id="mcp-title">Connections.</h1>
-              <p class="page-sub">Governed tool servers. Only allowlisted tools are callable.</p>
+        <section class="view view-page" id="view-mcp" data-view-panel="mcp" aria-labelledby="mcp-title" hidden>
+          <header class="page-head">
+            <div class="page-head-copy">
+              <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Registry / MCP</p>
+              <div class="page-title-row">
+                <h1 class="page-title" id="mcp-title">MCP servers</h1>
+                <span class="count-pill" id="mcp-count">0</span>
+              </div>
+              <p class="page-sub">Governed tool servers. Only allowlisted tools are callable. <span class="page-summary" id="mcp-summary"></span></p>
             </div>
             <div class="head-actions">
-              <button class="btn btn-primary" type="button" data-open-modal="mcp"><svg class="icon"><use href="#i-plus"/></svg> Add server</button>
+              <button class="btn btn-primary" type="button" data-open-modal="mcp">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg> Add server
+              </button>
             </div>
-          </div>
+          </header>
           <div class="notice">
-            <svg class="icon"><use href="#i-shield"/></svg>
+            <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
             <p><strong>Security posture.</strong> Credentials are stored as encrypted references, never as values in a manifest. HTTP/SSE transports only in v1.</p>
           </div>
-          <div class="mcp-grid" id="mcp-grid"></div>
+          <div class="grid mcp-grid" id="mcp-grid"></div>
         </section>
 
         <!-- TASKS -->
-        <section class="view" id="view-tasks" data-view-panel="tasks" aria-labelledby="tasks-title" hidden>
-          <div class="view-head">
-            <div>
-              <p class="kicker">Registry / Tasks</p>
-              <h1 class="page-title" id="tasks-title">Tasks.</h1>
-              <p class="page-sub">Reusable work built from skills and MCP tools.</p>
+        <section class="view view-page" id="view-tasks" data-view-panel="tasks" aria-labelledby="tasks-title" hidden>
+          <header class="page-head">
+            <div class="page-head-copy">
+              <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Registry / Tasks</p>
+              <div class="page-title-row">
+                <h1 class="page-title" id="tasks-title">Tasks</h1>
+                <span class="count-pill" id="task-count">0</span>
+              </div>
+              <p class="page-sub">Reusable work built from skills and MCP tools. <span class="page-summary" id="task-summary"></span></p>
             </div>
             <div class="head-actions">
-              <button class="btn btn-primary" type="button" data-open-modal="task"><svg class="icon"><use href="#i-plus"/></svg> New task</button>
+              <button class="btn btn-primary" type="button" data-open-modal="task">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg> New task
+              </button>
             </div>
-          </div>
+          </header>
           <div class="notice notice-quiet">
-            <svg class="icon"><use href="#i-clock"/></svg>
+            <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
             <p><strong>Manual runs only.</strong> Scheduling, approvals, and branching are out of scope for v1.</p>
           </div>
-          <div class="task-grid" id="task-grid"></div>
+          <div class="grid task-grid" id="task-grid"></div>
         </section>
 
         <!-- RUNS -->
-        <section class="view" id="view-runs" data-view-panel="runs" aria-labelledby="runs-title" hidden>
-          <div class="view-head">
-            <div>
-              <p class="kicker">Audit / Runs</p>
-              <h1 class="page-title" id="runs-title">The ledger.</h1>
+        <section class="view view-page" id="view-runs" data-view-panel="runs" aria-labelledby="runs-title" hidden>
+          <header class="page-head">
+            <div class="page-head-copy">
+              <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Audit / Runs</p>
+              <div class="page-title-row">
+                <h1 class="page-title" id="runs-title">Runs</h1>
+                <span class="count-pill" id="runs-count">0</span>
+              </div>
               <p class="page-sub">Every run, step, and tool call, on the record.</p>
             </div>
             <div class="head-actions">
-              <button class="btn btn-ghost" type="button" data-toast="Export is a mock in this prototype.">Export</button>
+              <button class="btn btn-secondary" type="button" data-toast="Export is a mock in this prototype.">
+                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg> Export
+              </button>
             </div>
-          </div>
-          <div class="toolbar">
+          </header>
+          <div class="toolbar toolbar-split">
             <div class="filter-chips" id="run-filters" role="group" aria-label="Filter runs by status"></div>
             <span class="toolbar-note" id="run-count"></span>
           </div>
-          <div class="ledger" id="runs-table"></div>
+          <div class="table-panel">
+            <div class="ledger" id="runs-table"></div>
+          </div>
         </section>
 
         <!-- USAGE -->
-        <section class="view" id="view-usage" data-view-panel="usage" aria-labelledby="usage-title" hidden>
-          <div class="view-head">
-            <div>
-              <p class="kicker">Operations / Usage</p>
-              <h1 class="page-title" id="usage-title">Usage.</h1>
+        <section class="view view-page" id="view-usage" data-view-panel="usage" aria-labelledby="usage-title" hidden>
+          <header class="page-head">
+            <div class="page-head-copy">
+              <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Operations / Usage</p>
+              <div class="page-title-row">
+                <h1 class="page-title" id="usage-title">Usage</h1>
+              </div>
               <p class="page-sub">How the workspace is being used, at a glance.</p>
             </div>
             <div class="head-actions">
-              <button class="btn btn-ghost" type="button" data-toast="Period selection is a mock in this prototype.">Last 30 days</button>
+              <button class="btn btn-secondary" type="button" data-toast="Period selection is a mock in this prototype.">
+                <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg> Last 30 days
+              </button>
             </div>
+          </header>
+
+          <div class="stat-grid">
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-label">Conversations</span><span class="trend up">+2 this week</span></div>
+              <strong id="usage-conversations">6</strong>
+              <span class="stat-sub" id="usage-conversations-sub">2 pinned · 4 active</span>
+              <svg class="sparkline" viewBox="0 0 120 28" aria-hidden="true"><path d="M2 23 18 20 34 22 50 14 66 16 82 9 98 12 118 6"/></svg>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-label">Runs</span><span class="trend up">+3 this week</span></div>
+              <strong id="usage-runs">5</strong>
+              <span class="stat-sub" id="usage-runs-sub">4 succeeded · 1 failed</span>
+              <svg class="sparkline" viewBox="0 0 120 28" aria-hidden="true"><path d="M2 20 18 12 34 17 50 8 66 15 82 5 98 11 118 4"/></svg>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-label">Published skills</span><span class="trend neutral">3 of 6</span></div>
+              <strong id="usage-skills">3</strong>
+              <span class="stat-sub" id="usage-skills-sub">of 6 total</span>
+              <svg class="sparkline" viewBox="0 0 120 28" aria-hidden="true"><path d="M2 22 18 22 34 18 50 18 66 10 82 10 98 7 118 7"/></svg>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-label">MCP servers</span><span class="trend warn">1 needs attention</span></div>
+              <strong id="usage-mcp">2</strong>
+              <span class="stat-sub" id="usage-mcp-sub">connected of 4</span>
+              <svg class="sparkline" viewBox="0 0 120 28" aria-hidden="true"><path d="M2 19 18 19 34 12 50 12 66 15 82 15 98 8 118 8"/></svg>
+            </article>
           </div>
-          <div class="usage-stats">
-            <div class="usage-stat"><p class="kicker">Conversations</p><strong id="usage-conversations">6</strong><span id="usage-conversations-sub">2 pinned · 4 active</span></div>
-            <div class="usage-stat"><p class="kicker">Runs</p><strong id="usage-runs">5</strong><span id="usage-runs-sub">4 succeeded · 1 failed</span></div>
-            <div class="usage-stat"><p class="kicker">Published skills</p><strong id="usage-skills">3</strong><span id="usage-skills-sub">of 6 total</span></div>
-            <div class="usage-stat"><p class="kicker">MCP servers</p><strong id="usage-mcp">2</strong><span id="usage-mcp-sub">connected of 4</span></div>
-          </div>
+
           <div class="usage-grid">
-            <section class="usage-card">
-              <div class="admin-card-head"><div><p class="kicker">Activity</p><h2>Runs per day</h2></div><span class="status neutral">Mock</span></div>
-              <div class="bar-chart" aria-label="Mock runs per day">
-                <div class="bar" style="--h:42%"><span>Mon</span></div>
-                <div class="bar" style="--h:66%"><span>Tue</span></div>
-                <div class="bar" style="--h:31%"><span>Wed</span></div>
-                <div class="bar" style="--h:84%"><span>Thu</span></div>
-                <div class="bar" style="--h:58%"><span>Fri</span></div>
-                <div class="bar" style="--h:18%"><span>Sat</span></div>
-                <div class="bar" style="--h:12%"><span>Sun</span></div>
+            <section class="panel usage-chart-panel">
+              <div class="panel-head">
+                <div><p class="eyebrow">Activity</p><h2>Runs per day</h2></div>
+                <span class="status neutral">Mock</span>
               </div>
+              <figure class="bar-figure">
+                <div class="bar-chart" role="img" aria-label="Runs per day for the last seven days: Monday 3, Tuesday 6, Wednesday 2, Thursday 8, Friday 5, Saturday 1, Sunday 1.">
+                  <div class="chart-y" aria-hidden="true"><span>8</span><span>6</span><span>4</span><span>2</span><span>0</span></div>
+                  <div class="bar-plot">
+                    <div class="grid-lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="bars">
+                      <div class="bar" style="--h:37.5%" tabindex="0" aria-label="Monday: 3 runs"><span class="bar-value">3</span><span class="bar-label">Mon</span></div>
+                      <div class="bar" style="--h:75%" tabindex="0" aria-label="Tuesday: 6 runs"><span class="bar-value">6</span><span class="bar-label">Tue</span></div>
+                      <div class="bar" style="--h:25%" tabindex="0" aria-label="Wednesday: 2 runs"><span class="bar-value">2</span><span class="bar-label">Wed</span></div>
+                      <div class="bar is-peak" style="--h:100%" tabindex="0" aria-label="Thursday: 8 runs"><span class="bar-value">8</span><span class="bar-label">Thu</span></div>
+                      <div class="bar" style="--h:62.5%" tabindex="0" aria-label="Friday: 5 runs"><span class="bar-value">5</span><span class="bar-label">Fri</span></div>
+                      <div class="bar is-quiet" style="--h:12.5%" tabindex="0" aria-label="Saturday: 1 run"><span class="bar-value">1</span><span class="bar-label">Sat</span></div>
+                      <div class="bar is-quiet" style="--h:12.5%" tabindex="0" aria-label="Sunday: 1 run"><span class="bar-value">1</span><span class="bar-label">Sun</span></div>
+                    </div>
+                  </div>
+                </div>
+                <figcaption class="figure-foot"><span>26 runs this week</span><span>Peak Thursday · 8 runs</span></figcaption>
+              </figure>
             </section>
-            <section class="usage-card">
-              <div class="admin-card-head"><div><p class="kicker">Efficiency</p><h2>Tokens &amp; spend</h2></div></div>
-              <dl class="kv">
+
+            <section class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Efficiency</p><h2>Tokens &amp; spend</h2></div></div>
+              <dl class="kv kv-compact">
                 <div><dt>Tokens</dt><dd>42.5k</dd></div>
                 <div><dt>Estimated spend</dt><dd>$1.03</dd></div>
-                <div><dt>Avg run</dt><dd>1m 08s</dd></div>
-                <div><dt>Failed runs</dt><dd>1 of 5</dd></div>
+                <div><dt>Average run</dt><dd>1m 08s</dd></div>
+                <div><dt>Failed runs</dt><dd><span class="text-warn">1 of 5</span></dd></div>
               </dl>
+              <div class="meter-block">
+                <div class="meter-label"><span>Monthly budget</span><span>10% used</span></div>
+                <div class="meter"><i style="--w:10%"></i></div>
+              </div>
             </section>
-            <section class="usage-card wide">
-              <div class="admin-card-head"><div><p class="kicker">Top work</p><h2>Most-run tasks</h2></div></div>
-              <table class="mini-table">
-                <thead><tr><th>Task</th><th>Runs</th><th>Success</th><th>Owner</th></tr></thead>
+
+            <section class="panel wide">
+              <div class="panel-head"><div><p class="eyebrow">Top work</p><h2>Most-run tasks</h2></div><button class="link-btn" type="button" data-view="tasks">All tasks <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+              <table class="data-table">
+                <thead><tr><th scope="col">Task</th><th scope="col">Runs</th><th scope="col">Success</th><th scope="col">Owner</th></tr></thead>
                 <tbody>
-                  <tr><td>Weekly Release Brief</td><td>2</td><td>1 / 2</td><td>Alex Chen</td></tr>
-                  <tr><td>Triage New Tickets</td><td>2</td><td>2 / 2</td><td>Priya Nair</td></tr>
-                  <tr><td>Onboarding Checklist Refresh</td><td>1</td><td>1 / 1</td><td>Sam Ito</td></tr>
+                  <tr><td>Weekly Release Brief</td><td>2</td><td><span class="success-cell"><span class="meter mini"><i style="--w:50%"></i></span>1 / 2</span></td><td>Alex Chen</td></tr>
+                  <tr><td>Triage New Tickets</td><td>2</td><td><span class="success-cell"><span class="meter mini"><i style="--w:100%"></i></span>2 / 2</span></td><td>Priya Nair</td></tr>
+                  <tr><td>Onboarding Checklist Refresh</td><td>1</td><td><span class="success-cell"><span class="meter mini"><i style="--w:100%"></i></span>1 / 1</span></td><td>Sam Ito</td></tr>
                 </tbody>
               </table>
             </section>
@@ -326,47 +420,69 @@
         </section>
 
         <!-- AUDIT -->
-        <section class="view" id="view-audit" data-view-panel="audit" aria-labelledby="audit-title" hidden>
-          <div class="view-head">
-            <div>
-              <p class="kicker">Operations / Audit</p>
-              <h1 class="page-title" id="audit-title">Audit.</h1>
-              <p class="page-sub">Registry changes, tool calls, runs, and access.</p>
+        <section class="view view-page" id="view-audit" data-view-panel="audit" aria-labelledby="audit-title" hidden>
+          <header class="page-head">
+            <div class="page-head-copy">
+              <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Operations / Audit</p>
+              <div class="page-title-row">
+                <h1 class="page-title" id="audit-title">Audit</h1>
+                <span class="count-pill" id="audit-count-top">0</span>
+              </div>
+              <p class="page-sub">Registry changes, tool calls, runs, and access. Append-only.</p>
             </div>
             <div class="head-actions">
-              <button class="btn btn-ghost" type="button" data-toast="Audit export is a mock in this prototype.">Export</button>
+              <button class="btn btn-secondary" type="button" data-toast="Audit export is a mock in this prototype.">
+                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg> Export
+              </button>
             </div>
-          </div>
-          <div class="toolbar">
+          </header>
+          <div class="toolbar toolbar-split">
+            <div class="audit-tools">
+              <label class="search-box search-box-sm">
+                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+                <span class="visually-hidden">Filter audit events by actor, action, or target</span>
+                <input id="audit-search" type="search" placeholder="Filter by actor, action, or target…" autocomplete="off">
+              </label>
+              <label class="select-box">
+                <span class="visually-hidden">Audit date range</span>
+                <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>
+                <select id="audit-period">
+                  <option value="all">All time</option>
+                  <option value="today">Today</option>
+                  <option value="7d">Last 7 days</option>
+                </select>
+              </label>
+            </div>
             <div class="filter-chips" id="audit-filters" role="group" aria-label="Filter audit events"></div>
-            <span class="toolbar-note" id="audit-count"></span>
           </div>
-          <table class="audit-table">
-            <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th><th>Outcome</th></tr></thead>
-            <tbody id="audit-body"></tbody>
-          </table>
+          <div class="table-panel">
+            <table class="audit-table">
+              <caption class="visually-hidden">Audit events, most recent first</caption>
+              <thead><tr><th scope="col">Time</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Target</th><th scope="col">Outcome</th></tr></thead>
+              <tbody id="audit-body"></tbody>
+            </table>
+          </div>
         </section>
 
-        <!-- ADMIN -->
-        <section class="view" id="view-admin" data-view-panel="admin" aria-labelledby="admin-title" hidden>
-          <div class="view-head">
-            <div>
-              <p class="kicker">Settings / Workspace</p>
-              <h1 class="page-title" id="admin-title">Settings.</h1>
+        <!-- SETTINGS -->
+        <section class="view view-page" id="view-admin" data-view-panel="admin" aria-labelledby="admin-title" hidden>
+          <header class="page-head">
+            <div class="page-head-copy">
+              <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span>Settings / Workspace</p>
+              <div class="page-title-row">
+                <h1 class="page-title" id="admin-title">Settings</h1>
+              </div>
               <p class="page-sub">Workspace settings, identity, and the model gateway.</p>
             </div>
             <div class="head-actions">
               <button class="btn btn-primary" type="button" data-toast="Settings saved (mock).">Save settings</button>
             </div>
-          </div>
+          </header>
 
-          <div class="admin-grid">
-            <section class="admin-card">
-              <div class="admin-card-head">
-                <div>
-                  <p class="kicker">Model gateway</p>
-                  <h2>Internal endpoint</h2>
-                </div>
+          <div class="settings-grid">
+            <section class="panel settings-card">
+              <div class="panel-head">
+                <div><p class="eyebrow">Model gateway</p><h2>Internal endpoint</h2></div>
                 <span class="status ok"><span class="dot"></span>Connected</span>
               </div>
               <dl class="kv">
@@ -375,49 +491,40 @@
                 <div><dt>Secret reference</dt><dd><code>secret://llm/internal-key</code></dd></div>
                 <div><dt>Data boundary</dt><dd>Internal only · TBD-INFRA-009</dd></div>
               </dl>
-              <button class="btn btn-ghost" type="button" data-toast="Connection test passed (mock).">Test connection</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-toast="Connection test passed (mock).">Test connection</button>
             </section>
 
-            <section class="admin-card">
-              <div class="admin-card-head">
-                <div>
-                  <p class="kicker">Identity</p>
-                  <h2>Local accounts</h2>
-                </div>
+            <section class="panel settings-card">
+              <div class="panel-head">
+                <div><p class="eyebrow">Identity</p><h2>Local accounts</h2></div>
                 <span class="status warn"><span class="dot"></span>MVP mode</span>
               </div>
               <p class="small muted">SSO is deferred. The identity provider is tracked as TBD-INFRA-010.</p>
-              <table class="mini-table">
-                <thead><tr><th>User</th><th>Role</th><th>Status</th></tr></thead>
+              <table class="data-table">
+                <thead><tr><th scope="col">User</th><th scope="col">Role</th><th scope="col">Status</th></tr></thead>
                 <tbody>
-                  <tr><td>Alex Chen</td><td><span class="role">Admin</span></td><td>Active</td></tr>
-                  <tr><td>Priya Nair</td><td><span class="role">Member</span></td><td>Active</td></tr>
-                  <tr><td>Sam Ito</td><td><span class="role">Author</span></td><td>Invited</td></tr>
+                  <tr><td>Alex Chen</td><td><span class="role-tag">Admin</span></td><td>Active</td></tr>
+                  <tr><td>Priya Nair</td><td><span class="role-tag">Member</span></td><td>Active</td></tr>
+                  <tr><td>Sam Ito</td><td><span class="role-tag">Author</span></td><td>Invited</td></tr>
                 </tbody>
               </table>
-              <button class="btn btn-ghost" type="button" data-toast="Invite flow is a mock in this prototype.">Invite user</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-toast="Invite flow is a mock in this prototype.">Invite user</button>
             </section>
 
-            <section class="admin-card">
-              <div class="admin-card-head">
-                <div>
-                  <p class="kicker">Registry policy</p>
-                  <h2>Publishing</h2>
-                </div>
+            <section class="panel settings-card">
+              <div class="panel-head">
+                <div><p class="eyebrow">Registry policy</p><h2>Publishing</h2></div>
                 <span class="status neutral"><span class="dot"></span>Proposed</span>
               </div>
               <p class="small">Admin-only publishing in v1. Delegated authorship is tracked as TBD-BIZ-004.</p>
-              <div class="toggle-row"><span>Require review before publish</span><span class="status neutral"><span class="dot"></span>Proposed · TBD-BIZ-004</span></div>
-              <div class="toggle-row"><span>Allow member-created drafts</span><span class="status neutral"><span class="dot"></span>Off in v1</span></div>
-              <div class="toggle-row"><span>Enable write-capable tools</span><span class="status error"><span class="dot"></span>Disabled in v1</span></div>
+              <div class="locked-row"><span>Require review before publish</span><span class="status neutral"><span class="dot"></span>Proposed · TBD-BIZ-004</span></div>
+              <div class="locked-row"><span>Allow member-created drafts</span><span class="status neutral"><span class="dot"></span>Off in v1</span></div>
+              <div class="locked-row"><span>Enable write-capable tools</span><span class="status error"><span class="dot"></span>Disabled in v1</span></div>
             </section>
 
-            <section class="admin-card">
-              <div class="admin-card-head">
-                <div>
-                  <p class="kicker">Security</p>
-                  <h2>Audit &amp; retention</h2>
-                </div>
+            <section class="panel settings-card">
+              <div class="panel-head">
+                <div><p class="eyebrow">Security</p><h2>Audit &amp; retention</h2></div>
                 <span class="status ok"><span class="dot"></span>Append-only</span>
               </div>
               <dl class="kv">
@@ -426,17 +533,21 @@
                 <div><dt>Retention</dt><dd>TBD-BIZ-003</dd></div>
                 <div><dt>Write tools</dt><dd>Disabled in v1</dd></div>
               </dl>
-              <button class="btn btn-ghost" type="button" data-toast="Audit export is a mock in this prototype.">Open audit log</button>
+              <button class="btn btn-secondary btn-sm" type="button" data-view="audit">Open audit log</button>
             </section>
           </div>
         </section>
-      </div>
-    </main>
+      </main>
+    </div>
   </div>
 
   <div class="scrim" id="scrim" hidden></div>
-  <aside class="drawer" id="drawer" aria-label="Detail panel" hidden></aside>
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+    <h2 class="visually-hidden" id="drawer-title">Detail panel</h2>
+  </aside>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <h2 class="visually-hidden" id="modal-title">Dialog</h2>
+  </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <noscript>
