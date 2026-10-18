@@ -1,0 +1,1818 @@
+{
+  "_meta": {
+    "name": "hound-dock design tokens",
+    "status": "Draft",
+    "version": "0.1",
+    "asOf": "2026-10-18",
+    "changeRecord": "docs/13_changes/CHG-016-design-tokens.md",
+    "scope": "Minimal token set for the effective desktop pages PG-001 to PG-012 and components C-01 to C-17. Light theme only; 960px is the narrowest adopted width.",
+    "authority": [
+      "docs/00_setup/open_items.md",
+      "docs/03_design/highfi_page_map.md",
+      "docs/03_design/design_system.md",
+      "docs/03_design/interaction_design.md"
+    ],
+    "valueBasis": "Colour values are copied from the light column of design_system.md §3.1 and the matching :root primitives in prototype/styles.css. Type, spacing, radius, shadow, and layout values are the recorded candidates in design_system.md §3.2 to §3.4 and the 1440/1280/1080/960 measures in highfi_page_map.md §7 and interaction_design.md §7. Every colour is a candidate, not a brand value.",
+    "layerRule": "primitive -> semantic -> component. Component tokens reference semantic or component tokens for colour, spacing, radius, and elevation; documented component dimensions are defined once in the component layer.",
+    "aliasSyntax": "{path.to.token}",
+    "frontend": "[TBD-FE]",
+    "tbd": {
+      "TBD-INFRA-001": {
+        "statusAsRecorded": "Open",
+        "effect": "Frontend stack and component library are unselected. Every frontend field is [TBD-FE]; no component library is assumed."
+      },
+      "TBD-BIZ-004": {
+        "statusAsRecorded": "Resolved in open_items.md (CHG-012; admin-only skill and task publication)",
+        "effect": "Referenced as-is for the read-only and terminal-Empty component behaviour. It is not re-decided, rewritten, or used to add a control."
+      }
+    },
+    "conflicts": "No CONFLICT is cited or adjudicated. CONFLICT-001 and CONFLICT-002 do not determine a token value.",
+    "theme": "light-only; the dark reference column in design_system.md §3.1 and §6 is excluded.",
+    "contrast": "design_system.md §6 records the light contrast pairs. This file cites them as candidate evidence and performs no new measurement; the neutral status pair is not recorded in §6.",
+    "spacingScale": "The 4px to 80px ramp is the recorded candidate scale. Component references cover the steps used by the effective key-page components; the remaining steps are scale values, not reserved control tokens.",
+    "componentCoverage": "Component tokens are defined only where design_system.md records a stable knob. C-04 (recorded count), C-15 (live region), and C-17 (back link) are composed from semantic tokens and have no separate component-layer entry. C-01 to C-17 are the only permitted component names.",
+    "trimmed": [
+      "Dark theme mapping (design_system.md §3.1 and §6): reference-only, not a theme decision.",
+      "shadow-md: used only by the skip link, not by a key-page surface.",
+      "text-3xl 28px: reserved compact display title; no effective page uses it.",
+      "control-h-lg 42px: reserved large control; no effective page uses it.",
+      "content-max 1360px: binds only above the adopted 1440px baseline.",
+      "Motion durations and easing: outside this token contract.",
+      "Ad-hoc prototype literals such as 9px, 10px, 14px, and 30px: not promoted to tokens."
+    ],
+    "notClaimed": [
+      "Not a brand palette, not a Frozen design system, and not a production implementation contract.",
+      "Not a frontend stack, component-library choice, or handoff format.",
+      "Not a dark theme, mobile layout, or any layout below 960px.",
+      "Not an approval of Gate 1 or of any page construction."
+    ]
+  },
+  "primitive": {
+    "color": {
+      "paper": {
+        "0": {
+          "value": "#ffffff",
+          "source": "design_system.md §3.1 light column (--surface-raised); prototype/styles.css :root (--paper-0)",
+          "frontend": "[TBD-FE]"
+        },
+        "1": {
+          "value": "#ffffff",
+          "source": "design_system.md §3.1 light column (--surface); prototype/styles.css :root (--paper-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "2": {
+          "value": "#f8f9fb",
+          "source": "design_system.md §3.1 light column (--canvas); prototype/styles.css :root (--paper-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "3": {
+          "value": "#f5f7fa",
+          "source": "design_system.md §3.1 light column (--surface-soft); prototype/styles.css :root (--paper-3)",
+          "frontend": "[TBD-FE]"
+        },
+        "4": {
+          "value": "#eef2f7",
+          "source": "design_system.md §3.1 light column (--surface-hover); prototype/styles.css :root (--paper-4)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "ink": {
+        "0": {
+          "value": "#111827",
+          "source": "design_system.md §3.1 light column (--text-primary); prototype/styles.css :root (--ink-0)",
+          "frontend": "[TBD-FE]"
+        },
+        "1": {
+          "value": "#4b5563",
+          "source": "design_system.md §3.1 light column (--text-secondary); prototype/styles.css :root (--ink-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "2": {
+          "value": "#667085",
+          "source": "design_system.md §3.1 light column (--text-muted); prototype/styles.css :root (--ink-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "3": {
+          "value": "#98a2b3",
+          "source": "design_system.md §3.1 light column (--text-faint); prototype/styles.css :root (--ink-3)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "line": {
+        "1": {
+          "value": "#e5e8ee",
+          "source": "design_system.md §3.1 light column (--border); prototype/styles.css :root (--line-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "2": {
+          "value": "#d5dae3",
+          "source": "design_system.md §3.1 light column (--border-strong); prototype/styles.css :root (--line-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "3": {
+          "value": "#7f8a9c",
+          "source": "design_system.md §3.1 light column (--control-border); prototype/styles.css :root (--line-3)",
+          "frontend": "[TBD-FE]"
+        },
+        "4": {
+          "value": "#6b7688",
+          "source": "design_system.md §3.1 light column (--control-border-hover); prototype/styles.css :root (--line-4)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "accent": {
+        "1": {
+          "value": "#2563eb",
+          "source": "design_system.md §3.1 light column (--accent and --focus); prototype/styles.css :root (--accent-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "2": {
+          "value": "#1d4ed8",
+          "source": "design_system.md §3.1 light column (--accent-hover and --accent-text); prototype/styles.css :root (--accent-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "3": {
+          "value": "#eaf0ff",
+          "source": "design_system.md §3.1 light column (--accent-soft); prototype/styles.css :root (--accent-3)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "sidebar": {
+        "1": {
+          "value": "#f7f8fa",
+          "source": "design_system.md §3.1 light column (--sidebar-bg); prototype/styles.css :root (--sidebar-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "2": {
+          "value": "#111827",
+          "source": "design_system.md §3.1 light column (--sidebar-text); prototype/styles.css :root (--sidebar-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "3": {
+          "value": "#5f6b7e",
+          "source": "design_system.md §3.1 light column (--sidebar-muted); prototype/styles.css :root (--sidebar-3)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "scrim": {
+        "value": "rgba(17, 24, 39, 0.42)",
+        "source": "design_system.md §3.1 light column (--scrim); prototype/styles.css :root (--scrim)",
+        "frontend": "[TBD-FE]"
+      },
+      "status": {
+        "ok": {
+          "text": {
+            "value": "#1f5a43",
+            "source": "design_system.md §3.1 status table (ok light text); prototype/styles.css :root (--ok-text)",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "#e0efe6",
+            "source": "design_system.md §3.1 status table (ok light background); prototype/styles.css :root (--ok-bg)",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "warn": {
+          "text": {
+            "value": "#7a4a12",
+            "source": "design_system.md §3.1 status table (warn light text); prototype/styles.css :root (--warn-text)",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "#f7ead3",
+            "source": "design_system.md §3.1 status table (warn light background); prototype/styles.css :root (--warn-bg)",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "error": {
+          "text": {
+            "value": "#8f2a24",
+            "source": "design_system.md §3.1 status table (error light text); prototype/styles.css :root (--error-text)",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "#f6ded9",
+            "source": "design_system.md §3.1 status table (error light background); prototype/styles.css :root (--error-bg)",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "info": {
+          "text": {
+            "value": "#234a74",
+            "source": "design_system.md §3.1 status table (info light text); prototype/styles.css :root (--info-text)",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "#e3ebf6",
+            "source": "design_system.md §3.1 status table (info light background); prototype/styles.css :root (--info-bg)",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "neutral": {
+          "text": {
+            "value": "#4b5563",
+            "source": "design_system.md §3.1 status table (neutral light text); prototype/styles.css :root (--neutral-text)",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "#eef1f5",
+            "source": "design_system.md §3.1 status table (neutral light background); prototype/styles.css :root (--neutral-bg)",
+            "frontend": "[TBD-FE]"
+          }
+        }
+      }
+    },
+    "font": {
+      "family": {
+        "ui": {
+          "value": "\"Avenir Next\", \"Segoe UI Variable\", \"Segoe UI\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "source": "design_system.md §3.2 (--font-ui); prototype/styles.css :root (--font-ui)",
+          "frontend": "[TBD-FE]"
+        },
+        "display": {
+          "value": "\"Iowan Old Style\", \"Palatino Linotype\", \"Book Antiqua\", Palatino, Georgia, serif",
+          "source": "design_system.md §3.2 (--font-display); prototype/styles.css :root (--font-display)",
+          "frontend": "[TBD-FE]"
+        },
+        "mono": {
+          "value": "\"SF Mono\", \"JetBrains Mono\", \"IBM Plex Mono\", Menlo, Consolas, monospace",
+          "source": "design_system.md §3.2 (--font-mono); prototype/styles.css :root (--font-mono)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "size": {
+        "text2xs": {
+          "value": "11px",
+          "source": "design_system.md §3.2 (--text-2xs 11px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "textXs": {
+          "value": "11.5px",
+          "source": "design_system.md §3.2 (--text-xs 11.5px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "textSm": {
+          "value": "12px",
+          "source": "design_system.md §3.2 (--text-sm 12px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "textMd": {
+          "value": "12.5px",
+          "source": "design_system.md §3.2 (--text-md 12.5px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "textBase": {
+          "value": "13.5px",
+          "source": "design_system.md §3.2 (--text-base 13.5px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "textLg": {
+          "value": "15px",
+          "source": "design_system.md §3.2 (--text-lg 15px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "textXl": {
+          "value": "18px",
+          "source": "design_system.md §3.2 (--text-xl 18px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "textCard": {
+          "value": "20px",
+          "source": "design_system.md §3.2 (--text-card 20px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "text2xl": {
+          "value": "22px",
+          "source": "design_system.md §3.2 (--text-2xl 22px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "text4xl": {
+          "value": "34px",
+          "source": "design_system.md §3.2 (--text-4xl 34px); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "weight": {
+        "regular": {
+          "value": 400,
+          "source": "design_system.md §3.2 weight range 400 to 600",
+          "frontend": "[TBD-FE]"
+        },
+        "medium": {
+          "value": 500,
+          "source": "design_system.md §3.2 weight range 400 to 600",
+          "frontend": "[TBD-FE]"
+        },
+        "semibold": {
+          "value": 600,
+          "source": "design_system.md §3.2 weight range 400 to 600",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "lineHeight": {
+        "tight": {
+          "value": 1.15,
+          "source": "design_system.md §3.2 (--leading-tight 1.15); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "snug": {
+          "value": 1.35,
+          "source": "design_system.md §3.2 (--leading-snug 1.35); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "normal": {
+          "value": 1.55,
+          "source": "design_system.md §3.2 (--leading-normal 1.55); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        },
+        "relaxed": {
+          "value": 1.68,
+          "source": "design_system.md §3.2 (--leading-relaxed 1.68); prototype/styles.css :root",
+          "frontend": "[TBD-FE]"
+        }
+      }
+    },
+    "space": {
+      "1": {
+        "value": "4px",
+        "source": "design_system.md §3.3 (--space-1 4px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "2": {
+        "value": "8px",
+        "source": "design_system.md §3.3 (--space-2 8px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "3": {
+        "value": "12px",
+        "source": "design_system.md §3.3 (--space-3 12px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "4": {
+        "value": "16px",
+        "source": "design_system.md §3.3 (--space-4 16px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "5": {
+        "value": "20px",
+        "source": "design_system.md §3.3 (--space-5 20px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "6": {
+        "value": "24px",
+        "source": "design_system.md §3.3 (--space-6 24px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "7": {
+        "value": "32px",
+        "source": "design_system.md §3.3 (--space-7 32px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "8": {
+        "value": "40px",
+        "source": "design_system.md §3.3 (--space-8 40px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "9": {
+        "value": "48px",
+        "source": "design_system.md §3.3 (--space-9 48px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "10": {
+        "value": "64px",
+        "source": "design_system.md §3.3 (--space-10 64px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      },
+      "11": {
+        "value": "80px",
+        "source": "design_system.md §3.3 (--space-11 80px); prototype/styles.css :root",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "radius": {
+      "xs": {
+        "value": "3px",
+        "source": "design_system.md §3.3 (3px tag radius); prototype/styles.css :root (--radius-xs)",
+        "frontend": "[TBD-FE]"
+      },
+      "sm": {
+        "value": "6px",
+        "source": "design_system.md §3.3 (6px control radius); prototype/styles.css :root (--radius-sm)",
+        "frontend": "[TBD-FE]"
+      },
+      "md": {
+        "value": "8px",
+        "source": "design_system.md §3.3 (8px radius step); prototype/styles.css :root (--radius-md)",
+        "frontend": "[TBD-FE]"
+      },
+      "lg": {
+        "value": "10px",
+        "source": "design_system.md §3.3 (10px card radius); prototype/styles.css :root (--radius-lg and --card-radius)",
+        "frontend": "[TBD-FE]"
+      },
+      "panel": {
+        "value": "14px",
+        "source": "design_system.md §3.3 (14px panel and modal radius); prototype/styles.css :root (--panel-radius)",
+        "frontend": "[TBD-FE]"
+      },
+      "pill": {
+        "value": "999px",
+        "source": "design_system.md §3.3 (999px pill radius); prototype/styles.css :root (--radius-pill)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "shadow": {
+      "xs": {
+        "value": "0 1px 2px rgba(17, 24, 39, 0.05)",
+        "source": "design_system.md §3.3 (flat cards use xs); prototype/styles.css :root (--shadow-xs)",
+        "frontend": "[TBD-FE]"
+      },
+      "sm": {
+        "value": "0 2px 8px rgba(17, 24, 39, 0.07)",
+        "source": "design_system.md §3.3; prototype/styles.css :root (--shadow-sm)",
+        "frontend": "[TBD-FE]"
+      },
+      "lg": {
+        "value": "0 18px 48px rgba(17, 24, 39, 0.15)",
+        "source": "design_system.md §3.3 (overlays use lg); prototype/styles.css :root (--shadow-lg)",
+        "frontend": "[TBD-FE]"
+      }
+    }
+  },
+  "semantic": {
+    "color": {
+      "text": {
+        "primary": {
+          "value": "{primitive.color.ink.0}",
+          "source": "design_system.md §3.1 (--text-primary = --ink-0); §6 primary text/surface 17.74:1",
+          "frontend": "[TBD-FE]"
+        },
+        "secondary": {
+          "value": "{primitive.color.ink.1}",
+          "source": "design_system.md §3.1 (--text-secondary = --ink-1); §6 secondary text/surface 7.56:1",
+          "frontend": "[TBD-FE]"
+        },
+        "muted": {
+          "value": "{primitive.color.ink.2}",
+          "source": "design_system.md §3.1 (--text-muted = --ink-2); §6 muted text/surface 4.97:1",
+          "frontend": "[TBD-FE]"
+        },
+        "faint": {
+          "value": "{primitive.color.ink.3}",
+          "source": "design_system.md §3.1 (--text-faint = --ink-3); §6 restricts it to decorative marks and does not assess it as text",
+          "frontend": "[TBD-FE]"
+        },
+        "accent": {
+          "value": "{primitive.color.accent.2}",
+          "source": "design_system.md §3.1 (--accent-text = --accent-2); §6 accent text/surface 6.70:1",
+          "frontend": "[TBD-FE]"
+        },
+        "onAccent": {
+          "value": "{primitive.color.paper.0}",
+          "source": "design_system.md §3.1 (--accent-contrast = --paper-0); §6 accent contrast/accent 5.17:1",
+          "frontend": "[TBD-FE]"
+        },
+        "sidebar": {
+          "value": "{primitive.color.sidebar.2}",
+          "source": "design_system.md §3.1 (--sidebar-text = --sidebar-2); §6 sidebar text/sidebar 16.69:1",
+          "frontend": "[TBD-FE]"
+        },
+        "sidebarMuted": {
+          "value": "{primitive.color.sidebar.3}",
+          "source": "design_system.md §3.1 (--sidebar-muted = --sidebar-3); §6 sidebar muted/sidebar 5.08:1",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "background": {
+        "canvas": {
+          "value": "{primitive.color.paper.2}",
+          "source": "design_system.md §3.1 (--canvas = --paper-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "surface": {
+          "value": "{primitive.color.paper.1}",
+          "source": "design_system.md §3.1 (--surface = --paper-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "surfaceRaised": {
+          "value": "{primitive.color.paper.0}",
+          "source": "design_system.md §3.1 (--surface-raised = --paper-0)",
+          "frontend": "[TBD-FE]"
+        },
+        "surfaceSoft": {
+          "value": "{primitive.color.paper.3}",
+          "source": "design_system.md §3.1 (--surface-soft = --paper-3)",
+          "frontend": "[TBD-FE]"
+        },
+        "surfaceHover": {
+          "value": "{primitive.color.paper.4}",
+          "source": "design_system.md §3.1 (--surface-hover = --paper-4)",
+          "frontend": "[TBD-FE]"
+        },
+        "accent": {
+          "value": "{primitive.color.accent.1}",
+          "source": "design_system.md §3.1 (--accent = --accent-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "accentHover": {
+          "value": "{primitive.color.accent.2}",
+          "source": "design_system.md §3.1 (--accent-hover = --accent-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "accentSoft": {
+          "value": "{primitive.color.accent.3}",
+          "source": "design_system.md §3.1 (--accent-soft = --accent-3); §5 sidebar active fill",
+          "frontend": "[TBD-FE]"
+        },
+        "sidebar": {
+          "value": "{primitive.color.sidebar.1}",
+          "source": "design_system.md §3.1 (--sidebar-bg = --sidebar-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "scrim": {
+          "value": "{primitive.color.scrim}",
+          "source": "design_system.md §3.1 (--scrim); §5 dialog scrim",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "border": {
+        "default": {
+          "value": "{primitive.color.line.1}",
+          "source": "design_system.md §3.1 (--border = --line-1)",
+          "frontend": "[TBD-FE]"
+        },
+        "strong": {
+          "value": "{primitive.color.line.2}",
+          "source": "design_system.md §3.1 (--border-strong = --line-2)",
+          "frontend": "[TBD-FE]"
+        },
+        "control": {
+          "value": "{primitive.color.line.3}",
+          "source": "design_system.md §3.1 (--control-border = --line-3); §6 control border/surface 3.49:1",
+          "frontend": "[TBD-FE]"
+        },
+        "controlHover": {
+          "value": "{primitive.color.line.4}",
+          "source": "design_system.md §3.1 (--control-border-hover = --line-4)",
+          "frontend": "[TBD-FE]"
+        },
+        "focus": {
+          "value": "{primitive.color.accent.1}",
+          "source": "design_system.md §3.1 (--focus = --accent-1); §3.3 2px focus ring",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "status": {
+        "ok": {
+          "text": {
+            "value": "{primitive.color.status.ok.text}",
+            "source": "design_system.md §3.1 status table (ok light text); §6 status ok text/bg 6.79:1",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "{primitive.color.status.ok.background}",
+            "source": "design_system.md §3.1 status table (ok light background)",
+            "frontend": "[TBD-FE]"
+          },
+          "border": {
+            "value": "{semantic.color.status.ok.text}",
+            "source": "prototype/styles.css .banner--ok (border-color: --ok-text); design_system.md §3.1 status table",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "warn": {
+          "text": {
+            "value": "{primitive.color.status.warn.text}",
+            "source": "design_system.md §3.1 status table (warn light text); §6 status warn text/bg 6.27:1",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "{primitive.color.status.warn.background}",
+            "source": "design_system.md §3.1 status table (warn light background)",
+            "frontend": "[TBD-FE]"
+          },
+          "border": {
+            "value": "{semantic.color.status.warn.text}",
+            "source": "prototype/styles.css .banner--warn (border-color: --warn-text); design_system.md §3.1 status table",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "error": {
+          "text": {
+            "value": "{primitive.color.status.error.text}",
+            "source": "design_system.md §3.1 status table (error light text); §6 status error text/bg 6.48:1",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "{primitive.color.status.error.background}",
+            "source": "design_system.md §3.1 status table (error light background)",
+            "frontend": "[TBD-FE]"
+          },
+          "border": {
+            "value": "{semantic.color.status.error.text}",
+            "source": "prototype/styles.css .banner--error (border-color: --error-text); design_system.md §3.1 status table",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "info": {
+          "text": {
+            "value": "{primitive.color.status.info.text}",
+            "source": "design_system.md §3.1 status table (info light text); §6 status info text/bg 7.59:1",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "{primitive.color.status.info.background}",
+            "source": "design_system.md §3.1 status table (info light background)",
+            "frontend": "[TBD-FE]"
+          },
+          "border": {
+            "value": "{semantic.color.status.info.text}",
+            "source": "prototype/styles.css .banner--info (border-color: --info-text); design_system.md §3.1 status table",
+            "frontend": "[TBD-FE]"
+          }
+        },
+        "neutral": {
+          "text": {
+            "value": "{primitive.color.status.neutral.text}",
+            "source": "design_system.md §3.1 status table (neutral light text); §6 does not record a neutral pair",
+            "frontend": "[TBD-FE]"
+          },
+          "background": {
+            "value": "{primitive.color.status.neutral.background}",
+            "source": "design_system.md §3.1 status table (neutral light background)",
+            "frontend": "[TBD-FE]"
+          },
+          "border": {
+            "value": "{semantic.color.status.neutral.text}",
+            "source": "prototype/styles.css .badge--neutral (text and border share --neutral-text); design_system.md §3.1 status table",
+            "frontend": "[TBD-FE]"
+          }
+        }
+      }
+    },
+    "typography": {
+      "family": {
+        "display": {
+          "value": "{primitive.font.family.display}",
+          "source": "design_system.md §3.2 (--font-display); display serif reserved for brand, page, card, and state headlines",
+          "frontend": "[TBD-FE]"
+        },
+        "ui": {
+          "value": "{primitive.font.family.ui}",
+          "source": "design_system.md §3.2 (--font-ui); body and controls",
+          "frontend": "[TBD-FE]"
+        },
+        "mono": {
+          "value": "{primitive.font.family.mono}",
+          "source": "design_system.md §3.2 (--font-mono); eyebrows, table headers, micro-labels",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "size": {
+        "micro": {
+          "value": "{primitive.font.size.text2xs}",
+          "source": "design_system.md §3.2 (--text-2xs 11px; table headers and micro-labels)",
+          "frontend": "[TBD-FE]"
+        },
+        "meta": {
+          "value": "{primitive.font.size.textXs}",
+          "source": "design_system.md §3.2 (--text-xs 11.5px; eyebrows, chips, field labels)",
+          "frontend": "[TBD-FE]"
+        },
+        "small": {
+          "value": "{primitive.font.size.textSm}",
+          "source": "design_system.md §3.2 (--text-sm 12px; buttons, table cells, hints)",
+          "frontend": "[TBD-FE]"
+        },
+        "bodySmall": {
+          "value": "{primitive.font.size.textMd}",
+          "source": "design_system.md §3.2 (--text-md 12.5px; card descriptions and supporting copy)",
+          "frontend": "[TBD-FE]"
+        },
+        "body": {
+          "value": "{primitive.font.size.textBase}",
+          "source": "design_system.md §3.2 (--text-base 13.5px; chat messages, prose, hints)",
+          "frontend": "[TBD-FE]"
+        },
+        "lead": {
+          "value": "{primitive.font.size.textLg}",
+          "source": "design_system.md §3.2 (--text-lg 15px; empty-state support copy)",
+          "frontend": "[TBD-FE]"
+        },
+        "panelTitle": {
+          "value": "{primitive.font.size.textXl}",
+          "source": "design_system.md §3.2 (--text-xl 18px; panel heads and facts titles)",
+          "frontend": "[TBD-FE]"
+        },
+        "cardTitle": {
+          "value": "{primitive.font.size.textCard}",
+          "source": "design_system.md §3.2 (--text-card 20px; registry card titles)",
+          "frontend": "[TBD-FE]"
+        },
+        "section": {
+          "value": "{primitive.font.size.text2xl}",
+          "source": "design_system.md §3.2 (--text-2xl 22px; large panel titles)",
+          "frontend": "[TBD-FE]"
+        },
+        "pageTitle": {
+          "value": "{primitive.font.size.text4xl}",
+          "source": "design_system.md §3.2 (--text-4xl 34px; desktop page and run-reference title)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "weight": {
+        "regular": {
+          "value": "{primitive.font.weight.regular}",
+          "source": "design_system.md §3.2 (400)",
+          "frontend": "[TBD-FE]"
+        },
+        "medium": {
+          "value": "{primitive.font.weight.medium}",
+          "source": "design_system.md §3.2 (500)",
+          "frontend": "[TBD-FE]"
+        },
+        "semibold": {
+          "value": "{primitive.font.weight.semibold}",
+          "source": "design_system.md §3.2 (600)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "lineHeight": {
+        "tight": {
+          "value": "{primitive.font.lineHeight.tight}",
+          "source": "design_system.md §3.2 (--leading-tight 1.15)",
+          "frontend": "[TBD-FE]"
+        },
+        "snug": {
+          "value": "{primitive.font.lineHeight.snug}",
+          "source": "design_system.md §3.2 (--leading-snug 1.35)",
+          "frontend": "[TBD-FE]"
+        },
+        "normal": {
+          "value": "{primitive.font.lineHeight.normal}",
+          "source": "design_system.md §3.2 (--leading-normal 1.55)",
+          "frontend": "[TBD-FE]"
+        },
+        "relaxed": {
+          "value": "{primitive.font.lineHeight.relaxed}",
+          "source": "design_system.md §3.2 (--leading-relaxed 1.68)",
+          "frontend": "[TBD-FE]"
+        }
+      }
+    },
+    "spacing": {
+      "space1": {
+        "value": "{primitive.space.1}",
+        "source": "design_system.md §3.3 (--space-1 4px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space2": {
+        "value": "{primitive.space.2}",
+        "source": "design_system.md §3.3 (--space-2 8px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space3": {
+        "value": "{primitive.space.3}",
+        "source": "design_system.md §3.3 (--space-3 12px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space4": {
+        "value": "{primitive.space.4}",
+        "source": "design_system.md §3.3 (--space-4 16px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space5": {
+        "value": "{primitive.space.5}",
+        "source": "design_system.md §3.3 (--space-5 20px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space6": {
+        "value": "{primitive.space.6}",
+        "source": "design_system.md §3.3 (--space-6 24px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space7": {
+        "value": "{primitive.space.7}",
+        "source": "design_system.md §3.3 (--space-7 32px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space8": {
+        "value": "{primitive.space.8}",
+        "source": "design_system.md §3.3 (--space-8 40px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space9": {
+        "value": "{primitive.space.9}",
+        "source": "design_system.md §3.3 (--space-9 48px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space10": {
+        "value": "{primitive.space.10}",
+        "source": "design_system.md §3.3 (--space-10 64px)",
+        "frontend": "[TBD-FE]"
+      },
+      "space11": {
+        "value": "{primitive.space.11}",
+        "source": "design_system.md §3.3 (--space-11 80px)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "radius": {
+      "tag": {
+        "value": "{primitive.radius.xs}",
+        "source": "design_system.md §3.3 (3px tag radius)",
+        "frontend": "[TBD-FE]"
+      },
+      "control": {
+        "value": "{primitive.radius.sm}",
+        "source": "design_system.md §3.3 (6px control radius); prototype/styles.css .btn and .input use --radius-sm",
+        "frontend": "[TBD-FE]"
+      },
+      "inset": {
+        "value": "{primitive.radius.md}",
+        "source": "design_system.md §3.3 (8px radius step); prototype/styles.css .nav-link and .notice use --radius-md",
+        "frontend": "[TBD-FE]"
+      },
+      "card": {
+        "value": "{primitive.radius.lg}",
+        "source": "design_system.md §3.3 (10px card and table radius); prototype/styles.css --card-radius",
+        "frontend": "[TBD-FE]"
+      },
+      "panel": {
+        "value": "{primitive.radius.panel}",
+        "source": "design_system.md §3.3 (14px panel and modal radius)",
+        "frontend": "[TBD-FE]"
+      },
+      "pill": {
+        "value": "{primitive.radius.pill}",
+        "source": "design_system.md §3.3 (999px pill radius)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "shadow": {
+      "resting": {
+        "value": "{primitive.shadow.xs}",
+        "source": "design_system.md §3.3 (flat cards use xs); prototype/styles.css .registry-card, .panel, and .composer (--shadow-xs)",
+        "frontend": "[TBD-FE]"
+      },
+      "raised": {
+        "value": "{primitive.shadow.sm}",
+        "source": "prototype/styles.css .signin-card and .registry-card:hover (--shadow-sm); design_system.md §3.3 low-contrast shadow",
+        "frontend": "[TBD-FE]"
+      },
+      "overlay": {
+        "value": "{primitive.shadow.lg}",
+        "source": "design_system.md §3.3 (overlays use lg); prototype/styles.css .dialog (--shadow-lg)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "layout": {
+      "breakpoints": {
+        "1440": {
+          "value": {
+            "sidebarWidth": "272px",
+            "mainPaneWidth": "1168px",
+            "pageGutter": "36px",
+            "contentWidth": "1096px",
+            "topbarHeight": "56px",
+            "registryColumns": 3,
+            "cardMinWidth": "320px",
+            "recordSplit": {
+              "reading": "764px",
+              "gap": "32px",
+              "panel": "300px"
+            },
+            "chatColumnWidth": "760px",
+            "controlHeight": "36px",
+            "signInPanelWidth": "420px",
+            "statePanelWidth": "560px",
+            "editorPanelWidth": "560px",
+            "dialogWidth": "460px"
+          },
+          "source": "highfi_page_map.md §7.1 and §7.2 (1440 baseline); interaction_design.md §7.1 to §7.3; design_system.md §4",
+          "frontend": "[TBD-FE]"
+        },
+        "1280": {
+          "value": {
+            "sidebarWidth": "272px",
+            "mainPaneWidth": "1008px",
+            "pageGutter": "28px",
+            "contentWidth": "952px",
+            "topbarHeight": "56px",
+            "registryColumns": 2,
+            "cardMinWidth": "320px",
+            "recordSplit": {
+              "reading": "644px",
+              "gap": "28px",
+              "panel": "280px"
+            },
+            "chatColumnWidth": "720px",
+            "controlHeight": "36px",
+            "signInPanelWidth": "420px",
+            "statePanelWidth": "560px",
+            "editorPanelWidth": "560px",
+            "dialogWidth": "460px"
+          },
+          "source": "highfi_page_map.md §7.1 and §7.2 (1280); interaction_design.md §7.3",
+          "frontend": "[TBD-FE]"
+        },
+        "1080": {
+          "value": {
+            "sidebarWidth": "272px",
+            "mainPaneWidth": "808px",
+            "pageGutter": "28px",
+            "contentWidth": "752px",
+            "topbarHeight": "56px",
+            "registryColumns": 2,
+            "cardMinWidth": "320px",
+            "recordSplit": {
+              "stacked": true
+            },
+            "chatColumnWidth": "720px",
+            "controlHeight": "36px",
+            "signInPanelWidth": "420px",
+            "statePanelWidth": "560px",
+            "editorPanelWidth": "560px",
+            "dialogWidth": "460px"
+          },
+          "source": "highfi_page_map.md §7.1 and §7.2 (1080); interaction_design.md §7.3",
+          "frontend": "[TBD-FE]"
+        },
+        "960": {
+          "value": {
+            "sidebarWidth": "272px",
+            "mainPaneWidth": "688px",
+            "pageGutter": "20px",
+            "contentWidth": "648px",
+            "topbarHeight": "56px",
+            "registryColumns": 2,
+            "cardMinWidth": "280px",
+            "recordSplit": {
+              "stacked": true
+            },
+            "chatColumnWidth": "648px",
+            "controlHeight": "36px",
+            "signInPanelWidth": "420px",
+            "statePanelWidth": "560px",
+            "editorPanelWidth": "560px",
+            "dialogWidth": "460px"
+          },
+          "source": "highfi_page_map.md §7.1 to §7.3 (960); interaction_design.md §7.3. The chat column fills the 648px content width.",
+          "frontend": "[TBD-FE]"
+        }
+      }
+    }
+  },
+  "component": {
+    "C-01-sidebar": {
+      "width": {
+        "value": "272px",
+        "source": "design_system.md §3.4 (--sidebar-w 272px); highfi_page_map.md §7.1 (272px at all four widths); C-01",
+        "frontend": "[TBD-FE]"
+      },
+      "background": {
+        "value": "{semantic.color.background.sidebar}",
+        "source": "design_system.md §5 Sidebar; C-01",
+        "frontend": "[TBD-FE]"
+      },
+      "text": {
+        "value": "{semantic.color.text.sidebar}",
+        "source": "design_system.md §5 Sidebar; C-01",
+        "frontend": "[TBD-FE]"
+      },
+      "mutedText": {
+        "value": "{semantic.color.text.sidebarMuted}",
+        "source": "design_system.md §5 Sidebar; C-01",
+        "frontend": "[TBD-FE]"
+      },
+      "hoverBackground": {
+        "value": "{semantic.color.background.surfaceRaised}",
+        "source": "prototype/styles.css .nav-link:hover (--sidebar-hover = --paper-0)",
+        "frontend": "[TBD-FE]"
+      },
+      "activeBackground": {
+        "value": "{semantic.color.background.accentSoft}",
+        "source": "design_system.md §5 Sidebar (--sidebar-active; soft blue fill)",
+        "frontend": "[TBD-FE]"
+      },
+      "activeText": {
+        "value": "{semantic.color.text.primary}",
+        "source": "design_system.md §5 Sidebar (ink text on the light rail, not white)",
+        "frontend": "[TBD-FE]"
+      },
+      "activeRuleColor": {
+        "value": "{semantic.color.border.focus}",
+        "source": "design_system.md §5 Sidebar (2px blue left rule); C-01",
+        "frontend": "[TBD-FE]"
+      },
+      "activeRuleWidth": {
+        "value": "2px",
+        "source": "design_system.md §5 Sidebar",
+        "frontend": "[TBD-FE]"
+      },
+      "itemHeight": {
+        "value": "36px",
+        "source": "design_system.md §3.4 (--control-h 36px) applied to navigation items",
+        "frontend": "[TBD-FE]"
+      },
+      "itemRadius": {
+        "value": "{semantic.radius.inset}",
+        "source": "prototype/styles.css .nav-link (--radius-md 8px)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-02-topbar": {
+      "height": {
+        "value": "56px",
+        "source": "design_system.md §3.4 (--topbar-h 56px); highfi_page_map.md §7.1; C-02",
+        "frontend": "[TBD-FE]"
+      },
+      "background": {
+        "value": "{semantic.color.background.canvas}",
+        "source": "prototype/styles.css .topbar (background: --canvas)",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.default}",
+        "source": "prototype/styles.css .topbar (border-bottom: --border)",
+        "frontend": "[TBD-FE]"
+      },
+      "gap": {
+        "value": "{semantic.spacing.space4}",
+        "source": "prototype/styles.css .topbar (gap: --space-4)",
+        "frontend": "[TBD-FE]"
+      },
+      "breadcrumbFamily": {
+        "value": "{semantic.typography.family.mono}",
+        "source": "design_system.md §5 Topbar (breadcrumb is mono)",
+        "frontend": "[TBD-FE]"
+      },
+      "breadcrumbSize": {
+        "value": "{semantic.typography.size.micro}",
+        "source": "design_system.md §5 Topbar (11.5px); §3.2 --text-xs",
+        "frontend": "[TBD-FE]"
+      },
+      "breadcrumbColor": {
+        "value": "{semantic.color.text.muted}",
+        "source": "prototype/styles.css .breadcrumb (--text-muted)",
+        "frontend": "[TBD-FE]"
+      },
+      "breadcrumbCurrentColor": {
+        "value": "{semantic.color.text.accent}",
+        "source": "prototype/styles.css .breadcrumb .current (--accent-text)",
+        "frontend": "[TBD-FE]"
+      },
+      "breadcrumbSeparatorColor": {
+        "value": "{semantic.color.text.faint}",
+        "source": "prototype/styles.css .breadcrumb .sep (--text-faint; decorative only)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-03-page-header": {
+      "titleFamily": {
+        "value": "{semantic.typography.family.display}",
+        "source": "highfi_page_map.md §8 C-03; design_system.md §3.2 display serif rule",
+        "frontend": "[TBD-FE]"
+      },
+      "titleSize": {
+        "value": "{semantic.typography.size.pageTitle}",
+        "source": "highfi_page_map.md §8 C-03; design_system.md §3.2 (--text-4xl 34px)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleWeight": {
+        "value": "{semantic.typography.weight.medium}",
+        "source": "design_system.md §3.2 (500 for page titles)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleLineHeight": {
+        "value": "{semantic.typography.lineHeight.tight}",
+        "source": "design_system.md §3.2 (--leading-tight 1.15)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleColor": {
+        "value": "{semantic.color.text.primary}",
+        "source": "design_system.md §3.1 (--text-primary)",
+        "frontend": "[TBD-FE]"
+      },
+      "eyebrowFamily": {
+        "value": "{semantic.typography.family.mono}",
+        "source": "design_system.md §3.2 (uppercase and letterspacing reserved for eyebrows); C-03",
+        "frontend": "[TBD-FE]"
+      },
+      "eyebrowSize": {
+        "value": "{semantic.typography.size.micro}",
+        "source": "design_system.md §3.2 (--text-2xs 11px)",
+        "frontend": "[TBD-FE]"
+      },
+      "eyebrowColor": {
+        "value": "{semantic.color.text.muted}",
+        "source": "design_system.md §3.1 (--text-muted)",
+        "frontend": "[TBD-FE]"
+      },
+      "descriptionSize": {
+        "value": "{semantic.typography.size.body}",
+        "source": "design_system.md §3.2 (--text-base 13.5px)",
+        "frontend": "[TBD-FE]"
+      },
+      "descriptionColor": {
+        "value": "{semantic.color.text.secondary}",
+        "source": "design_system.md §3.1 (--text-secondary)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-05-read-only-notice": {
+      "background": {
+        "value": "{semantic.color.background.surfaceSoft}",
+        "source": "prototype/styles.css .notice (--surface-soft); highfi_page_map.md §8 C-05",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.default}",
+        "source": "prototype/styles.css .notice (--border)",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.inset}",
+        "source": "prototype/styles.css .notice (--radius-md 8px)",
+        "frontend": "[TBD-FE]"
+      },
+      "text": {
+        "value": "{semantic.color.text.secondary}",
+        "source": "prototype/styles.css .notice (--text-secondary)",
+        "frontend": "[TBD-FE]"
+      },
+      "strongText": {
+        "value": "{semantic.color.text.primary}",
+        "source": "prototype/styles.css .notice strong (--text-primary)",
+        "frontend": "[TBD-FE]"
+      },
+      "textSize": {
+        "value": "{semantic.typography.size.bodySmall}",
+        "source": "prototype/styles.css .notice (--text-md 12.5px)",
+        "frontend": "[TBD-FE]"
+      },
+      "strongWeight": {
+        "value": "{semantic.typography.weight.semibold}",
+        "source": "prototype/styles.css .notice strong (font-weight: 600)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-06-registry-card": {
+      "background": {
+        "value": "{semantic.color.background.surface}",
+        "source": "design_system.md §5 Registry cards; C-06",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.default}",
+        "source": "design_system.md §5 Registry cards (1px border); C-06",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.card}",
+        "source": "design_system.md §5 Registry cards (10px radius); C-06",
+        "frontend": "[TBD-FE]"
+      },
+      "padding": {
+        "value": "{semantic.spacing.space4}",
+        "source": "design_system.md §3.4 (--card-pad 16px); §5 Registry cards",
+        "frontend": "[TBD-FE]"
+      },
+      "gridGap": {
+        "value": "{semantic.spacing.space4}",
+        "source": "interaction_design.md §7.1 (card grid 16px gap)",
+        "frontend": "[TBD-FE]"
+      },
+      "shadow": {
+        "value": "{semantic.shadow.resting}",
+        "source": "design_system.md §3.3 (flat cards use xs); §5 Registry cards",
+        "frontend": "[TBD-FE]"
+      },
+      "hoverShadow": {
+        "value": "{semantic.shadow.raised}",
+        "source": "prototype/styles.css .registry-card:hover (--shadow-sm)",
+        "frontend": "[TBD-FE]"
+      },
+      "hoverLift": {
+        "value": "2px",
+        "source": "design_system.md §5 Registry cards (2px hover lift)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleFamily": {
+        "value": "{semantic.typography.family.display}",
+        "source": "design_system.md §3.2 (serif reserved for card titles); C-06",
+        "frontend": "[TBD-FE]"
+      },
+      "titleSize": {
+        "value": "{semantic.typography.size.cardTitle}",
+        "source": "design_system.md §3.2 (--text-card 20px)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleWeight": {
+        "value": "{semantic.typography.weight.medium}",
+        "source": "design_system.md §3.2 (500 for card titles)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleLineHeight": {
+        "value": "{semantic.typography.lineHeight.snug}",
+        "source": "design_system.md §3.2 (--leading-snug 1.35)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleColor": {
+        "value": "{semantic.color.text.primary}",
+        "source": "design_system.md §3.1 (--text-primary)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-07-status-pill": {
+      "height": {
+        "value": "23px",
+        "source": "design_system.md §5 Buttons and chips (chips and status pills 23px tall); C-07",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.pill}",
+        "source": "design_system.md §3.3 (999px pill radius); C-07",
+        "frontend": "[TBD-FE]"
+      },
+      "labelFamily": {
+        "value": "{semantic.typography.family.ui}",
+        "source": "design_system.md §3.2 (UI sans for controls and metadata)",
+        "frontend": "[TBD-FE]"
+      },
+      "labelSize": {
+        "value": "{semantic.typography.size.meta}",
+        "source": "design_system.md §5 (11.5px semibold); §3.2 --text-xs",
+        "frontend": "[TBD-FE]"
+      },
+      "labelWeight": {
+        "value": "{semantic.typography.weight.semibold}",
+        "source": "design_system.md §5 (11.5px semibold)",
+        "frontend": "[TBD-FE]"
+      },
+      "variants": {
+        "ok": {
+          "value": {
+            "text": "{semantic.color.status.ok.text}",
+            "background": "{semantic.color.status.ok.background}",
+            "border": "{semantic.color.status.ok.border}"
+          },
+          "source": "design_system.md §3.1 status table (ok); highfi_page_map.md §8 C-07; §6 6.79:1",
+          "frontend": "[TBD-FE]"
+        },
+        "warn": {
+          "value": {
+            "text": "{semantic.color.status.warn.text}",
+            "background": "{semantic.color.status.warn.background}",
+            "border": "{semantic.color.status.warn.border}"
+          },
+          "source": "design_system.md §3.1 status table (warn); highfi_page_map.md §8 C-07; §6 6.27:1",
+          "frontend": "[TBD-FE]"
+        },
+        "error": {
+          "value": {
+            "text": "{semantic.color.status.error.text}",
+            "background": "{semantic.color.status.error.background}",
+            "border": "{semantic.color.status.error.border}"
+          },
+          "source": "design_system.md §3.1 status table (error); highfi_page_map.md §8 C-07; §6 6.48:1",
+          "frontend": "[TBD-FE]"
+        },
+        "info": {
+          "value": {
+            "text": "{semantic.color.status.info.text}",
+            "background": "{semantic.color.status.info.background}",
+            "border": "{semantic.color.status.info.border}"
+          },
+          "source": "design_system.md §3.1 status table (info); highfi_page_map.md §8 C-07; §6 7.59:1",
+          "frontend": "[TBD-FE]"
+        },
+        "neutral": {
+          "value": {
+            "text": "{semantic.color.status.neutral.text}",
+            "background": "{semantic.color.status.neutral.background}",
+            "border": "{semantic.color.status.neutral.border}"
+          },
+          "source": "design_system.md §3.1 status table (neutral); highfi_page_map.md §8 C-07; §6 does not record a neutral pair",
+          "frontend": "[TBD-FE]"
+        }
+      }
+    },
+    "C-08-button": {
+      "height": {
+        "value": "36px",
+        "source": "design_system.md §5 Buttons and chips (default 36px); C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "compactHeight": {
+        "value": "31px",
+        "source": "design_system.md §5 Buttons and chips (compact 31px); §3.4 --control-h-sm",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.control}",
+        "source": "design_system.md §5 Buttons and chips (radius 6px); C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "labelFamily": {
+        "value": "{semantic.typography.family.ui}",
+        "source": "design_system.md §3.2 (UI sans for controls)",
+        "frontend": "[TBD-FE]"
+      },
+      "labelSize": {
+        "value": "{semantic.typography.size.small}",
+        "source": "design_system.md §3.2 (--text-sm 12px; buttons)",
+        "frontend": "[TBD-FE]"
+      },
+      "labelWeight": {
+        "value": "{semantic.typography.weight.semibold}",
+        "source": "prototype/styles.css .btn (font-weight: 600)",
+        "frontend": "[TBD-FE]"
+      },
+      "variants": {
+        "primary": {
+          "value": {
+            "background": "{semantic.color.background.accent}",
+            "hoverBackground": "{semantic.color.background.accentHover}",
+            "text": "{semantic.color.text.onAccent}"
+          },
+          "source": "design_system.md §5 Buttons and chips (primary blue fill, white text, hover deepens); C-08",
+          "frontend": "[TBD-FE]"
+        },
+        "secondary": {
+          "value": {
+            "background": "{semantic.color.background.surface}",
+            "border": "{semantic.color.border.control}",
+            "text": "{semantic.color.text.primary}",
+            "hoverBorder": "{semantic.color.border.controlHover}",
+            "hoverBackground": "{semantic.color.background.surfaceHover}"
+          },
+          "source": "design_system.md §5 Buttons and chips (secondary surface plus control border); prototype/styles.css .btn--secondary and :hover",
+          "frontend": "[TBD-FE]"
+        },
+        "ghost": {
+          "value": {
+            "background": "transparent",
+            "text": "{semantic.color.text.secondary}",
+            "hoverBackground": "{semantic.color.background.surfaceHover}",
+            "hoverText": "{semantic.color.text.primary}"
+          },
+          "source": "design_system.md §5 Buttons and chips (ghost transparent); prototype/styles.css .btn--ghost and :hover",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "focusWidth": {
+        "value": "2px",
+        "source": "design_system.md §3.3 and §5 (2px focus ring); C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "focusOffset": {
+        "value": "2px",
+        "source": "design_system.md §3.3 (2px focus offset)",
+        "frontend": "[TBD-FE]"
+      },
+      "focusColor": {
+        "value": "{semantic.color.border.focus}",
+        "source": "design_system.md §3.1 (--focus); §3.3 (2px solid --focus)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-09-input": {
+      "height": {
+        "value": "36px",
+        "source": "design_system.md §5 Forms and state panels (inputs 36px); C-09",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.control}",
+        "source": "prototype/styles.css .input (--radius-sm 6px); design_system.md §3.3 control radius",
+        "frontend": "[TBD-FE]"
+      },
+      "variants": {
+        "default": {
+          "value": {
+            "background": "{semantic.color.background.surfaceRaised}",
+            "border": "{semantic.color.border.control}",
+            "text": "{semantic.color.text.primary}"
+          },
+          "source": "prototype/styles.css .input (--surface-raised, --control-border, --text-primary)",
+          "frontend": "[TBD-FE]"
+        },
+        "hover": {
+          "value": {
+            "border": "{semantic.color.border.controlHover}"
+          },
+          "source": "prototype/styles.css .input:hover (--control-border-hover)",
+          "frontend": "[TBD-FE]"
+        },
+        "invalid": {
+          "value": {
+            "border": "{semantic.color.status.error.text}"
+          },
+          "source": "prototype/styles.css .input[aria-invalid=true] (--error-text); C-09",
+          "frontend": "[TBD-FE]"
+        },
+        "readonly": {
+          "value": {
+            "background": "{semantic.color.background.surfaceSoft}",
+            "text": "{semantic.color.text.secondary}"
+          },
+          "source": "prototype/styles.css .input[readonly] (--surface-soft, --text-secondary)",
+          "frontend": "[TBD-FE]"
+        }
+      },
+      "textSize": {
+        "value": "{semantic.typography.size.body}",
+        "source": "prototype/styles.css .input (--text-base 13.5px)",
+        "frontend": "[TBD-FE]"
+      },
+      "textWeight": {
+        "value": "{semantic.typography.weight.regular}",
+        "source": "design_system.md §3.2 (body 400)",
+        "frontend": "[TBD-FE]"
+      },
+      "lineHeight": {
+        "value": "{semantic.typography.lineHeight.normal}",
+        "source": "design_system.md §3.2 (--leading-normal 1.55)",
+        "frontend": "[TBD-FE]"
+      },
+      "labelSize": {
+        "value": "{semantic.typography.size.meta}",
+        "source": "design_system.md §5 Forms and state panels (form labels 11.5px)",
+        "frontend": "[TBD-FE]"
+      },
+      "labelColor": {
+        "value": "{semantic.color.text.primary}",
+        "source": "prototype/styles.css .field-label (--text-primary)",
+        "frontend": "[TBD-FE]"
+      },
+      "fieldGap": {
+        "value": "{semantic.spacing.space4}",
+        "source": "prototype/styles.css .field (margin-bottom: --space-4)",
+        "frontend": "[TBD-FE]"
+      },
+      "requiredTagRadius": {
+        "value": "{semantic.radius.tag}",
+        "source": "prototype/styles.css .req-label (--radius-xs 3px)",
+        "frontend": "[TBD-FE]"
+      },
+      "requiredTagSize": {
+        "value": "{semantic.typography.size.micro}",
+        "source": "prototype/styles.css .req-label (--text-2xs 11px)",
+        "frontend": "[TBD-FE]"
+      },
+      "focusWidth": {
+        "value": "{component.C-08-button.focusWidth}",
+        "source": "design_system.md §3.3 (2px focus ring); shared with C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "focusOffset": {
+        "value": "{component.C-08-button.focusOffset}",
+        "source": "design_system.md §3.3 (2px focus offset); shared with C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "focusColor": {
+        "value": "{semantic.color.border.focus}",
+        "source": "design_system.md §3.1 (--focus)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-10-composer": {
+      "background": {
+        "value": "{semantic.color.background.surfaceRaised}",
+        "source": "design_system.md §5 Composer (raised surface); C-10",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.control}",
+        "source": "prototype/styles.css .composer (--control-border)",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.panel}",
+        "source": "design_system.md §5 Composer (14px radius)",
+        "frontend": "[TBD-FE]"
+      },
+      "shadow": {
+        "value": "{semantic.shadow.resting}",
+        "source": "prototype/styles.css .composer (--shadow-xs)",
+        "frontend": "[TBD-FE]"
+      },
+      "text": {
+        "value": "{semantic.color.text.primary}",
+        "source": "prototype/styles.css .composer textarea (--text-primary)",
+        "frontend": "[TBD-FE]"
+      },
+      "placeholder": {
+        "value": "{semantic.color.text.muted}",
+        "source": "prototype/styles.css .composer textarea::placeholder (--text-muted)",
+        "frontend": "[TBD-FE]"
+      },
+      "textSize": {
+        "value": "{semantic.typography.size.body}",
+        "source": "prototype/styles.css .composer textarea (--text-base 13.5px)",
+        "frontend": "[TBD-FE]"
+      },
+      "lineHeight": {
+        "value": "{semantic.typography.lineHeight.normal}",
+        "source": "design_system.md §3.2 (--leading-normal 1.55)",
+        "frontend": "[TBD-FE]"
+      },
+      "rowGap": {
+        "value": "{semantic.spacing.space3}",
+        "source": "prototype/styles.css .composer-row (gap: 12px; --space-3)",
+        "frontend": "[TBD-FE]"
+      },
+      "focusWidth": {
+        "value": "{component.C-08-button.focusWidth}",
+        "source": "design_system.md §3.3 (2px focus ring); shared with C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "focusOffset": {
+        "value": "{component.C-08-button.focusOffset}",
+        "source": "design_system.md §3.3 (2px focus offset); shared with C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "focusColor": {
+        "value": "{semantic.color.border.focus}",
+        "source": "design_system.md §3.1 (--focus)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-11-run-step-table": {
+      "background": {
+        "value": "{semantic.color.background.surface}",
+        "source": "design_system.md §5 Tables (surface panel); C-11",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.default}",
+        "source": "design_system.md §5 Tables (1px border)",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.card}",
+        "source": "design_system.md §5 Tables (10px radius)",
+        "frontend": "[TBD-FE]"
+      },
+      "shadow": {
+        "value": "{semantic.shadow.resting}",
+        "source": "prototype/styles.css .table-panel (--shadow-xs)",
+        "frontend": "[TBD-FE]"
+      },
+      "headerBackground": {
+        "value": "{semantic.color.background.surfaceSoft}",
+        "source": "design_system.md §5 Tables (soft background); prototype/styles.css .steps-table th",
+        "frontend": "[TBD-FE]"
+      },
+      "headerColor": {
+        "value": "{semantic.color.text.muted}",
+        "source": "design_system.md §5 Tables (muted header)",
+        "frontend": "[TBD-FE]"
+      },
+      "headerFamily": {
+        "value": "{semantic.typography.family.mono}",
+        "source": "design_system.md §5 Tables (uppercase mono header)",
+        "frontend": "[TBD-FE]"
+      },
+      "headerSize": {
+        "value": "{semantic.typography.size.micro}",
+        "source": "design_system.md §5 Tables (11px header)",
+        "frontend": "[TBD-FE]"
+      },
+      "headerWeight": {
+        "value": "{semantic.typography.weight.semibold}",
+        "source": "prototype/styles.css .steps-table th (font-weight: 600)",
+        "frontend": "[TBD-FE]"
+      },
+      "cellPaddingInline": {
+        "value": "{semantic.spacing.space3}",
+        "source": "prototype/styles.css .steps-table th (padding 9px 12px; --space-3)",
+        "frontend": "[TBD-FE]"
+      },
+      "rowSize": {
+        "value": "{semantic.typography.size.bodySmall}",
+        "source": "design_system.md §5 Tables (12.5px rows)",
+        "frontend": "[TBD-FE]"
+      },
+      "rowColor": {
+        "value": "{semantic.color.text.primary}",
+        "source": "prototype/styles.css .steps-table td (--text-primary)",
+        "frontend": "[TBD-FE]"
+      },
+      "rowLineHeight": {
+        "value": "{semantic.typography.lineHeight.normal}",
+        "source": "design_system.md §3.2 (--leading-normal 1.55)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-12-facts-panel": {
+      "width": {
+        "value": "300px",
+        "source": "design_system.md §3.4 (--rail-w 300px); highfi_page_map.md §7.1; C-12",
+        "frontend": "[TBD-FE]"
+      },
+      "widthNarrow": {
+        "value": "280px",
+        "source": "highfi_page_map.md §7.1 (280px at 1280); C-12",
+        "frontend": "[TBD-FE]"
+      },
+      "background": {
+        "value": "{semantic.color.background.surface}",
+        "source": "prototype/styles.css .facts (--surface)",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.default}",
+        "source": "prototype/styles.css .facts (--border)",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.panel}",
+        "source": "prototype/styles.css .facts (--panel-radius 14px)",
+        "frontend": "[TBD-FE]"
+      },
+      "shadow": {
+        "value": "{semantic.shadow.resting}",
+        "source": "prototype/styles.css .facts (--shadow-xs)",
+        "frontend": "[TBD-FE]"
+      },
+      "padding": {
+        "value": "{semantic.spacing.space5}",
+        "source": "prototype/styles.css .facts (padding: --space-5 20px)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleSize": {
+        "value": "{semantic.typography.size.panelTitle}",
+        "source": "design_system.md §3.2 (--text-xl 18px; facts titles)",
+        "frontend": "[TBD-FE]"
+      },
+      "titleColor": {
+        "value": "{semantic.color.text.primary}",
+        "source": "design_system.md §3.1 (--text-primary)",
+        "frontend": "[TBD-FE]"
+      },
+      "labelSize": {
+        "value": "{semantic.typography.size.micro}",
+        "source": "prototype/styles.css .fact-label (--text-2xs 11px); design_system.md §3.2 micro-label role",
+        "frontend": "[TBD-FE]"
+      },
+      "labelColor": {
+        "value": "{semantic.color.text.muted}",
+        "source": "design_system.md §3.1 (--text-muted)",
+        "frontend": "[TBD-FE]"
+      },
+      "valueSize": {
+        "value": "{semantic.typography.size.body}",
+        "source": "prototype/styles.css .fact-value (--text-base 13.5px)",
+        "frontend": "[TBD-FE]"
+      },
+      "valueColor": {
+        "value": "{semantic.color.text.primary}",
+        "source": "design_system.md §3.1 (--text-primary)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-13-state-panel": {
+      "width": {
+        "value": "560px",
+        "source": "design_system.md §5 Forms and state panels (560px); highfi_page_map.md §8 C-13",
+        "frontend": "[TBD-FE]"
+      },
+      "background": {
+        "value": "{semantic.color.background.surface}",
+        "source": "prototype/styles.css .state-panel (--surface)",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.default}",
+        "source": "prototype/styles.css .state-panel (--border)",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.panel}",
+        "source": "prototype/styles.css .state-panel (--panel-radius 14px)",
+        "frontend": "[TBD-FE]"
+      },
+      "shadow": {
+        "value": "{semantic.shadow.resting}",
+        "source": "prototype/styles.css .state-panel (--shadow-xs)",
+        "frontend": "[TBD-FE]"
+      },
+      "paddingInline": {
+        "value": "{semantic.spacing.space7}",
+        "source": "prototype/styles.css .state-panel (padding 30px 32px; --space-7 inline)",
+        "frontend": "[TBD-FE]"
+      },
+      "headlineFamily": {
+        "value": "{semantic.typography.family.display}",
+        "source": "design_system.md §5 Forms and state panels (serif headline); C-13",
+        "frontend": "[TBD-FE]"
+      },
+      "headlineSize": {
+        "value": "{semantic.typography.size.section}",
+        "source": "design_system.md §3.2 (--text-2xl 22px; large panel titles)",
+        "frontend": "[TBD-FE]"
+      },
+      "headlineWeight": {
+        "value": "{semantic.typography.weight.medium}",
+        "source": "design_system.md §3.2 (500)",
+        "frontend": "[TBD-FE]"
+      },
+      "headlineLineHeight": {
+        "value": "{semantic.typography.lineHeight.snug}",
+        "source": "design_system.md §3.2 (--leading-snug 1.35)",
+        "frontend": "[TBD-FE]"
+      },
+      "headlineColor": {
+        "value": "{semantic.color.text.primary}",
+        "source": "design_system.md §3.1 (--text-primary)",
+        "frontend": "[TBD-FE]"
+      },
+      "paragraphSize": {
+        "value": "{semantic.typography.size.lead}",
+        "source": "design_system.md §3.2 (--text-lg 15px; empty-state support copy)",
+        "frontend": "[TBD-FE]"
+      },
+      "paragraphColor": {
+        "value": "{semantic.color.text.secondary}",
+        "source": "design_system.md §3.1 (--text-secondary)",
+        "frontend": "[TBD-FE]"
+      },
+      "paragraphLineHeight": {
+        "value": "{semantic.typography.lineHeight.relaxed}",
+        "source": "design_system.md §3.2 (--leading-relaxed 1.68)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-14-dialog": {
+      "width": {
+        "value": "460px",
+        "source": "design_system.md §5 Overlays (460px discard confirmation); C-14",
+        "frontend": "[TBD-FE]"
+      },
+      "background": {
+        "value": "{semantic.color.background.surface}",
+        "source": "prototype/styles.css .dialog (--surface)",
+        "frontend": "[TBD-FE]"
+      },
+      "border": {
+        "value": "{semantic.color.border.strong}",
+        "source": "prototype/styles.css .dialog (--border-strong)",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.panel}",
+        "source": "prototype/styles.css .dialog (--panel-radius 14px)",
+        "frontend": "[TBD-FE]"
+      },
+      "shadow": {
+        "value": "{semantic.shadow.overlay}",
+        "source": "design_system.md §3.3 (overlays use lg); prototype/styles.css .dialog (--shadow-lg)",
+        "frontend": "[TBD-FE]"
+      },
+      "scrim": {
+        "value": "{semantic.color.background.scrim}",
+        "source": "design_system.md §5 Overlays (scrim); §3.1 --scrim",
+        "frontend": "[TBD-FE]"
+      },
+      "padding": {
+        "value": "{semantic.spacing.space6}",
+        "source": "prototype/styles.css .dialog (padding: 24px; --space-6)",
+        "frontend": "[TBD-FE]"
+      },
+      "focusWidth": {
+        "value": "{component.C-08-button.focusWidth}",
+        "source": "design_system.md §3.3 (2px focus ring); shared with C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "focusOffset": {
+        "value": "{component.C-08-button.focusOffset}",
+        "source": "design_system.md §3.3 (2px focus offset); shared with C-08",
+        "frontend": "[TBD-FE]"
+      },
+      "focusColor": {
+        "value": "{semantic.color.border.focus}",
+        "source": "design_system.md §3.1 (--focus)",
+        "frontend": "[TBD-FE]"
+      }
+    },
+    "C-16-skeleton": {
+      "background": {
+        "value": "{semantic.color.background.surfaceSoft}",
+        "source": "prototype/styles.css .skeleton (--surface-soft); highfi_page_map.md §8 C-16",
+        "frontend": "[TBD-FE]"
+      },
+      "shimmer": {
+        "value": "{semantic.color.background.surfaceHover}",
+        "source": "prototype/styles.css .skeleton::after (--surface-hover)",
+        "frontend": "[TBD-FE]"
+      },
+      "radius": {
+        "value": "{semantic.radius.control}",
+        "source": "prototype/styles.css .skeleton (--radius-sm 6px)",
+        "frontend": "[TBD-FE]"
+      }
+    }
+  }
+}
