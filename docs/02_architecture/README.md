@@ -9,6 +9,7 @@ Authoritative assets:
 - `docs/02_architecture/02_api_workflow_and_review.md` — interface boundary, error classes, permission points, sync/async, nine-state mapping.
 - `docs/02_architecture/03_security_reliability_and_operations.md` — trust boundaries, security/data boundaries, reliability, observability, operations.
 - `docs/02_architecture/04_architecture_review.md` — independent architecture review.
+- `docs/02_architecture/05_enterprise_internal_baseline.md` — authoritative supplement for the enterprise-internal baseline (CHG-012): Admin skill/task authoring, audit, STATE-003/005 effective, PostgreSQL, internal gateway.
 - `docs/02_architecture/adr/README.md` and `adr_001_*` … `adr_005_*` — architecture decision records.
 Allowed status: Draft / Reviewed / Frozen. `Frozen` requires explicit user approval recorded in the Frozen assets section below.
 Update entry point: Docs Agent through a change record in `docs/13_changes/`; open decisions only via `docs/00_setup/open_items.md`.
@@ -21,8 +22,8 @@ Owns architecture: system structure, component responsibilities, technology deci
 
 - MUST NOT select a frontend or backend stack before TBD-INFRA-001 and TBD-INFRA-002 are resolved.
 - MUST NOT contain implementation code, API request/response schemas, database schemas, migrations, deployment commands, or UI specifications.
-- MUST NOT resolve a `TBD-*` or `CONFLICT-*` entry, or promote `FLOW-004`–`006` / `STATE-003`–`006` to effective behavior.
-- MUST NOT state a retention period, encryption choice, PII classification, capacity target, availability target, or compliance conclusion while `TBD-BIZ-003`, `TBD-BIZ-008`, and `TBD-BIZ-014` are open.
+- MUST NOT resolve a `TBD-*` or `CONFLICT-*` entry, or promote `FLOW-004`–`006` / `STATE-003`–`006` to effective behavior, except where a recorded product-owner decision and change record (`CHG-012`) explicitly does so in `05_enterprise_internal_baseline.md`. The supplement records the architecture impact; it does not create the decision.
+- MUST NOT state a retention period, encryption choice, PII classification, capacity target, availability target, or compliance conclusion while `TBD-BIZ-003`, `TBD-BIZ-008`, and `TBD-BIZ-014` are open, except by reference to `business_model.md` Appendix B and `CHG-012`.
 
 ## Document map
 
@@ -34,6 +35,7 @@ Owns architecture: system structure, component responsibilities, technology deci
 | `02_api_workflow_and_review.md` | API boundary, workflow and state mapping | Draft |
 | `03_security_reliability_and_operations.md` | Security, reliability and operations | Draft |
 | `04_architecture_review.md` | Independent review of the set | Draft |
+| `05_enterprise_internal_baseline.md` | Enterprise-internal architecture supplement (CHG-012) | Draft |
 | `adr/` | Decision records for high-cost-to-reverse choices | Draft |
 
 ## Naming note

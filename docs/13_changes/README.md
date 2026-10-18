@@ -14,6 +14,9 @@ Authoritative assets:
 - `docs/13_changes/CHG-007-business-model-v0.2.md` — business model v0.2: acceptance-contract restructure, 3 objectives, 5 MVP CAPs, 31 exclusions, permission matrix, state diagrams, BR decision expressions, NFR measurement points, and conflict closing conditions.
 - `docs/13_changes/CHG-008-prototype-interaction-build.md` — prototype rebuild: effective PG-001 to PG-009, direct-URL-only No Permission for PG-010 to PG-012, FLOW-001 to FLOW-003, nine-state coverage, and §5.3 discard confirmation.
 - `docs/13_changes/CHG-009-prototype-porcelain-blue.md` — selected Porcelain Blue palette: near-white rail, light blue selection, blue action, light-rail active-state correction, and refreshed captures.
+- `docs/13_changes/CHG-010-backend-architecture.md` — Stage 3 backend architecture: modules, domain model, STATE-001/002, API boundary, security/reliability/operations, review, and ADRs.
+- `docs/13_changes/CHG-011-logical-data-model.md` — Stage 5 logical data model: 11 logical tables, 18/18 entity mapping, STATE-001/002 only, classification/audit/migration gates, and the recorded 04_data start-gate amendment (superseded in part by CHG-012).
+- `docs/13_changes/CHG-012-enterprise-internal-baseline.md` — enterprise-internal baseline: Internal/Sensitive classification, 90/180/365 retention, Admin skill/task publication, audit, STATE-003/005 effective, PostgreSQL, internal gateway, and the 13-table data model.
 Allowed status: Draft / Reviewed / Frozen. A merged record MUST be `Reviewed` before the next change lands; `CHG-000` remains `Draft` until the user's Stage 0 sign-off. `Frozen` is reserved for a record locked at a stage gate. Records MUST NOT be deleted; corrections MUST be appended.
 Update entry point: Tech Lead opens every change record; other owners supply evidence through the Task Brief handoff and do not edit this folder.
 

@@ -17,9 +17,9 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 
 | Prefix | Open | Resolved |
 |---|---|---|
-| `TBD-BIZ` | 13 | 2 |
-| `TBD-INFRA` | 10 | 1 |
-| `CONFLICT` | 2 | 0 |
+| `TBD-BIZ` | 9 | 6 |
+| `TBD-INFRA` | 8 | 3 |
+| `CONFLICT` | 1 | 1 |
 
 ---
 
@@ -48,24 +48,24 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-BIZ-003 — Data sensitivity and PII boundaries
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Stage 2 — Product Definition, before any data handling or dataset sharing
 - **Impact:** Determines whether datasets may be shared with AI tools, what retention/access controls apply, and which security work is mandatory. Blocking for RULE-009 and any `docs/04_data/` or `docs/08_security/` content.
 - **Candidate options:** (a) MVP holds no user data; (b) MVP holds personal data that is not sensitive; (c) MVP holds regulated or otherwise sensitive data.
 - **Decision criteria:** Regulatory and legal exposure; product need; operating cost of the required controls.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected the enterprise-internal baseline on 2026-10-18: Internal/Sensitive classification, no Highly Sensitive data, 90/180/365-day retention for conversations/runs/audit, TLS and at-rest encryption, and log redaction. Recorded in `CHG-012` and `docs/01_product/business_model.md` Appendix B.
 
 ## TBD-BIZ-004 — Team size, roles, and skill/MCP publication policy
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Stage 2 close-out (PRD review)
 - **Impact:** Determines the RBAC model, whether non-admins can author or publish skills, and how much review/approval workflow is required. PRD §6 and §13 depend on it.
 - **Candidate options:** (a) admin-only publishing; (b) anyone may draft, admin approves publication; (c) anyone may publish with audit only.
 - **Decision criteria:** risk tolerance; adoption speed; operating cost of review.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected admin-only skill and task publication on 2026-10-18. MCP registration/allowlisting and account administration remain out of the MVP; role assignments are provisioned out of band. Recorded in `CHG-012` and `docs/01_product/business_model.md` Appendix B.
 
 ## TBD-BIZ-005 — First MCP integrations and first three MVP tasks
 
@@ -114,13 +114,13 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-BIZ-009 — Audit obligation and evidence scope
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Gate 1 — before Stage 3 Architecture
 - **Impact:** Determines whether audit is an MVP capability, which events must be recorded, who may read or export them, and how long they are retained. Affects CAP-009, CAND-004, NFR-010, ROLE-004, and the retention decision in TBD-BIZ-003. The PRD proposes audit but the confirmed four capabilities do not include it.
 - **Candidate options:** (a) registry changes, tool calls, and task runs only; (b) add authentication, account, and secret-rotation events; (c) no audit in the MVP; (d) read-only audit export without an in-product viewer.
 - **Decision criteria:** accountability need; data minimization; storage and operating cost.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected audit in the MVP on 2026-10-18 for sign-in, skill/task publication, run, and audit-read events. Audit is append-only, Admin read-only, with no export and 365-day retention. Recorded in `CHG-012` and `docs/01_product/business_model.md` Appendix B.
 
 ## TBD-BIZ-010 — Cost visibility and budget ceiling
 
@@ -136,13 +136,13 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-BIZ-011 — MVP boundary for supporting capabilities
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Gate 1 — before Stage 3 Architecture
 - **Impact:** PRD §8 includes search, run/audit history, model-provider configuration, and local account management; the prototype adds file context, chat history actions, usage, and exports. The confirmed MVP selection names only chat, registries, and manual tasks. The boundary determines which capabilities enter CAP-006 onward and which objectives are measured. Affects CAP-008 through CAP-011, CAP-017 through CAP-021, ROLE, and all NFR scope.
 - **Candidate options:** (a) strictly the four confirmed capabilities plus local accounts and self-hosted deployment; (b) add search with citations; (c) add run/audit history and model-provider configuration; (d) add file context and chat history actions; (e) a stated combination of (b)–(d).
 - **Decision criteria:** usefulness of the first real workflow; integration effort; data risk; operating cost.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected the strict MVP plus skill/task authoring and audit on 2026-10-18. Search, file context, cost visibility, chat history actions, MCP registration/allowlisting, and account administration remain out. Recorded in `CHG-012` and `docs/01_product/business_model.md` Appendix B.
 
 ## TBD-BIZ-012 — Gate 1 acceptance baseline of PRD v0.1
 
@@ -213,13 +213,13 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-INFRA-003 — Data store and persistence
 
 - **Category:** Engineering decision
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User; Tech Lead prepares options after TBD-BIZ-003 is confirmed
 - **Must confirm by:** Stage 5 — Data Design
 - **Impact:** Data models, migrations, backup, and local development cannot be designed. No data handling may begin.
 - **Candidate options:** (a) PostgreSQL; (b) SQLite; (c) no persistence in the MVP.
 - **Decision criteria:** requirement fit; operational cost; migration and exit path.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected PostgreSQL on 2026-10-18 for the enterprise-internal baseline. The physical schema, indexes, and migrations remain a separate change under the resolved store. Recorded in `CHG-012` and `docs/01_product/business_model.md` Appendix B.
 
 ## TBD-INFRA-004 — Missing Stage 1 environment baseline
 
@@ -279,13 +279,13 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-INFRA-009 — LLM provider, model gateway, and data residency
 
 - **Category:** Engineering decision
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Stage 3 — Architecture
 - **Impact:** Determines model access, tool-calling reliability, data boundary, and cost. PRD §12 and §17 depend on it; no external model call may be configured before it is resolved.
 - **Candidate options:** (a) internal OpenAI-compatible gateway; (b) Azure OpenAI; (c) a hosted API such as DeepSeek; (d) local vLLM or Ollama.
 - **Decision criteria:** data boundary; tool-calling capability; operating cost.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected an internal OpenAI-compatible gateway on 2026-10-18, with no external egress for the enterprise-internal baseline. Recorded in `CHG-012` and `docs/01_product/business_model.md` Appendix B.
 
 ## TBD-INFRA-010 — SSO/IdP for post-MVP
 
@@ -322,8 +322,9 @@ The register contained no entries before 2026-10-18. The following conflicts wer
 - **Side B:** `docs/01_product/prd.md` §13, permission matrix: "| View all runs and audit | ✓ | — | — | ✓ |"
 - **Blocked:** ROLE-004 (Auditor), CAND-002 (proposed permission matrix), CAND-004 (audit scope) in `docs/01_product/business_model.md`
 - **Arbiter:** User (product owner), with the Tech Lead recording the resolution
-- **Status:** Open
+- **Status:** Resolved — Admin-capability side selected on 2026-10-18.
 - **Closing condition:** Product owner records either (a) the Auditor is a separate role with read-only runs and audit, or (b) the Auditor is an Admin capability and PRD §13 is corrected. The Tech Lead records the chosen side in this entry. Appended by CHG-007; no side was chosen.
+- **Resolution source:** Product owner selected option (b) on 2026-10-18: the Auditor is an Admin capability in v1; Admin has read-only audit access; ROLE-004 remains proposed and denied. Recorded in `CHG-012` and `docs/01_product/business_model.md` Appendix B.
 - **Gate:** Gate 1 — before Stage 3 Architecture
 
 ## CONFLICT-002 — What "Stage 5" denotes and where its deliverable lives

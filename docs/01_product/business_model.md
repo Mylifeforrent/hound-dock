@@ -1,28 +1,30 @@
 # Business Model — hound-dock Internal Agent Workspace
 
 Status: Draft
-Version: 0.2
+Version: 0.3
 As-of: 2026-10-18
-Owner: Docs Agent (dormant; authored by the Tech Lead under CHG-007)
+Owner: Docs Agent (dormant; v0.2 authored by the Tech Lead under CHG-007; v0.3 Appendix B authored by the data architect under CHG-012)
 Decision owner: Product Owner (user)
-Refs: SRC-001, SRC-002, SRC-003, SRC-004, SRC-005, SRC-006; TBD-BIZ-003, TBD-BIZ-004, TBD-BIZ-005, TBD-BIZ-006, TBD-BIZ-007, TBD-BIZ-008, TBD-BIZ-009, TBD-BIZ-010, TBD-BIZ-011, TBD-BIZ-012, TBD-BIZ-013, TBD-BIZ-014, TBD-BIZ-015; TBD-INFRA-001, TBD-INFRA-002, TBD-INFRA-003, TBD-INFRA-004, TBD-INFRA-005, TBD-INFRA-007, TBD-INFRA-009, TBD-INFRA-010, TBD-INFRA-011; CONFLICT-001, CONFLICT-002; CHG-001, CHG-005, CHG-006, CHG-007
+Refs: SRC-001, SRC-002, SRC-003, SRC-004, SRC-005, SRC-006; TBD-BIZ-003, TBD-BIZ-004, TBD-BIZ-005, TBD-BIZ-006, TBD-BIZ-007, TBD-BIZ-008, TBD-BIZ-009, TBD-BIZ-010, TBD-BIZ-011, TBD-BIZ-012, TBD-BIZ-013, TBD-BIZ-014, TBD-BIZ-015; TBD-INFRA-001, TBD-INFRA-002, TBD-INFRA-003, TBD-INFRA-004, TBD-INFRA-005, TBD-INFRA-007, TBD-INFRA-009, TBD-INFRA-010, TBD-INFRA-011; CONFLICT-001, CONFLICT-002; CHG-001, CHG-005, CHG-006, CHG-007, CHG-012
+
+**v0.3 amendment:** Appendix B records the enterprise-internal baseline decisions of 2026-10-18 under `CHG-012`. Where Appendix B conflicts with an earlier section, Appendix B wins.
 
 ## 1. Document metadata
 
 | Field | Value | Tag |
 |---|---|---|
 | Document | `docs/01_product/business_model.md` — business specification for the hound-dock internal agent workspace | `[SRC: SRC-006 §④]` |
-| Version | 0.2 (revises v0.1; v0.1 was an uncommitted working-tree draft, so no v0.1 commit exists to retain) | `[DERIVED: CHG-007 records the revision]` |
-| Status | `Draft`. `Reviewed` is not claimed while CONFLICT-001 and CONFLICT-002 are `Open` and TBD-BIZ-012 is unresolved. | `[TBD-BIZ-012]` |
+| Version | 0.3 (revises v0.2; Appendix B records the enterprise-internal baseline) | `[DERIVED: CHG-012 records the revision]` |
+| Status | `Draft`. `Reviewed` is not claimed while CONFLICT-002 is `Open` and TBD-BIZ-012 is unresolved. | `[TBD-BIZ-012]` |
 | As-of date | 2026-10-18 | `[SRC: CHG-007]` |
 | Owner | Docs Agent (dormant); authored by the Tech Lead under the CHG-007 handoff | `[SRC: CHG-007#Task Brief]` |
 | Decision owner | Product Owner (user) for every `TBD-BIZ`, `CONFLICT`, permission grant, MVP trade-off, and numeric target | `[SRC: SRC-006 §⑧]` |
 | Originating stage | Stage 5 — Business Model, per the Stage 5 task contract. The repository stage map calls Stage 5 "Data Design" under `docs/04_data/`; the disagreement is CONFLICT-002 and is not resolved here. | `[SRC: open_items.md#CONFLICT-002]` |
 | Review state | Independent Verifier review required by RULE-005; record path `docs/12_reviews/CHG-007-review.md` | `[SRC: project_rules.md#RULE-005]` |
 | Supersedes | v0.1 (Draft, uncommitted working-tree draft). The v0.1 content is summarized in CHG-006 and the CHG-006 review; this revision replaces the working-tree file. | `[SRC: CHG-007#Plan]` |
-| Change summary | Objectives reduced from five to three; MVP fixed at five CAPs with acceptance criteria; 31 out-of-scope CAPs and 18 required-topic adjudications; six flows redrawn as `flowchart LR` with `[HUMAN]`/`[SYSTEM]` labels and step time limits; one ER diagram plus a unique-key/classification/PII entity table; a roles-by-entity-operation matrix with no blank cells; six `stateDiagram-v2` models with guard conditions and failure destinations; eight business rules with decision expressions and violation consequences; twelve NFRs with measurement points and time windows. | `[SRC: SRC-006 §②]` |
-| Open items | `TBD-BIZ`: 13 Open / 2 Resolved. `TBD-INFRA`: 10 Open / 1 Resolved. `CONFLICT`: 2 Open. `BR`: 8 Active / 0 Blocked. `NFR`: 12 (9 with a proposed numeric target, 3 with a TBD target plus a suggested baseline). `CAP`: 5 in MVP, 31 out. | `[SRC: open_items.md#Summary]` |
-| Downstream consumers | `docs/02_architecture/` (CAP, FLOW, ENT, NFR scope); `docs/04_data/` (ENT, STATE, retention TBD); `docs/05_api/` (roles, permissions, BR outcomes); `docs/03_design/` (FLOW, matrix, state surfaces); `docs/07_testing/` (BR expressions, NFR methods); `docs/08_security/` (BR-001, BR-007, NFR-006/007/008); `docs/09_deployment/` (BR-007, NFR-012); `docs/10_operations/` (NFR-010); `docs/11_quality/` (OBJ, NFR, traceability) | `[DERIVED: section ownership in SRC-006 §④]` |
+| Change summary | Objectives reduced from five to three; MVP fixed at five CAPs with acceptance criteria; 31 out-of-scope CAPs and 18 required-topic adjudications; six flows redrawn as `flowchart LR` with `[HUMAN]`/`[SYSTEM]` labels and step time limits; one ER diagram plus a unique-key/classification/PII entity table; a roles-by-entity-operation matrix with no blank cells; six `stateDiagram-v2` models with guard conditions and failure destinations; eight business rules with decision expressions and violation consequences; twelve NFRs with measurement points and time windows. v0.3 adds Appendix B: Internal/Sensitive classification, 90/180/365-day retention, admin-only skill/task publication, audit, STATE-003/STATE-005 effective, PostgreSQL, and an internal model gateway. | `[SRC: SRC-006 §②]` `[DERIVED: CHG-012]` |
+| Open items | `TBD-BIZ`: 9 Open / 6 Resolved. `TBD-INFRA`: 8 Open / 3 Resolved. `CONFLICT`: 1 Open / 1 Resolved. `BR`: 8 Active / 0 Blocked. `NFR`: 12 (9 with a proposed numeric target, 3 with a TBD target plus a suggested baseline). `CAP`: 6 in MVP, 30 out. | `[SRC: open_items.md#Summary]` |
+| Downstream consumers | `docs/02_architecture/` (CAP, FLOW, ENT, NFR scope); `docs/04_data/` (ENT, STATE, retention per Appendix B); `docs/05_api/` (roles, permissions, BR outcomes); `docs/03_design/` (FLOW, matrix, state surfaces); `docs/07_testing/` (BR expressions, NFR methods); `docs/08_security/` (BR-001, BR-007, NFR-006/007/008); `docs/09_deployment/` (BR-007, NFR-012); `docs/10_operations/` (NFR-010); `docs/11_quality/` (OBJ, NFR, traceability) | `[DERIVED: section ownership in SRC-006 §④]` |
 
 ### 1.1 Source register (SRC)
 
@@ -61,10 +63,11 @@ Refs: SRC-001, SRC-002, SRC-003, SRC-004, SRC-005, SRC-006; TBD-BIZ-003, TBD-BIZ
 
 ### 1.3 Reading order
 
-1. §2 and §3 for the three objectives, the five MVP capabilities, and the 31 exclusions. `[DERIVED: SRC-006 §②]`
+1. §2 and §3 for the three objectives, the v0.2 MVP capability set, and the 31 v0.2 exclusions; v0.3 Appendix B updates the set to six CAPs and 30 exclusions. `[DERIVED: SRC-006 §②]`
 2. §4 and §8 for the buildable flows and the eight decidable rules. `[DERIVED: SRC-006 §②]`
 3. §5, §6, and §7 for the entity, permission, and state contracts that QA needs. `[DERIVED: SRC-006 §②]`
 4. §9 for measurable quality, §11 and §12 for the decisions that block acceptance, and Appendix A for the unconfirmed proposal pool. `[DERIVED: SRC-006 §⑧]`
+5. Appendix B first for the v0.3 enterprise-internal baseline, its classification/retention/role/audit decisions, and the superseded-statement map. `[DERIVED: CHG-012]`
 
 ## 2. Business objectives
 
@@ -1044,6 +1047,8 @@ NFRs are quality targets, not business rules. NFR-001 to NFR-003 and NFR-006 to 
 
 ### 10.5 Mechanical checks
 
+**v0.3 note:** Appendix B updates the MVP to six CAPs and the out-of-scope register to 30; the v0.2 counts in this table are historical and are superseded by Appendix B.6/B.9. `[DERIVED: CHG-012]`
+
 | Check | Result | Evidence | Tag |
 |---|---|---|---|
 | Every OBJ has at least one BR | Pass | OBJ-001 → BR-001/002; OBJ-002 → BR-003/004; OBJ-003 → BR-005/006/008 | `[DERIVED: §10.1]` |
@@ -1089,15 +1094,15 @@ The canonical entries are in `docs/00_setup/open_items.md` under RULE-014. This 
 
 | TBD | Question | Options | Affects | Owner | Must confirm by (canonical) | Status | Tag |
 |---|---|---|---|---|---|---|---|
-| **TBD-BIZ-003** | What data classification, PII boundary, retention, and deletion rules apply? | (a) no user data; (b) personal, non-sensitive; (c) regulated or sensitive | NFR-006, NFR-008, NFR-009; §5.1; CAND-021/022; CAP-003 | Product Owner | Stage 2 — Product Definition, before any data handling or dataset sharing | Open | `[TBD-BIZ-003]` |
-| **TBD-BIZ-004** | Who may create, publish, register, allowlist, and administer the workspace? | (a) admin-only publication; (b) anyone drafts, admin approves; (c) anyone publishes with audit only | ROLE-002/003/004; §6; FLOW-004 to FLOW-006; CAND-001/002 | Product Owner | Stage 2 close-out (PRD review) | Open | `[TBD-BIZ-004]` |
+| **TBD-BIZ-003** | What data classification, PII boundary, retention, and deletion rules apply? | (a) no user data; (b) personal, non-sensitive; (c) regulated or sensitive | NFR-006, NFR-008, NFR-009; §5.1; CAND-021/022; CAP-003 | Product Owner | Stage 2 — Product Definition, before any data handling or dataset sharing | Resolved | `[TBD-BIZ-003]` |
+| **TBD-BIZ-004** | Who may create, publish, register, allowlist, and administer the workspace? | (a) admin-only publication; (b) anyone drafts, admin approves; (c) anyone publishes with audit only | ROLE-002/003/004; §6; FLOW-004 to FLOW-006; CAND-001/002 | Product Owner | Stage 2 close-out (PRD review) | Resolved | `[TBD-BIZ-004]` |
 | **TBD-BIZ-005** | Which MCP integrations and first three tasks validate the MVP? | (a) docs/wiki search; (b) issue tracker; (c) Git provider; (d) read-only database; (e) chat/notification; candidate tasks: summarize a document, create a ticket, produce a weekly report | OBJ-002/003 measurement; CAP-003/004 acceptance | Product Owner | Stage 2 close-out (PRD review) / Stage 3 | Open | `[TBD-BIZ-005]` |
 | **TBD-BIZ-006** | What metrics, baselines, targets, time windows, and go-live threshold apply? | (a) weekly active members; (b) runs per week; (c) task success rate; (d) time saved; (e) zero secret-exposure incidents | OBJ-001 to OBJ-003; CAP-017; CAND-013 | Product Owner | Stage 2 close-out (PRD review) | Open | `[TBD-BIZ-006]` |
 | **TBD-BIZ-007** | Is v1 prompt-only and linear, or code-capable and branching; what retry policy applies? | (a) prompt-only skill steps; (b) prompt plus MCP tool steps, linear; (c) code skills and branching/loops | BR-005, BR-008; FLOW-003 to FLOW-006; STATE-003 to STATE-005; CAND-003/008/009/010/019 | Product Owner | Stage 2 close-out (PRD review) | Open | `[TBD-BIZ-007]` |
 | **TBD-BIZ-008** | What NFR thresholds and measurement environment apply? | (a) adopt the PRD §12 proposals; (b) set different numeric targets; (c) accept best-effort and mark performance/availability as a TBD | NFR-001 to NFR-012; OBJ-001 to OBJ-003 | Product Owner; Tech Lead supplies the environment | Gate 1 — before Stage 3 Architecture; measurement environment at Stage 7 — Development Setup | Open | `[TBD-BIZ-008]` |
-| **TBD-BIZ-009** | Is audit required, which events are recorded, and who reads or exports them? | (a) registry, tool, and run events; (b) add authentication and account events; (c) no audit in MVP; (d) export only | CAP-009; CAND-004; NFR-010; ROLE-004 | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-009]` |
+| **TBD-BIZ-009** | Is audit required, which events are recorded, and who reads or exports them? | (a) registry, tool, and run events; (b) add authentication and account events; (c) no audit in MVP; (d) export only | CAP-009; CAND-004; NFR-010; ROLE-004 | Product Owner | Gate 1 — before Stage 3 Architecture | Resolved | `[TBD-BIZ-009]` |
 | **TBD-BIZ-010** | Is cost visible, and is there a budget or quota? | (a) no cost display; (b) per-run token/cost; (c) monthly budget and alert; (d) hard quota | CAP-016, CAP-017; CAND-013/014 | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-010]` |
-| **TBD-BIZ-011** | Which supporting capabilities are in the MVP? | (a) strictly four capabilities plus local accounts and self-hosting; (b) add search; (c) add run/audit history and model configuration; (d) add file context and chat history actions; (e) a stated combination | CAP-008 to CAP-011; CAP-017 to CAP-021; CAP-024 to CAP-036; ROLE; NFR scope | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-011]` |
+| **TBD-BIZ-011** | Which supporting capabilities are in the MVP? | (a) strictly four capabilities plus local accounts and self-hosting; (b) add search; (c) add run/audit history and model configuration; (d) add file context and chat history actions; (e) a stated combination | CAP-008 to CAP-011; CAP-017 to CAP-021; CAP-024 to CAP-036; ROLE; NFR scope | Product Owner | Gate 1 — before Stage 3 Architecture | Resolved | `[TBD-BIZ-011]` |
 | **TBD-BIZ-012** | What PRD v0.1 baseline is accepted at Gate 1? | (a) accept §2 to §5, §8, §9, and §12 as written; (b) accept scope only and keep roles, metrics, NFRs, and execution as candidates; (c) revise and issue v0.2 | All OBJ, CAP, BR; document status | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-012]` |
 | **TBD-BIZ-013** | What happens to owned skills, tasks, and runs when an owner is disabled or leaves? | (a) transfer ownership to an Admin; (b) keep attribution and deprecate; (c) delete or retire; (d) no policy in MVP | ENT-006, ENT-011; STATE-003, STATE-005, STATE-006; ROLE-002; CAND-020 | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-013]` |
 | **TBD-BIZ-014** | What legal, platform, or contractual constraints apply? | (a) none apply; (b) internal policy applies; (c) external regulation or contract applies | NFR-006, NFR-008, NFR-009; CAND-021/022/023; any compliance BR | Product Owner | Gate 1 — before connecting internal data or external providers | Open | `[TBD-BIZ-014]` |
@@ -1111,7 +1116,7 @@ The canonical entries are in `docs/00_setup/open_items.md` under RULE-014. This 
 
 - **Side A:** `docs/01_product/prd.md` §6, Auditor row: "| **Auditor** | Reviews usage and audit records | Read-only access to runs and audit; in v1 this is an Admin capability |" `[SRC: prd.md#§6]`
 - **Side B:** `docs/01_product/prd.md` §13, permission matrix: "| View all runs and audit | ✓ | — | — | ✓ |" `[SRC: prd.md#§13]`
-- **Blocked:** ROLE-004, CAND-002, CAND-004. **Arbiter:** Product Owner. **Status:** Open. `[CONFLICT-001]`
+- **Blocked:** ROLE-004, CAND-002, CAND-004. **Arbiter:** Product Owner. **Status:** Resolved — Admin audit read. `[CONFLICT-001]`
 - **Closing condition:** the product owner records either (a) the Auditor is a separate role with read-only runs and audit, or (b) the Auditor is an Admin capability and PRD §13 is corrected; the Tech Lead records the chosen side in `open_items.md`. **Gate:** Gate 1 — before Stage 3 Architecture. `[SRC: open_items.md#CONFLICT-001]`
 
 **[CONFLICT-002] Point of conflict:** what "Stage 5" denotes and where its deliverable lives. `[CONFLICT-002]`
@@ -1187,9 +1192,164 @@ Nothing in this appendix becomes a `BR` directly. These are proposals from Draft
 
 **Promotion path:** a `CAND` becomes a `BR` only when (1) the product owner records the decision in a change record, (2) the source becomes `Confirmed`, `Approved`, or `Frozen`, (3) the affected TBD is marked `Resolved` in `open_items.md`, and (4) the full BR fields and traceability are added in a new document version. A `CAND` never becomes a rule by editing this appendix alone. `[DERIVED: SRC-006 §⑧]`
 
+## Appendix B — Enterprise-internal baseline (v0.3 amendment)
+
+**Status:** Effective amendment, `Draft`. **Decision source:** `CHG-012`, product-owner selection of 2026-10-18. **Reading rule:** where this appendix conflicts with an earlier section, this appendix wins. It does not accept the PRD (`TBD-BIZ-012`), resolve `CONFLICT-002`, or create a new `TBD`/`CONFLICT` ID.
+
+### B.1 Deployment and data boundary
+
+- The product is for **enterprise internal daily work only**: one self-hosted workspace, local accounts, and no vendor control plane. `BR-007` is unchanged. `[SRC: BR-007]`
+- The model provider is an **internal OpenAI-compatible gateway** with no external egress. `TBD-INFRA-009` is resolved by this decision. `[DERIVED: CHG-012]`
+- Search, file context, external MCP invocation, cost tracking, chat-history actions, projects, task templates, notifications, import/export, and account administration remain out of the MVP. `[DERIVED: CHG-012]`
+- No `Public` data is produced by the product; the workspace is not a publication surface. `[DERIVED: CHG-012]`
+
+### B.2 Data classification, retention, and protection
+
+**Classification.** This table replaces every `TBD-BIZ-003` classification label in §5.1 and the retention references in §9.
+
+| Level | Data in scope | Handling rule |
+|---|---|---|
+| `Public` | None | No product data is classified Public |
+| `Internal` | Internal identifiers, ordinals, state and kind enumerations, action/outcome values, structural metadata | Internal-only access; not exposed outside the workspace |
+| `Sensitive` | Account identifiers and sign-in names; conversation/message content; skill and task names, descriptions, instructions, and input definitions; step parameters; MCP server names and endpoint references; run references; run/step result and error summaries; timestamps and durations; audit actor, target, and correlation | Access limited to the owning Member and Admin as the matrix allows; no content or identifiers in logs; no external egress |
+| `Highly Sensitive` | Prohibited in the MVP | No field is classified Highly Sensitive. Credentials and secret values are never stored in a business record. If such data must enter, a new security decision and controls are required before use |
+
+`TBD-BIZ-003` is resolved by this table. It is not a claim that no legal or contractual constraint applies; `TBD-BIZ-014` remains open for the internal-policy reference. `[DERIVED: CHG-012]`
+
+**Retention.**
+
+| Data | Period | Boundary |
+|---|---|---|
+| Conversations and messages | 90 days from creation | Deletion job and exact trigger are a later operational design |
+| Runs and run steps | 180 days from creation | Completed-run readability is preserved within the period |
+| Audit events | 365 days from event occurrence | Append-only; no early deletion |
+| Accounts | While active | Offboarding and deletion remain `TBD-BIZ-013` |
+| Skill, task, and MCP registry records | While recorded | Retirement, deprecation, and deletion remain `TBD-BIZ-004`/`TBD-BIZ-013` |
+| Artifacts, citations, secrets, model configuration | Not persisted | No retention period |
+
+`NFR-009` is satisfied by this table for the persisted records; the retention job itself is a later implementation. `[DERIVED: CHG-012]`
+
+**Protection.** TLS in transit; encryption at rest; no message content, sign-in names, endpoint references, tool names, or credentials in operational logs; Admin-only audit read; no Highly Sensitive data. Encryption algorithm, key management, and masking rules remain security design under `TBD-INFRA-004` and the security folder. `[DERIVED: CHG-012]`
+
+### B.3 Roles and permissions
+
+- **ROLE-001 Member** is unchanged: sign in; chat own-only; read recorded skills, MCP servers, and tasks; initiate and read own runs.
+- **ROLE-002 Admin** becomes effective for **skill and task publication** and **audit read**. Admin accounts also hold the Member role; the Admin grants below are additive.
+- **ROLE-003 Author** and **ROLE-004 Auditor** remain proposed and denied. `CONFLICT-001` is resolved toward the Admin-capability side: audit read is an Admin capability, not a separate Auditor role. `[DERIVED: CHG-012]`
+
+**Admin grants (additive to Member).**
+
+| Operation | Admin result | Boundary |
+|---|---|---|
+| `Skill.publish` | allowed | Create, publish, deprecate, and discard skill versions |
+| `TaskDefinition.publish` | allowed | Create, publish, and retire task versions |
+| `Skill.read`, `TaskDefinition.read`, `McpServer.read` | read-only | Registry read remains read-only for MCP |
+| `Run.read` | allowed | All runs, not only the Admin's own |
+| `Audit.read` | allowed | Read-only; no export |
+| `McpServer.register`, `McpTool.allowlist`, `McpTool.invoke` | denied | MCP registration and invocation remain out of the MVP |
+| `Account.manage`, `Artifact.read` | denied | Account administration and artifact access remain out |
+
+This table replaces the ROLE-002 row of §6.2 where it conflicts. The Member row is unchanged. `[DERIVED: CHG-012]`
+
+### B.4 Audit
+
+- `CAP-009` enters the MVP as an append-only audit capability.
+- Recorded events: sign-in success and failure; skill created, published, deprecated, discarded; task created, published, retired, discarded; run initiated, succeeded, failed; audit read. No account, role, MCP, or export events in the MVP.
+- The actor is the signed-in account for human actions and a system actor for terminal run transitions. The target is the affected record reference.
+- Audit is read-only for Admin; there is no export. Operational logs are not audit events.
+- Retention is 365 days. Audit events are append-only and are never edited or deleted before retention.
+
+`TBD-BIZ-009` is resolved by this section. `ENT-017` becomes an effective entity. `[DERIVED: CHG-012]`
+
+### B.5 State models
+
+**`STATE-003` — Skill Version, effective.** States: `Draft`, `Published`, `Deprecated`, `Superseded`, `Discarded`. Transitions:
+
+```mermaid
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Published : admin publishes a valid draft
+  Draft --> Discarded : admin discards the draft
+  Published --> Deprecated : admin deprecates the version
+  Published --> Superseded : a newer version is published
+  Deprecated --> [*]
+  Superseded --> [*]
+  Discarded --> [*]
+```
+
+**`STATE-005` — Task Version, effective.** States: `Draft`, `Published`, `Retired`, `Superseded`, `Discarded`. Transitions:
+
+```mermaid
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Published : admin publishes a valid draft
+  Draft --> Discarded : admin discards the draft
+  Published --> Retired : admin retires the version
+  Published --> Superseded : a newer version is published
+  Retired --> [*]
+  Superseded --> [*]
+  Discarded --> [*]
+```
+
+`STATE-004` (MCP server health) and `STATE-006` (account) remain **reserved**. `STATE-001`/`STATE-002` remain effective and unchanged. `[DERIVED: CHG-012]`
+
+### B.6 MVP scope
+
+The MVP is **six capabilities**: `CAP-001` Chat, `CAP-002` Skill registry with admin authoring, `CAP-003` MCP registry read-only, `CAP-004` Task definitions and manual runs with admin authoring, `CAP-005` self-hosted local accounts, and `CAP-009` audit.
+
+The out-of-scope register drops from 31 to **30 CAPs**: `CAP-009` is now in; `CAP-006`–`CAP-008` and `CAP-010`–`CAP-036` remain out. The required-topic table's audit-log row moves to the MVP; the other 17 topics remain out. `[DERIVED: CHG-012]`
+
+### B.7 Store and provider
+
+- **PostgreSQL** is selected as the data store. `TBD-INFRA-003` is resolved; the physical schema, indexes, and migrations remain a separate change.
+- The model gateway is internal, OpenAI-compatible, and has no external egress. `TBD-INFRA-009` is resolved.
+- The stack, dependency tooling, environment baseline, and verified commands remain open (`TBD-INFRA-001`, `-002`, `-004`, `-005`, `-007`).
+
+### B.8 Remaining open items
+
+- `TBD-BIZ-005`, `-006`, `-007`, `-008`, `-010`, `-012`, `-013`, `-014`, `-015`.
+- `TBD-INFRA-001`, `-002`, `-004`, `-005`, `-006`, `-007`, `-010`, `-011`.
+- `CONFLICT-002`.
+- `TBD-BIZ-014` is narrowed: internal policy applies, but the policy reference or clause is still missing; no legal or compliance conclusion is issued.
+
+### B.9 Superseded statements
+
+| Location | v0.2 statement | v0.3 amendment |
+|---|---|---|
+| §3.1 | Exactly five MVP CAPs | Six CAPs: CAP-001–005 + CAP-009 |
+| §3.2 | CAP-009 audit is out of scope | CAP-009 is in the MVP |
+| §3.3 topic 10 | Audit log out of MVP | Audit log is in the MVP |
+| §5.1 | Classification column is `TBD-BIZ-003` | Replaced by B.2 |
+| §5.1 | Skill/task lifecycle is proposed | Skill/task version states are effective per B.5 |
+| §6.1 | ROLE-002 Admin is proposed | Admin is effective for B.3 grants |
+| §6.2 | ROLE-002 row is all `denied` | Replaced by B.3 additive grants |
+| §7.3/§7.5 | STATE-003/STATE-005 are proposed | Effective per B.5 |
+| §9 NFR-009 | Retention is `TBD-BIZ-003` | 90/180/365 per B.2 |
+| §10.2 | NFR-009 maps to `TBD-BIZ-003` | Retention per B.2 |
+| §10.5 | Mechanical counts use 31 out-of-scope CAPs and MVP ≤5 | Superseded by B.6 (30 out, six CAPs) |
+| §12.1 | TBD-BIZ-003/004/009/011 and TBD-INFRA-003/009 are Open | Resolved per B.1–B.7 |
+| §12.2 | CONFLICT-001 is Open | Resolved toward Admin audit read |
+| §12.3 | PII classification is `TBD-BIZ-003`; audit event is `TBD-BIZ-009` | Internal/Sensitive per B.2; audit event effective per B.4 |
+| §1.1 SRC-006 | Stage 5 contract with five CAPs | The product owner's 2026-10-18 baseline decision supersedes the five-CAP limit |
+
+### B.10 Appendix B self-check
+
+| # | Check | Verdict | Evidence |
+|---|---|---|---|
+| B-1 | Every amended item names its new value | Pass | B.1–B.9; superseded table in B.9 |
+| B-2 | No `TBD` is used as a settled value | Pass | `TBD-BIZ-014` remains open; no policy reference is invented |
+| B-3 | No new `TBD`/`CONFLICT` ID | Pass | Only existing IDs are referenced |
+| B-4 | Admin and audit are bounded to the selected baseline | Pass | B.3–B.4; MCP registration, account administration, and export remain out |
+| B-5 | State models have terminals and no dead states | Pass | B.5; every terminal exits to `[*]`, and Draft/Published have outgoing transitions |
+| B-6 | Retention is explicit and bounded | Pass | B.2; 90/180/365 with open operational trigger |
+| B-7 | No compliance conclusion | Pass | `TBD-BIZ-014` remains open; B.2 is a product-owner classification, not a legal conclusion |
+| B-8 | Mermaid is statically valid | Partial — static check only | Two `stateDiagram-v2` blocks; no renderer installed |
+
+**Appendix B verdict:** Pass 7 / Partial 1 / Fail 0. The base v0.2 self-check below applies to the unamended sections; this appendix is the authoritative v0.3 amendment.
+
 ## Pre-completion self-check
 
-**Self-check tag:** every row is a conclusion derived from the evidence in its Evidence cell. `[DERIVED: §1–§12; CHG-007]`
+**Self-check tag:** every row is a conclusion derived from the evidence in its Evidence cell. This table applies to the unamended v0.2 base; Appendix B has its own check in B.10. `[DERIVED: §1–§12; CHG-007]`
 
 | # | Check | Verdict | Evidence (section and ID) | Fix action |
 |---|---|---|---|---|
@@ -1206,7 +1366,7 @@ Nothing in this appendix becomes a `BR` directly. These are proposals from Draft
 | 11 | No TBD used as settled fact | Pass | Every `TBD` reference names an open decision; §2, §5.1, §9, and §12.1 label targets, classifications, and gates as open; no `TBD` appears in a BR `Source` field. | None |
 | 12 | Source eligibility | Pass | §8: 8/8 BR `Source` fields cite SRC-001. SRC-002, SRC-003, SRC-004, and SRC-006 appear in CAP/CAND/CHL evidence, proposed NFRs, proposed entity or state notes, and as cited context in §1, §2, §4, and §8; no BR cites them. | None |
 
-**Verdict:** Pass 10 / Partial 1 / Unverified 1 / Fail 0. The document remains `Draft` because CONFLICT-001 and CONFLICT-002 are `Open`, TBD-BIZ-012 is unresolved, and the state-model coverage interpretation is TBD-BIZ-015; a partial self-check is not a claim that Stage 5 is complete. `[TBD-BIZ-012]` `[TBD-BIZ-015]`
+**Verdict:** Pass 10 / Partial 1 / Unverified 1 / Fail 0 for the v0.2 base. Appendix B supersedes rows 4, 5, 9, and 11 where they conflict (permission matrix, state coverage, CAP count, and TBD status). The v0.3 document remains `Draft` because CONFLICT-002 and TBD-BIZ-012 are open. `[TBD-BIZ-012]`
 
 **Residual verification limits:**
 
@@ -1217,14 +1377,14 @@ Nothing in this appendix becomes a `BR` directly. These are proposals from Draft
 
 ```
 Status: Draft
-Self-check: Pass 10 / Partial 1 / Unverified 1 / Fail 0
-Blocked: 0 Blocked BRs; CONFLICT-001 (Auditor role), CONFLICT-002 (Stage 5 definition). CAP-002, CAP-003, and CAP-004 have no confirmed human authority (TBD-BIZ-004), so the confirmed MVP is not operable.
+Self-check: Base v0.2 Pass 10 / Partial 1 / Unverified 1 / Fail 0; Appendix B Pass 7 / Partial 1 / Fail 0.
+Blocked: 0 Blocked BRs; CONFLICT-002 (Stage 5 definition). Skill and task registries are operable through Admin publication; the MCP registry remains read-only and reservation-bound.
 Decisions needed (ranked by impact, <=5):
-1. Confirm roles and registry authority — TBD-BIZ-004. Without it, no person may populate the skill, MCP, or task registry.
-2. Accept or amend PRD v0.1 as the Gate 1 baseline — TBD-BIZ-012. This decides whether the candidate layer can be promoted.
-3. Confirm data, PII, retention, and compliance constraints — TBD-BIZ-003 and TBD-BIZ-014. This blocks external model and search use and any retention rule.
-4. Confirm the MVP boundary for search, audit, and model configuration — TBD-BIZ-011 and TBD-BIZ-009. This decides CAP-008 to CAP-011 and CAP-017 to CAP-036.
-5. Confirm objectives, go-live threshold, and NFR targets — TBD-BIZ-006 and TBD-BIZ-008. This makes OBJ-001 to OBJ-003 and NFR-001 to NFR-012 testable.
-Must close before Gate 1: TBD-BIZ-003, TBD-BIZ-004, TBD-BIZ-005, TBD-BIZ-006, TBD-BIZ-007, TBD-BIZ-008, TBD-BIZ-009, TBD-BIZ-010, TBD-BIZ-011, TBD-BIZ-012, TBD-BIZ-013, TBD-BIZ-014, TBD-BIZ-015; TBD-INFRA-004, TBD-INFRA-009, TBD-INFRA-011.
-Deliverable: docs/01_product/business_model.md v0.2
+1. Accept or amend PRD v0.1 as the Gate 1 baseline — TBD-BIZ-012. This decides whether the candidate layer can be promoted.
+2. Supply the internal-policy reference for TBD-BIZ-014. The classification decision is recorded; the legal/compliance conclusion is not.
+3. Confirm the first integrations and first three tasks — TBD-BIZ-005. Without them the acceptance demo has no content.
+4. Confirm the execution model and retry policy — TBD-BIZ-007. Skill/task execution semantics remain unresolved.
+5. Confirm objectives, go-live threshold, and NFR targets — TBD-BIZ-006 and TBD-BIZ-008.
+Must close before Gate 1: TBD-BIZ-005, TBD-BIZ-006, TBD-BIZ-007, TBD-BIZ-008, TBD-BIZ-010, TBD-BIZ-012, TBD-BIZ-013, TBD-BIZ-014, TBD-BIZ-015; TBD-INFRA-004, TBD-INFRA-011. Stack, tooling, and command gates TBD-INFRA-001/002/005/007 remain implementation gates.
+Deliverable: docs/01_product/business_model.md v0.3
 ```
