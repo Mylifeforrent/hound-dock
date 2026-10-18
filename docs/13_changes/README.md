@@ -10,6 +10,8 @@ Authoritative assets:
 - `docs/13_changes/CHG-003-prototype-ia.md` — prototype IA revision: chat-first home and Manage entry.
 - `docs/13_changes/CHG-004-prototype-ia-v2.md` — prototype IA v2: Tasks shortcut, history actions, expanded Manage.
 - `docs/13_changes/CHG-005-prototype-visual-system.md` — prototype visual system v2: quiet-console layout, design tokens, light/dark themes, and accessibility.
+- `docs/13_changes/CHG-006-business-model.md` — Stage 5 business model: confirmed core, candidate layer, traceability, new TBDs, and conflicts.
+- `docs/13_changes/CHG-007-business-model-v0.2.md` — business model v0.2: acceptance-contract restructure, 3 objectives, 5 MVP CAPs, 31 exclusions, permission matrix, state diagrams, BR decision expressions, NFR measurement points, and conflict closing conditions.
 Allowed status: Draft / Reviewed / Frozen. A merged record MUST be `Reviewed` before the next change lands; `CHG-000` remains `Draft` until the user's Stage 0 sign-off. `Frozen` is reserved for a record locked at a stage gate. Records MUST NOT be deleted; corrections MUST be appended.
 Update entry point: Tech Lead opens every change record; other owners supply evidence through the Task Brief handoff and do not edit this folder.
 
