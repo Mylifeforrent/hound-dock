@@ -33,6 +33,8 @@
     <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M15 12v2"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M10 7l-5 5 5 5"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v6H4V6h6"/></symbol>
   </svg>
 
@@ -40,10 +42,10 @@
 
   <div class="app">
     <aside class="sidebar" aria-label="Workspace navigation">
-      <div class="brand">
+      <button class="brand" type="button" data-view="chat" aria-label="Go to chat">
         <span class="brand-mark" aria-hidden="true"><span>H</span><i></i></span>
         <span class="brand-word">hound<span>/</span>dock</span>
-      </div>
+      </button>
 
       <button class="workspace-switch" type="button" data-toast="Workspace switching is out of scope for this mock.">
         <span class="workspace-dot"></span>
@@ -54,38 +56,25 @@
         <svg class="icon"><use href="#i-chevron"/></svg>
       </button>
 
-      <nav class="nav" aria-label="Primary">
-        <button class="nav-item is-active" type="button" data-view="chat" aria-current="page">
-          <svg class="icon"><use href="#i-chat"/></svg><span>Chat</span><kbd>1</kbd>
-        </button>
-        <button class="nav-item" type="button" data-view="tasks">
-          <svg class="icon"><use href="#i-tasks"/></svg><span>Tasks</span><kbd>2</kbd>
-        </button>
-        <button class="nav-item" type="button" data-view="skills">
-          <svg class="icon"><use href="#i-skills"/></svg><span>Skills</span><kbd>3</kbd>
-        </button>
-        <button class="nav-item" type="button" data-view="mcp">
-          <svg class="icon"><use href="#i-mcp"/></svg><span>MCP</span><kbd>4</kbd>
-        </button>
-        <button class="nav-item" type="button" data-view="runs">
-          <svg class="icon"><use href="#i-runs"/></svg><span>Runs</span><kbd>5</kbd>
-        </button>
-        <button class="nav-item" type="button" data-view="admin">
-          <svg class="icon"><use href="#i-admin"/></svg><span>Admin</span><kbd>6</kbd>
-        </button>
+      <button class="new-chat-btn" type="button" data-action="new-chat">
+        <svg class="icon"><use href="#i-plus"/></svg>
+        <span>New chat</span>
+      </button>
+
+      <nav class="history" aria-label="Chat history">
+        <div class="history-head">
+          <p class="sidebar-label">Chats</p>
+          <span class="history-count" id="history-count"></span>
+        </div>
+        <div id="chat-history"></div>
       </nav>
 
-      <div class="pinned">
-        <p class="sidebar-label">Pinned</p>
-        <button class="pinned-item" type="button" data-open-task="task-release">
-          <span class="pin-mark"></span>Weekly release brief
-        </button>
-        <button class="pinned-item" type="button" data-open-task="task-triage">
-          <span class="pin-mark"></span>Triage new tickets
-        </button>
-      </div>
-
       <div class="sidebar-foot">
+        <button class="manage-btn" id="manage-btn" type="button" aria-haspopup="dialog">
+          <svg class="icon"><use href="#i-grid"/></svg>
+          <span>Manage workspace</span>
+          <svg class="icon manage-chevron"><use href="#i-chevron"/></svg>
+        </button>
         <div class="stamp">Prototype<br><span>Mock data</span></div>
         <div class="sidebar-user">
           <span class="avatar avatar-sm">AC</span>
@@ -99,14 +88,17 @@
         <button class="icon-btn menu-btn" type="button" data-toggle-nav aria-label="Toggle navigation">
           <svg class="icon"><use href="#i-menu"/></svg>
         </button>
+        <button class="back-btn" id="back-to-chat" type="button" data-view="chat" hidden>
+          <svg class="icon"><use href="#i-back"/></svg> Chat
+        </button>
         <div class="crumb">
           <span class="crumb-kicker">HOUND-DOCK</span>
           <span class="crumb-sep">/</span>
           <span class="crumb-current" id="crumb-current">Chat</span>
         </div>
         <div class="topbar-right">
-          <button class="icon-btn" type="button" data-toast="Command search is a mock in this prototype." aria-label="Search">
-            <svg class="icon"><use href="#i-search"/></svg>
+          <button class="icon-btn" type="button" data-open-manage aria-label="Manage workspace" title="Manage workspace">
+            <svg class="icon"><use href="#i-grid"/></svg>
           </button>
           <span class="mock-pill">MOCK</span>
           <span class="avatar">AC</span>
@@ -119,12 +111,8 @@
           <div class="view-head">
             <div>
               <p class="kicker">Workspace / Conversation</p>
-              <h1 class="page-title" id="chat-title">Ask the room.</h1>
-              <p class="page-sub">Chat with a skill, search the workspace, or start a task.</p>
-            </div>
-            <div class="head-actions">
-              <button class="btn btn-ghost" type="button" data-action="new-chat">New chat</button>
-              <button class="btn btn-primary" type="button" data-view="tasks">Run a task</button>
+              <h1 class="page-title">Ask the room.</h1>
+              <p class="page-sub">Chat with a skill, search the workspace, or pick up a conversation.</p>
             </div>
           </div>
 
@@ -132,8 +120,8 @@
             <div class="chat-card">
               <div class="chat-head">
                 <div>
-                  <p class="kicker">Session 04</p>
-                  <h2 class="chat-title">Release notes &amp; blockers</h2>
+                  <p class="kicker">Conversation</p>
+                  <h2 class="chat-title" id="chat-title">Release notes &amp; blockers</h2>
                 </div>
                 <span class="live"><i></i>Mock session</span>
               </div>
@@ -148,7 +136,7 @@
 
               <div class="composer" id="composer">
                 <div class="composer-context" id="composer-context"></div>
-                <textarea id="chat-input" rows="2" placeholder="Ask, search, or run a task…" aria-label="Message"></textarea>
+                <textarea id="chat-input" rows="2" placeholder="Ask, search, or use a skill…" aria-label="Message"></textarea>
                 <div class="composer-bar">
                   <div class="composer-tools">
                     <button class="chip" type="button" data-menu="slash"><span class="slash">/</span> Skills</button>

@@ -366,13 +366,82 @@
     }
   ];
 
+  const CHATS = [
+    {
+      id: 'chat-release',
+      title: 'Release notes & blockers',
+      group: 'Today',
+      updated: '2h ago',
+      messages: INITIAL_MESSAGES.map((message) => ({ ...message }))
+    },
+    {
+      id: 'chat-onboarding',
+      title: 'Onboarding checklist',
+      group: 'Today',
+      updated: '4h ago',
+      messages: [
+        { role: 'user', text: 'Where is the onboarding checklist for a new platform engineer?' },
+        {
+          role: 'assistant',
+          skill: { id: 'skill-onboarding', name: 'Onboarding Buddy', version: 'v1' },
+          tools: [{ name: 'confluence.search', input: 'space = ONBOARDING, q = checklist', output: '3 pages', duration: '0.9s' }],
+          body: `<p>The checklist lives in <strong>ONBOARDING → New engineer → Week 1</strong>. The current version covers access, local setup, and the first on-call shadow shift.</p>
+            <ul><li><strong>Day 1:</strong> accounts, laptop, and team intro.</li><li><strong>Week 1:</strong> local environment, first ticket, and runbook walkthrough.</li><li><strong>Week 2:</strong> on-call shadow and first small change.</li></ul>`,
+          sources: [{ kind: 'Confluence', label: 'Platform onboarding checklist' }]
+        }
+      ]
+    },
+    {
+      id: 'chat-metrics',
+      title: 'Weekly metrics digest',
+      group: 'Yesterday',
+      updated: '1d ago',
+      messages: [
+        { role: 'user', text: "Summarize last week's activation and retention metrics." },
+        {
+          role: 'assistant',
+          skill: { id: 'skill-metrics', name: 'Weekly Metrics Digest', version: 'v1' },
+          tools: [{ name: 'postgres.read', input: 'view = metrics_weekly, weeks = 5', output: '5 rows', duration: '0.6s' }],
+          body: `<p>Activation was <strong>61%</strong>, up 4 points week over week. Retention at day 7 held at <strong>48%</strong>; the drop is concentrated in the self-serve cohort.</p>
+            <ul><li><strong>Activation:</strong> 61% (+4 pts).</li><li><strong>Day-7 retention:</strong> 48% (flat).</li><li><strong>Anomaly:</strong> self-serve accounts that skip setup fall to 22% retention.</li></ul>
+            <p>This is a mock digest; the skill is still a draft.</p>`,
+          sources: [{ kind: 'Metrics', label: 'metrics_weekly (read-only)' }]
+        }
+      ]
+    },
+    { id: 'chat-q3', title: 'Q3 planning notes', group: 'Yesterday', updated: '1d ago', messages: [] },
+    {
+      id: 'chat-token',
+      title: 'Token rotation runbook',
+      group: 'Previous 7 days',
+      updated: '3d ago',
+      messages: [
+        { role: 'user', text: 'Search the runbook for the token rotation steps.' },
+        {
+          role: 'assistant',
+          tools: [
+            { name: 'confluence.search', input: 'space = RUNBOOKS, q = token rotation', output: '2 pages', duration: '0.8s' },
+            { name: 'web.search', input: 'token rotation best practice', output: '4 results', duration: '1.0s' }
+          ],
+          body: `<p>The runbook describes a four-step rotation:</p>
+            <ol><li>Create the new credential and store it as a secret reference.</li><li>Deploy it to the gateway and verify a test call.</li><li>Revoke the old credential after the verification window.</li><li>Record the rotation in the audit log.</li></ol>
+            <p>Always rotate before the expiry window; never paste the value into chat.</p>`,
+          sources: [{ kind: 'Confluence', label: 'Token rotation runbook' }, { kind: 'Web', label: 'Rotation best practice' }]
+        }
+      ]
+    },
+    { id: 'chat-incident', title: 'Incident postmortem', group: 'Previous 7 days', updated: '5d ago', messages: [] }
+  ];
+
   const state = {
     view: 'chat',
     skills: SKILLS,
     mcps: MCPS,
     tasks: TASKS,
     runs: RUNS,
-    messages: INITIAL_MESSAGES.map((message) => ({ ...message })),
+    chats: CHATS,
+    activeChatId: 'chat-release',
+    messages: CHATS[0].messages,
     activeSkill: null,
     search: false,
     files: [],
@@ -494,6 +563,9 @@
   function renderChat() {
     const thread = $('#chat-thread');
     if (!thread) return;
+    const activeChat = state.chats.find((chat) => chat.id === state.activeChatId);
+    const title = $('#chat-title');
+    if (title) title.textContent = activeChat ? activeChat.title : 'New conversation';
     const typing = state.typing
       ? `<div class="msg msg-assistant"><p class="msg-role">hound-dock</p><div class="typing"><i></i><i></i><i></i></div></div>`
       : '';
@@ -523,6 +595,44 @@
         <button type="button" class="chip-x" data-remove-context="file" data-file-index="${index}" aria-label="Remove file">×</button></span>`);
     });
     context.innerHTML = chips.join('');
+  }
+
+  function renderHistory() {
+    const container = $('#chat-history');
+    if (!container) return;
+    const groups = ['Today', 'Yesterday', 'Previous 7 days'];
+    const count = $('#history-count');
+    if (count) count.textContent = String(state.chats.length);
+    container.innerHTML = groups.map((group) => {
+      const chats = state.chats.filter((chat) => chat.group === group);
+      if (!chats.length) return '';
+      return `<div class="history-group">
+        <p class="history-label">${group}</p>
+        ${chats.map((chat) => `<button type="button" class="history-item ${chat.id === state.activeChatId ? 'is-active' : ''}" data-chat-id="${chat.id}" ${chat.id === state.activeChatId ? 'aria-current="true"' : ''}>
+          <span class="history-title">${esc(chat.title)}</span>
+          <span class="history-meta">${esc(chat.updated)}</span>
+        </button>`).join('')}
+      </div>`;
+    }).join('') || `<p class="small muted" style="padding:8px">No chats yet.</p>`;
+  }
+
+  function selectChat(id) {
+    const chat = state.chats.find((item) => item.id === id);
+    if (!chat) return;
+    state.activeChatId = id;
+    state.messages = chat.messages;
+    state.activeSkill = null;
+    state.search = false;
+    state.files = [];
+    state.typing = false;
+    navigate('chat');
+    renderChat();
+    renderHistory();
+    const input = $('#chat-input');
+    if (input) {
+      input.value = '';
+      input.focus();
+    }
   }
 
   /* ---------------- render: skills ---------------- */
@@ -641,6 +751,7 @@
 
   function renderAll() {
     renderChat();
+    renderHistory();
     renderSkillFilters();
     renderSkills();
     renderMCP();
@@ -652,24 +763,21 @@
   function navigate(view) {
     if (!viewNames[view]) return;
     state.view = view;
-    $$('.nav-item').forEach((item) => {
-      const active = item.dataset.view === view;
-      item.classList.toggle('is-active', active);
-      if (active) item.setAttribute('aria-current', 'page');
-      else item.removeAttribute('aria-current');
-    });
     $$('[data-view-panel]').forEach((panel) => {
       const active = panel.dataset.viewPanel === view;
       panel.hidden = !active;
       panel.classList.toggle('is-active', active);
     });
-    $('#crumb-current').textContent = viewNames[view];
+    $('#crumb-current').textContent = view === 'chat' ? 'Chat' : `Manage · ${viewNames[view]}`;
+    const back = $('#back-to-chat');
+    if (back) back.hidden = view === 'chat';
     document.body.classList.remove('nav-open');
     closeDrawer(true);
     closeModal(true);
     closeMenus();
     window.scrollTo({ top: 0, behavior: 'auto' });
     try { history.replaceState(null, '', `#${view}`); } catch (error) { /* file:// can reject replaceState */ }
+    if (view === 'chat') renderHistory();
     if (view === 'skills') { renderSkillFilters(); renderSkills(); }
     if (view === 'runs') renderRuns();
   }
@@ -865,6 +973,31 @@
     `);
   }
 
+  function openManage() {
+    const publishedSkills = state.skills.filter((skill) => skill.status === 'Published').length;
+    const connectedMcp = state.mcps.filter((mcp) => mcp.status === 'Connected').length;
+    const publishedTasks = state.tasks.filter((task) => task.status === 'Published').length;
+    const rows = [
+      { view: 'skills', icon: 'skills', title: 'Skills', desc: 'Versioned instructions', meta: `${publishedSkills} published · ${state.skills.length} total` },
+      { view: 'mcp', icon: 'mcp', title: 'MCP servers', desc: 'Governed tool connections', meta: `${connectedMcp} connected · ${state.mcps.length} total` },
+      { view: 'tasks', icon: 'tasks', title: 'Tasks', desc: 'Reusable work definitions', meta: `${publishedTasks} published · ${state.tasks.length} total` },
+      { view: 'runs', icon: 'runs', title: 'Runs', desc: 'Execution history and artifacts', meta: `${state.runs.length} recorded` },
+      { view: 'admin', icon: 'admin', title: 'Admin', desc: 'Local accounts and model gateway', meta: 'MVP settings' }
+    ];
+    openDrawer(`
+      ${drawerHead('Workspace', 'Manage.', 'Registries and administration — occasional configuration.', '')}
+      <p class="drawer-desc">The daily flow stays in chat. Open a registry only when you need to configure or inspect it.</p>
+      <div class="manage-list">
+        ${rows.map((row) => `<button type="button" class="manage-row" data-view="${row.view}">
+          <span class="manage-icon">${icon(row.icon)}</span>
+          <span><strong>${row.title}</strong><small>${row.desc} · ${row.meta}</small></span>
+          <span class="manage-chevron-row">→</span>
+        </button>`).join('')}
+      </div>
+      <p class="small muted" style="margin-top:16px">All registry changes are audited. Write-capable tools are disabled in v1.</p>
+    `);
+  }
+
   /* ---------------- modal ---------------- */
 
   const modal = $('#modal');
@@ -1009,26 +1142,51 @@
     const input = $('#chat-input');
     const text = input.value.trim();
     if (!text || state.typing) return;
+    const activeChat = state.chats.find((chat) => chat.id === state.activeChatId);
+    const firstUserMessage = !state.messages.some((message) => message.role === 'user');
     state.messages.push({ role: 'user', text });
+    if (activeChat) {
+      activeChat.updated = 'now';
+      if (firstUserMessage && activeChat.title === 'New conversation') {
+        activeChat.title = text.length > 48 ? `${text.slice(0, 48)}…` : text;
+      }
+      renderHistory();
+    }
+    const chatId = state.activeChatId;
+    const reply = mockReply(text);
     input.value = '';
     state.typing = true;
     renderChat();
     setTimeout(() => {
-      state.typing = false;
-      state.messages.push(mockReply(text));
-      renderChat();
+      const targetChat = state.chats.find((chat) => chat.id === chatId);
+      if (targetChat) {
+        targetChat.messages.push(reply);
+        targetChat.updated = 'now';
+      }
+      if (state.activeChatId === chatId) {
+        state.typing = false;
+        if (targetChat) state.messages = targetChat.messages;
+        renderChat();
+      }
+      renderHistory();
     }, 720);
   }
 
   function newChat() {
-    state.messages = [];
-    state.activeSkill = null;
-    state.search = false;
-    state.files = [];
-    state.typing = false;
-    renderChat();
-    $('#chat-input').value = '';
-    $('#chat-input').focus();
+    const existing = state.chats.find((chat) => chat.title === 'New conversation' && chat.messages.length === 0);
+    if (existing) {
+      selectChat(existing.id);
+      return;
+    }
+    const chat = {
+      id: `chat-${Date.now()}`,
+      title: 'New conversation',
+      group: 'Today',
+      updated: 'now',
+      messages: []
+    };
+    state.chats.unshift(chat);
+    selectChat(chat.id);
     showToast('New mock conversation.');
   }
 
@@ -1264,6 +1422,8 @@
     if (viewButton) { event.preventDefault(); navigate(viewButton.dataset.view); return; }
 
     if (hit('[data-toggle-nav]')) { document.body.classList.toggle('nav-open'); return; }
+    if (hit('#manage-btn') || hit('[data-open-manage]')) { openManage(); return; }
+    if (hit('[data-chat-id]')) { selectChat(hit('[data-chat-id]').dataset.chatId); return; }
     if (hit('[data-action="new-chat"]')) { newChat(); return; }
     if (hit('[data-prompt]')) {
       const prompt = hit('[data-prompt]').dataset.prompt;
@@ -1349,8 +1509,6 @@
   document.addEventListener('submit', handleFormSubmit);
 
   document.addEventListener('keydown', (event) => {
-    const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName);
-
     if (event.key === 'Tab') {
       const overlay = !$('#modal').hidden ? $('#modal') : (!$('#drawer').hidden ? $('#drawer') : null);
       if (overlay) {
@@ -1388,12 +1546,6 @@
     if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[role="button"][data-open-skill], [role="button"][data-open-mcp], [role="button"][data-open-task], [role="button"][data-open-run]')) {
       event.preventDefault();
       event.target.click();
-      return;
-    }
-
-    if (!typing && !event.metaKey && !event.ctrlKey && !event.altKey && /^[1-6]$/.test(event.key)) {
-      const views = ['chat', 'tasks', 'skills', 'mcp', 'runs', 'admin'];
-      navigate(views[Number(event.key) - 1]);
       return;
     }
 
