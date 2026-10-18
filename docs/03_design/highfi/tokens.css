@@ -1,0 +1,455 @@
+/* ==========================================================================
+   hound-dock high-fidelity tokens — GENERATED FILE, DO NOT EDIT
+
+   Source:    docs/03_design/design_tokens.json
+   sha256:    f5ee83da18b5daf2a93639a24f2dc1c55f9de6ce16d7c0ba00836004b9c3eb99
+   Generator: docs/03_design/highfi/tools/generate_tokens.py
+   Status:    Draft. The source is not a Frozen design system.
+   Layers:    primitive -> semantic -> component. Light theme only.
+   Rule:      every line below is projected from one JSON token value.
+              Regenerate; never hand-edit this file.
+   ========================================================================== */
+
+:root {
+  /* ---- primitive ------------------------------------------------------- */
+
+  /* primitive.color */
+  --primitive-color-paper-0: #ffffff; /* primitive.color.paper.0 */
+  --primitive-color-paper-1: #ffffff; /* primitive.color.paper.1 */
+  --primitive-color-paper-2: #f8f9fb; /* primitive.color.paper.2 */
+  --primitive-color-paper-3: #f5f7fa; /* primitive.color.paper.3 */
+  --primitive-color-paper-4: #eef2f7; /* primitive.color.paper.4 */
+  --primitive-color-ink-0: #111827; /* primitive.color.ink.0 */
+  --primitive-color-ink-1: #4b5563; /* primitive.color.ink.1 */
+  --primitive-color-ink-2: #667085; /* primitive.color.ink.2 */
+  --primitive-color-ink-3: #98a2b3; /* primitive.color.ink.3 */
+  --primitive-color-line-1: #e5e8ee; /* primitive.color.line.1 */
+  --primitive-color-line-2: #d5dae3; /* primitive.color.line.2 */
+  --primitive-color-line-3: #7f8a9c; /* primitive.color.line.3 */
+  --primitive-color-line-4: #6b7688; /* primitive.color.line.4 */
+  --primitive-color-accent-1: #2563eb; /* primitive.color.accent.1 */
+  --primitive-color-accent-2: #1d4ed8; /* primitive.color.accent.2 */
+  --primitive-color-accent-3: #eaf0ff; /* primitive.color.accent.3 */
+  --primitive-color-sidebar-1: #f7f8fa; /* primitive.color.sidebar.1 */
+  --primitive-color-sidebar-2: #111827; /* primitive.color.sidebar.2 */
+  --primitive-color-sidebar-3: #5f6b7e; /* primitive.color.sidebar.3 */
+  --primitive-color-scrim: rgba(17, 24, 39, 0.42); /* primitive.color.scrim */
+  --primitive-color-status-ok-text: #1f5a43; /* primitive.color.status.ok.text */
+  --primitive-color-status-ok-background: #e0efe6; /* primitive.color.status.ok.background */
+  --primitive-color-status-warn-text: #7a4a12; /* primitive.color.status.warn.text */
+  --primitive-color-status-warn-background: #f7ead3; /* primitive.color.status.warn.background */
+  --primitive-color-status-error-text: #8f2a24; /* primitive.color.status.error.text */
+  --primitive-color-status-error-background: #f6ded9; /* primitive.color.status.error.background */
+  --primitive-color-status-info-text: #234a74; /* primitive.color.status.info.text */
+  --primitive-color-status-info-background: #e3ebf6; /* primitive.color.status.info.background */
+  --primitive-color-status-neutral-text: #4b5563; /* primitive.color.status.neutral.text */
+  --primitive-color-status-neutral-background: #eef1f5; /* primitive.color.status.neutral.background */
+
+  /* primitive.font */
+  --primitive-font-family-ui: "Avenir Next", "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif; /* primitive.font.family.ui */
+  --primitive-font-family-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif; /* primitive.font.family.display */
+  --primitive-font-family-mono: "SF Mono", "JetBrains Mono", "IBM Plex Mono", Menlo, Consolas, monospace; /* primitive.font.family.mono */
+  --primitive-font-size-text2xs: 11px; /* primitive.font.size.text2xs */
+  --primitive-font-size-text-xs: 11.5px; /* primitive.font.size.textXs */
+  --primitive-font-size-text-sm: 12px; /* primitive.font.size.textSm */
+  --primitive-font-size-text-md: 12.5px; /* primitive.font.size.textMd */
+  --primitive-font-size-text-base: 13.5px; /* primitive.font.size.textBase */
+  --primitive-font-size-text-lg: 15px; /* primitive.font.size.textLg */
+  --primitive-font-size-text-xl: 18px; /* primitive.font.size.textXl */
+  --primitive-font-size-text-card: 20px; /* primitive.font.size.textCard */
+  --primitive-font-size-text2xl: 22px; /* primitive.font.size.text2xl */
+  --primitive-font-size-text4xl: 34px; /* primitive.font.size.text4xl */
+  --primitive-font-weight-regular: 400; /* primitive.font.weight.regular */
+  --primitive-font-weight-medium: 500; /* primitive.font.weight.medium */
+  --primitive-font-weight-semibold: 600; /* primitive.font.weight.semibold */
+  --primitive-font-line-height-tight: 1.15; /* primitive.font.lineHeight.tight */
+  --primitive-font-line-height-snug: 1.35; /* primitive.font.lineHeight.snug */
+  --primitive-font-line-height-normal: 1.55; /* primitive.font.lineHeight.normal */
+  --primitive-font-line-height-relaxed: 1.68; /* primitive.font.lineHeight.relaxed */
+
+  /* primitive.space */
+  --primitive-space-1: 4px; /* primitive.space.1 */
+  --primitive-space-2: 8px; /* primitive.space.2 */
+  --primitive-space-3: 12px; /* primitive.space.3 */
+  --primitive-space-4: 16px; /* primitive.space.4 */
+  --primitive-space-5: 20px; /* primitive.space.5 */
+  --primitive-space-6: 24px; /* primitive.space.6 */
+  --primitive-space-7: 32px; /* primitive.space.7 */
+  --primitive-space-8: 40px; /* primitive.space.8 */
+  --primitive-space-9: 48px; /* primitive.space.9 */
+  --primitive-space-10: 64px; /* primitive.space.10 */
+  --primitive-space-11: 80px; /* primitive.space.11 */
+
+  /* primitive.radius */
+  --primitive-radius-xs: 3px; /* primitive.radius.xs */
+  --primitive-radius-sm: 6px; /* primitive.radius.sm */
+  --primitive-radius-md: 8px; /* primitive.radius.md */
+  --primitive-radius-lg: 10px; /* primitive.radius.lg */
+  --primitive-radius-panel: 14px; /* primitive.radius.panel */
+  --primitive-radius-pill: 999px; /* primitive.radius.pill */
+
+  /* primitive.shadow */
+  --primitive-shadow-xs: 0 1px 2px rgba(17, 24, 39, 0.05); /* primitive.shadow.xs */
+  --primitive-shadow-sm: 0 2px 8px rgba(17, 24, 39, 0.07); /* primitive.shadow.sm */
+  --primitive-shadow-lg: 0 18px 48px rgba(17, 24, 39, 0.15); /* primitive.shadow.lg */
+
+  /* ---- semantic ------------------------------------------------------- */
+
+  /* semantic.color */
+  --semantic-color-text-primary: var(--primitive-color-ink-0); /* semantic.color.text.primary */
+  --semantic-color-text-secondary: var(--primitive-color-ink-1); /* semantic.color.text.secondary */
+  --semantic-color-text-muted: var(--primitive-color-ink-2); /* semantic.color.text.muted */
+  --semantic-color-text-faint: var(--primitive-color-ink-3); /* semantic.color.text.faint */
+  --semantic-color-text-accent: var(--primitive-color-accent-2); /* semantic.color.text.accent */
+  --semantic-color-text-on-accent: var(--primitive-color-paper-0); /* semantic.color.text.onAccent */
+  --semantic-color-text-sidebar: var(--primitive-color-sidebar-2); /* semantic.color.text.sidebar */
+  --semantic-color-text-sidebar-muted: var(--primitive-color-sidebar-3); /* semantic.color.text.sidebarMuted */
+  --semantic-color-background-canvas: var(--primitive-color-paper-2); /* semantic.color.background.canvas */
+  --semantic-color-background-surface: var(--primitive-color-paper-1); /* semantic.color.background.surface */
+  --semantic-color-background-surface-raised: var(--primitive-color-paper-0); /* semantic.color.background.surfaceRaised */
+  --semantic-color-background-surface-soft: var(--primitive-color-paper-3); /* semantic.color.background.surfaceSoft */
+  --semantic-color-background-surface-hover: var(--primitive-color-paper-4); /* semantic.color.background.surfaceHover */
+  --semantic-color-background-accent: var(--primitive-color-accent-1); /* semantic.color.background.accent */
+  --semantic-color-background-accent-hover: var(--primitive-color-accent-2); /* semantic.color.background.accentHover */
+  --semantic-color-background-accent-soft: var(--primitive-color-accent-3); /* semantic.color.background.accentSoft */
+  --semantic-color-background-sidebar: var(--primitive-color-sidebar-1); /* semantic.color.background.sidebar */
+  --semantic-color-background-scrim: var(--primitive-color-scrim); /* semantic.color.background.scrim */
+  --semantic-color-border-default: var(--primitive-color-line-1); /* semantic.color.border.default */
+  --semantic-color-border-strong: var(--primitive-color-line-2); /* semantic.color.border.strong */
+  --semantic-color-border-control: var(--primitive-color-line-3); /* semantic.color.border.control */
+  --semantic-color-border-control-hover: var(--primitive-color-line-4); /* semantic.color.border.controlHover */
+  --semantic-color-border-focus: var(--primitive-color-accent-1); /* semantic.color.border.focus */
+  --semantic-color-status-ok-text: var(--primitive-color-status-ok-text); /* semantic.color.status.ok.text */
+  --semantic-color-status-ok-background: var(--primitive-color-status-ok-background); /* semantic.color.status.ok.background */
+  --semantic-color-status-ok-border: var(--semantic-color-status-ok-text); /* semantic.color.status.ok.border */
+  --semantic-color-status-warn-text: var(--primitive-color-status-warn-text); /* semantic.color.status.warn.text */
+  --semantic-color-status-warn-background: var(--primitive-color-status-warn-background); /* semantic.color.status.warn.background */
+  --semantic-color-status-warn-border: var(--semantic-color-status-warn-text); /* semantic.color.status.warn.border */
+  --semantic-color-status-error-text: var(--primitive-color-status-error-text); /* semantic.color.status.error.text */
+  --semantic-color-status-error-background: var(--primitive-color-status-error-background); /* semantic.color.status.error.background */
+  --semantic-color-status-error-border: var(--semantic-color-status-error-text); /* semantic.color.status.error.border */
+  --semantic-color-status-info-text: var(--primitive-color-status-info-text); /* semantic.color.status.info.text */
+  --semantic-color-status-info-background: var(--primitive-color-status-info-background); /* semantic.color.status.info.background */
+  --semantic-color-status-info-border: var(--semantic-color-status-info-text); /* semantic.color.status.info.border */
+  --semantic-color-status-neutral-text: var(--primitive-color-status-neutral-text); /* semantic.color.status.neutral.text */
+  --semantic-color-status-neutral-background: var(--primitive-color-status-neutral-background); /* semantic.color.status.neutral.background */
+  --semantic-color-status-neutral-border: var(--semantic-color-status-neutral-text); /* semantic.color.status.neutral.border */
+
+  /* semantic.typography */
+  --semantic-typography-family-display: var(--primitive-font-family-display); /* semantic.typography.family.display */
+  --semantic-typography-family-ui: var(--primitive-font-family-ui); /* semantic.typography.family.ui */
+  --semantic-typography-family-mono: var(--primitive-font-family-mono); /* semantic.typography.family.mono */
+  --semantic-typography-size-micro: var(--primitive-font-size-text2xs); /* semantic.typography.size.micro */
+  --semantic-typography-size-meta: var(--primitive-font-size-text-xs); /* semantic.typography.size.meta */
+  --semantic-typography-size-small: var(--primitive-font-size-text-sm); /* semantic.typography.size.small */
+  --semantic-typography-size-body-small: var(--primitive-font-size-text-md); /* semantic.typography.size.bodySmall */
+  --semantic-typography-size-body: var(--primitive-font-size-text-base); /* semantic.typography.size.body */
+  --semantic-typography-size-lead: var(--primitive-font-size-text-lg); /* semantic.typography.size.lead */
+  --semantic-typography-size-panel-title: var(--primitive-font-size-text-xl); /* semantic.typography.size.panelTitle */
+  --semantic-typography-size-card-title: var(--primitive-font-size-text-card); /* semantic.typography.size.cardTitle */
+  --semantic-typography-size-section: var(--primitive-font-size-text2xl); /* semantic.typography.size.section */
+  --semantic-typography-size-page-title: var(--primitive-font-size-text4xl); /* semantic.typography.size.pageTitle */
+  --semantic-typography-weight-regular: var(--primitive-font-weight-regular); /* semantic.typography.weight.regular */
+  --semantic-typography-weight-medium: var(--primitive-font-weight-medium); /* semantic.typography.weight.medium */
+  --semantic-typography-weight-semibold: var(--primitive-font-weight-semibold); /* semantic.typography.weight.semibold */
+  --semantic-typography-line-height-tight: var(--primitive-font-line-height-tight); /* semantic.typography.lineHeight.tight */
+  --semantic-typography-line-height-snug: var(--primitive-font-line-height-snug); /* semantic.typography.lineHeight.snug */
+  --semantic-typography-line-height-normal: var(--primitive-font-line-height-normal); /* semantic.typography.lineHeight.normal */
+  --semantic-typography-line-height-relaxed: var(--primitive-font-line-height-relaxed); /* semantic.typography.lineHeight.relaxed */
+
+  /* semantic.spacing */
+  --semantic-spacing-space1: var(--primitive-space-1); /* semantic.spacing.space1 */
+  --semantic-spacing-space2: var(--primitive-space-2); /* semantic.spacing.space2 */
+  --semantic-spacing-space3: var(--primitive-space-3); /* semantic.spacing.space3 */
+  --semantic-spacing-space4: var(--primitive-space-4); /* semantic.spacing.space4 */
+  --semantic-spacing-space5: var(--primitive-space-5); /* semantic.spacing.space5 */
+  --semantic-spacing-space6: var(--primitive-space-6); /* semantic.spacing.space6 */
+  --semantic-spacing-space7: var(--primitive-space-7); /* semantic.spacing.space7 */
+  --semantic-spacing-space8: var(--primitive-space-8); /* semantic.spacing.space8 */
+  --semantic-spacing-space9: var(--primitive-space-9); /* semantic.spacing.space9 */
+  --semantic-spacing-space10: var(--primitive-space-10); /* semantic.spacing.space10 */
+  --semantic-spacing-space11: var(--primitive-space-11); /* semantic.spacing.space11 */
+
+  /* semantic.radius */
+  --semantic-radius-tag: var(--primitive-radius-xs); /* semantic.radius.tag */
+  --semantic-radius-control: var(--primitive-radius-sm); /* semantic.radius.control */
+  --semantic-radius-inset: var(--primitive-radius-md); /* semantic.radius.inset */
+  --semantic-radius-card: var(--primitive-radius-lg); /* semantic.radius.card */
+  --semantic-radius-panel: var(--primitive-radius-panel); /* semantic.radius.panel */
+  --semantic-radius-pill: var(--primitive-radius-pill); /* semantic.radius.pill */
+
+  /* semantic.shadow */
+  --semantic-shadow-resting: var(--primitive-shadow-xs); /* semantic.shadow.resting */
+  --semantic-shadow-raised: var(--primitive-shadow-sm); /* semantic.shadow.raised */
+  --semantic-shadow-overlay: var(--primitive-shadow-lg); /* semantic.shadow.overlay */
+
+  /* semantic.layout */
+  --semantic-layout-breakpoints-1440-sidebar-width: 272px; /* semantic.layout.breakpoints.1440.sidebarWidth */
+  --semantic-layout-breakpoints-1440-main-pane-width: 1168px; /* semantic.layout.breakpoints.1440.mainPaneWidth */
+  --semantic-layout-breakpoints-1440-page-gutter: 36px; /* semantic.layout.breakpoints.1440.pageGutter */
+  --semantic-layout-breakpoints-1440-content-width: 1096px; /* semantic.layout.breakpoints.1440.contentWidth */
+  --semantic-layout-breakpoints-1440-topbar-height: 56px; /* semantic.layout.breakpoints.1440.topbarHeight */
+  --semantic-layout-breakpoints-1440-registry-columns: 3; /* semantic.layout.breakpoints.1440.registryColumns */
+  --semantic-layout-breakpoints-1440-card-min-width: 320px; /* semantic.layout.breakpoints.1440.cardMinWidth */
+  --semantic-layout-breakpoints-1440-record-split-reading: 764px; /* semantic.layout.breakpoints.1440.recordSplit.reading */
+  --semantic-layout-breakpoints-1440-record-split-gap: 32px; /* semantic.layout.breakpoints.1440.recordSplit.gap */
+  --semantic-layout-breakpoints-1440-record-split-panel: 300px; /* semantic.layout.breakpoints.1440.recordSplit.panel */
+  --semantic-layout-breakpoints-1440-chat-column-width: 760px; /* semantic.layout.breakpoints.1440.chatColumnWidth */
+  --semantic-layout-breakpoints-1440-control-height: 36px; /* semantic.layout.breakpoints.1440.controlHeight */
+  --semantic-layout-breakpoints-1440-sign-in-panel-width: 420px; /* semantic.layout.breakpoints.1440.signInPanelWidth */
+  --semantic-layout-breakpoints-1440-state-panel-width: 560px; /* semantic.layout.breakpoints.1440.statePanelWidth */
+  --semantic-layout-breakpoints-1440-editor-panel-width: 560px; /* semantic.layout.breakpoints.1440.editorPanelWidth */
+  --semantic-layout-breakpoints-1440-dialog-width: 460px; /* semantic.layout.breakpoints.1440.dialogWidth */
+  --semantic-layout-breakpoints-1280-sidebar-width: 272px; /* semantic.layout.breakpoints.1280.sidebarWidth */
+  --semantic-layout-breakpoints-1280-main-pane-width: 1008px; /* semantic.layout.breakpoints.1280.mainPaneWidth */
+  --semantic-layout-breakpoints-1280-page-gutter: 28px; /* semantic.layout.breakpoints.1280.pageGutter */
+  --semantic-layout-breakpoints-1280-content-width: 952px; /* semantic.layout.breakpoints.1280.contentWidth */
+  --semantic-layout-breakpoints-1280-topbar-height: 56px; /* semantic.layout.breakpoints.1280.topbarHeight */
+  --semantic-layout-breakpoints-1280-registry-columns: 2; /* semantic.layout.breakpoints.1280.registryColumns */
+  --semantic-layout-breakpoints-1280-card-min-width: 320px; /* semantic.layout.breakpoints.1280.cardMinWidth */
+  --semantic-layout-breakpoints-1280-record-split-reading: 644px; /* semantic.layout.breakpoints.1280.recordSplit.reading */
+  --semantic-layout-breakpoints-1280-record-split-gap: 28px; /* semantic.layout.breakpoints.1280.recordSplit.gap */
+  --semantic-layout-breakpoints-1280-record-split-panel: 280px; /* semantic.layout.breakpoints.1280.recordSplit.panel */
+  --semantic-layout-breakpoints-1280-chat-column-width: 720px; /* semantic.layout.breakpoints.1280.chatColumnWidth */
+  --semantic-layout-breakpoints-1280-control-height: 36px; /* semantic.layout.breakpoints.1280.controlHeight */
+  --semantic-layout-breakpoints-1280-sign-in-panel-width: 420px; /* semantic.layout.breakpoints.1280.signInPanelWidth */
+  --semantic-layout-breakpoints-1280-state-panel-width: 560px; /* semantic.layout.breakpoints.1280.statePanelWidth */
+  --semantic-layout-breakpoints-1280-editor-panel-width: 560px; /* semantic.layout.breakpoints.1280.editorPanelWidth */
+  --semantic-layout-breakpoints-1280-dialog-width: 460px; /* semantic.layout.breakpoints.1280.dialogWidth */
+  --semantic-layout-breakpoints-1080-sidebar-width: 272px; /* semantic.layout.breakpoints.1080.sidebarWidth */
+  --semantic-layout-breakpoints-1080-main-pane-width: 808px; /* semantic.layout.breakpoints.1080.mainPaneWidth */
+  --semantic-layout-breakpoints-1080-page-gutter: 28px; /* semantic.layout.breakpoints.1080.pageGutter */
+  --semantic-layout-breakpoints-1080-content-width: 752px; /* semantic.layout.breakpoints.1080.contentWidth */
+  --semantic-layout-breakpoints-1080-topbar-height: 56px; /* semantic.layout.breakpoints.1080.topbarHeight */
+  --semantic-layout-breakpoints-1080-registry-columns: 2; /* semantic.layout.breakpoints.1080.registryColumns */
+  --semantic-layout-breakpoints-1080-card-min-width: 320px; /* semantic.layout.breakpoints.1080.cardMinWidth */
+  --semantic-layout-breakpoints-1080-record-split-stacked: true; /* semantic.layout.breakpoints.1080.recordSplit.stacked */
+  --semantic-layout-breakpoints-1080-chat-column-width: 720px; /* semantic.layout.breakpoints.1080.chatColumnWidth */
+  --semantic-layout-breakpoints-1080-control-height: 36px; /* semantic.layout.breakpoints.1080.controlHeight */
+  --semantic-layout-breakpoints-1080-sign-in-panel-width: 420px; /* semantic.layout.breakpoints.1080.signInPanelWidth */
+  --semantic-layout-breakpoints-1080-state-panel-width: 560px; /* semantic.layout.breakpoints.1080.statePanelWidth */
+  --semantic-layout-breakpoints-1080-editor-panel-width: 560px; /* semantic.layout.breakpoints.1080.editorPanelWidth */
+  --semantic-layout-breakpoints-1080-dialog-width: 460px; /* semantic.layout.breakpoints.1080.dialogWidth */
+  --semantic-layout-breakpoints-960-sidebar-width: 272px; /* semantic.layout.breakpoints.960.sidebarWidth */
+  --semantic-layout-breakpoints-960-main-pane-width: 688px; /* semantic.layout.breakpoints.960.mainPaneWidth */
+  --semantic-layout-breakpoints-960-page-gutter: 20px; /* semantic.layout.breakpoints.960.pageGutter */
+  --semantic-layout-breakpoints-960-content-width: 648px; /* semantic.layout.breakpoints.960.contentWidth */
+  --semantic-layout-breakpoints-960-topbar-height: 56px; /* semantic.layout.breakpoints.960.topbarHeight */
+  --semantic-layout-breakpoints-960-registry-columns: 2; /* semantic.layout.breakpoints.960.registryColumns */
+  --semantic-layout-breakpoints-960-card-min-width: 280px; /* semantic.layout.breakpoints.960.cardMinWidth */
+  --semantic-layout-breakpoints-960-record-split-stacked: true; /* semantic.layout.breakpoints.960.recordSplit.stacked */
+  --semantic-layout-breakpoints-960-chat-column-width: 648px; /* semantic.layout.breakpoints.960.chatColumnWidth */
+  --semantic-layout-breakpoints-960-control-height: 36px; /* semantic.layout.breakpoints.960.controlHeight */
+  --semantic-layout-breakpoints-960-sign-in-panel-width: 420px; /* semantic.layout.breakpoints.960.signInPanelWidth */
+  --semantic-layout-breakpoints-960-state-panel-width: 560px; /* semantic.layout.breakpoints.960.statePanelWidth */
+  --semantic-layout-breakpoints-960-editor-panel-width: 560px; /* semantic.layout.breakpoints.960.editorPanelWidth */
+  --semantic-layout-breakpoints-960-dialog-width: 460px; /* semantic.layout.breakpoints.960.dialogWidth */
+
+  /* ---- component ------------------------------------------------------- */
+
+  /* component.C-01-sidebar */
+  --component-c-01-sidebar-width: 272px; /* component.C-01-sidebar.width */
+  --component-c-01-sidebar-background: var(--semantic-color-background-sidebar); /* component.C-01-sidebar.background */
+  --component-c-01-sidebar-text: var(--semantic-color-text-sidebar); /* component.C-01-sidebar.text */
+  --component-c-01-sidebar-muted-text: var(--semantic-color-text-sidebar-muted); /* component.C-01-sidebar.mutedText */
+  --component-c-01-sidebar-hover-background: var(--semantic-color-background-surface-raised); /* component.C-01-sidebar.hoverBackground */
+  --component-c-01-sidebar-active-background: var(--semantic-color-background-accent-soft); /* component.C-01-sidebar.activeBackground */
+  --component-c-01-sidebar-active-text: var(--semantic-color-text-primary); /* component.C-01-sidebar.activeText */
+  --component-c-01-sidebar-active-rule-color: var(--semantic-color-border-focus); /* component.C-01-sidebar.activeRuleColor */
+  --component-c-01-sidebar-active-rule-width: 2px; /* component.C-01-sidebar.activeRuleWidth */
+  --component-c-01-sidebar-item-height: 36px; /* component.C-01-sidebar.itemHeight */
+  --component-c-01-sidebar-item-radius: var(--semantic-radius-inset); /* component.C-01-sidebar.itemRadius */
+
+  /* component.C-02-topbar */
+  --component-c-02-topbar-height: 56px; /* component.C-02-topbar.height */
+  --component-c-02-topbar-background: var(--semantic-color-background-canvas); /* component.C-02-topbar.background */
+  --component-c-02-topbar-border: var(--semantic-color-border-default); /* component.C-02-topbar.border */
+  --component-c-02-topbar-gap: var(--semantic-spacing-space4); /* component.C-02-topbar.gap */
+  --component-c-02-topbar-breadcrumb-family: var(--semantic-typography-family-mono); /* component.C-02-topbar.breadcrumbFamily */
+  --component-c-02-topbar-breadcrumb-size: var(--semantic-typography-size-micro); /* component.C-02-topbar.breadcrumbSize */
+  --component-c-02-topbar-breadcrumb-color: var(--semantic-color-text-muted); /* component.C-02-topbar.breadcrumbColor */
+  --component-c-02-topbar-breadcrumb-current-color: var(--semantic-color-text-accent); /* component.C-02-topbar.breadcrumbCurrentColor */
+  --component-c-02-topbar-breadcrumb-separator-color: var(--semantic-color-text-faint); /* component.C-02-topbar.breadcrumbSeparatorColor */
+
+  /* component.C-03-page-header */
+  --component-c-03-page-header-title-family: var(--semantic-typography-family-display); /* component.C-03-page-header.titleFamily */
+  --component-c-03-page-header-title-size: var(--semantic-typography-size-page-title); /* component.C-03-page-header.titleSize */
+  --component-c-03-page-header-title-weight: var(--semantic-typography-weight-medium); /* component.C-03-page-header.titleWeight */
+  --component-c-03-page-header-title-line-height: var(--semantic-typography-line-height-tight); /* component.C-03-page-header.titleLineHeight */
+  --component-c-03-page-header-title-color: var(--semantic-color-text-primary); /* component.C-03-page-header.titleColor */
+  --component-c-03-page-header-eyebrow-family: var(--semantic-typography-family-mono); /* component.C-03-page-header.eyebrowFamily */
+  --component-c-03-page-header-eyebrow-size: var(--semantic-typography-size-micro); /* component.C-03-page-header.eyebrowSize */
+  --component-c-03-page-header-eyebrow-color: var(--semantic-color-text-muted); /* component.C-03-page-header.eyebrowColor */
+  --component-c-03-page-header-description-size: var(--semantic-typography-size-body); /* component.C-03-page-header.descriptionSize */
+  --component-c-03-page-header-description-color: var(--semantic-color-text-secondary); /* component.C-03-page-header.descriptionColor */
+
+  /* component.C-05-read-only-notice */
+  --component-c-05-read-only-notice-background: var(--semantic-color-background-surface-soft); /* component.C-05-read-only-notice.background */
+  --component-c-05-read-only-notice-border: var(--semantic-color-border-default); /* component.C-05-read-only-notice.border */
+  --component-c-05-read-only-notice-radius: var(--semantic-radius-inset); /* component.C-05-read-only-notice.radius */
+  --component-c-05-read-only-notice-text: var(--semantic-color-text-secondary); /* component.C-05-read-only-notice.text */
+  --component-c-05-read-only-notice-strong-text: var(--semantic-color-text-primary); /* component.C-05-read-only-notice.strongText */
+  --component-c-05-read-only-notice-text-size: var(--semantic-typography-size-body-small); /* component.C-05-read-only-notice.textSize */
+  --component-c-05-read-only-notice-strong-weight: var(--semantic-typography-weight-semibold); /* component.C-05-read-only-notice.strongWeight */
+
+  /* component.C-06-registry-card */
+  --component-c-06-registry-card-background: var(--semantic-color-background-surface); /* component.C-06-registry-card.background */
+  --component-c-06-registry-card-border: var(--semantic-color-border-default); /* component.C-06-registry-card.border */
+  --component-c-06-registry-card-radius: var(--semantic-radius-card); /* component.C-06-registry-card.radius */
+  --component-c-06-registry-card-padding: var(--semantic-spacing-space4); /* component.C-06-registry-card.padding */
+  --component-c-06-registry-card-grid-gap: var(--semantic-spacing-space4); /* component.C-06-registry-card.gridGap */
+  --component-c-06-registry-card-shadow: var(--semantic-shadow-resting); /* component.C-06-registry-card.shadow */
+  --component-c-06-registry-card-hover-shadow: var(--semantic-shadow-raised); /* component.C-06-registry-card.hoverShadow */
+  --component-c-06-registry-card-hover-lift: 2px; /* component.C-06-registry-card.hoverLift */
+  --component-c-06-registry-card-title-family: var(--semantic-typography-family-display); /* component.C-06-registry-card.titleFamily */
+  --component-c-06-registry-card-title-size: var(--semantic-typography-size-card-title); /* component.C-06-registry-card.titleSize */
+  --component-c-06-registry-card-title-weight: var(--semantic-typography-weight-medium); /* component.C-06-registry-card.titleWeight */
+  --component-c-06-registry-card-title-line-height: var(--semantic-typography-line-height-snug); /* component.C-06-registry-card.titleLineHeight */
+  --component-c-06-registry-card-title-color: var(--semantic-color-text-primary); /* component.C-06-registry-card.titleColor */
+
+  /* component.C-07-status-pill */
+  --component-c-07-status-pill-height: 23px; /* component.C-07-status-pill.height */
+  --component-c-07-status-pill-radius: var(--semantic-radius-pill); /* component.C-07-status-pill.radius */
+  --component-c-07-status-pill-label-family: var(--semantic-typography-family-ui); /* component.C-07-status-pill.labelFamily */
+  --component-c-07-status-pill-label-size: var(--semantic-typography-size-meta); /* component.C-07-status-pill.labelSize */
+  --component-c-07-status-pill-label-weight: var(--semantic-typography-weight-semibold); /* component.C-07-status-pill.labelWeight */
+  --component-c-07-status-pill-variants-ok-text: var(--semantic-color-status-ok-text); /* component.C-07-status-pill.variants.ok.text */
+  --component-c-07-status-pill-variants-ok-background: var(--semantic-color-status-ok-background); /* component.C-07-status-pill.variants.ok.background */
+  --component-c-07-status-pill-variants-ok-border: var(--semantic-color-status-ok-border); /* component.C-07-status-pill.variants.ok.border */
+  --component-c-07-status-pill-variants-warn-text: var(--semantic-color-status-warn-text); /* component.C-07-status-pill.variants.warn.text */
+  --component-c-07-status-pill-variants-warn-background: var(--semantic-color-status-warn-background); /* component.C-07-status-pill.variants.warn.background */
+  --component-c-07-status-pill-variants-warn-border: var(--semantic-color-status-warn-border); /* component.C-07-status-pill.variants.warn.border */
+  --component-c-07-status-pill-variants-error-text: var(--semantic-color-status-error-text); /* component.C-07-status-pill.variants.error.text */
+  --component-c-07-status-pill-variants-error-background: var(--semantic-color-status-error-background); /* component.C-07-status-pill.variants.error.background */
+  --component-c-07-status-pill-variants-error-border: var(--semantic-color-status-error-border); /* component.C-07-status-pill.variants.error.border */
+  --component-c-07-status-pill-variants-info-text: var(--semantic-color-status-info-text); /* component.C-07-status-pill.variants.info.text */
+  --component-c-07-status-pill-variants-info-background: var(--semantic-color-status-info-background); /* component.C-07-status-pill.variants.info.background */
+  --component-c-07-status-pill-variants-info-border: var(--semantic-color-status-info-border); /* component.C-07-status-pill.variants.info.border */
+  --component-c-07-status-pill-variants-neutral-text: var(--semantic-color-status-neutral-text); /* component.C-07-status-pill.variants.neutral.text */
+  --component-c-07-status-pill-variants-neutral-background: var(--semantic-color-status-neutral-background); /* component.C-07-status-pill.variants.neutral.background */
+  --component-c-07-status-pill-variants-neutral-border: var(--semantic-color-status-neutral-border); /* component.C-07-status-pill.variants.neutral.border */
+
+  /* component.C-08-button */
+  --component-c-08-button-height: 36px; /* component.C-08-button.height */
+  --component-c-08-button-compact-height: 31px; /* component.C-08-button.compactHeight */
+  --component-c-08-button-radius: var(--semantic-radius-control); /* component.C-08-button.radius */
+  --component-c-08-button-label-family: var(--semantic-typography-family-ui); /* component.C-08-button.labelFamily */
+  --component-c-08-button-label-size: var(--semantic-typography-size-small); /* component.C-08-button.labelSize */
+  --component-c-08-button-label-weight: var(--semantic-typography-weight-semibold); /* component.C-08-button.labelWeight */
+  --component-c-08-button-variants-primary-background: var(--semantic-color-background-accent); /* component.C-08-button.variants.primary.background */
+  --component-c-08-button-variants-primary-hover-background: var(--semantic-color-background-accent-hover); /* component.C-08-button.variants.primary.hoverBackground */
+  --component-c-08-button-variants-primary-text: var(--semantic-color-text-on-accent); /* component.C-08-button.variants.primary.text */
+  --component-c-08-button-variants-secondary-background: var(--semantic-color-background-surface); /* component.C-08-button.variants.secondary.background */
+  --component-c-08-button-variants-secondary-border: var(--semantic-color-border-control); /* component.C-08-button.variants.secondary.border */
+  --component-c-08-button-variants-secondary-text: var(--semantic-color-text-primary); /* component.C-08-button.variants.secondary.text */
+  --component-c-08-button-variants-secondary-hover-border: var(--semantic-color-border-control-hover); /* component.C-08-button.variants.secondary.hoverBorder */
+  --component-c-08-button-variants-secondary-hover-background: var(--semantic-color-background-surface-hover); /* component.C-08-button.variants.secondary.hoverBackground */
+  --component-c-08-button-variants-ghost-background: transparent; /* component.C-08-button.variants.ghost.background */
+  --component-c-08-button-variants-ghost-text: var(--semantic-color-text-secondary); /* component.C-08-button.variants.ghost.text */
+  --component-c-08-button-variants-ghost-hover-background: var(--semantic-color-background-surface-hover); /* component.C-08-button.variants.ghost.hoverBackground */
+  --component-c-08-button-variants-ghost-hover-text: var(--semantic-color-text-primary); /* component.C-08-button.variants.ghost.hoverText */
+  --component-c-08-button-focus-width: 2px; /* component.C-08-button.focusWidth */
+  --component-c-08-button-focus-offset: 2px; /* component.C-08-button.focusOffset */
+  --component-c-08-button-focus-color: var(--semantic-color-border-focus); /* component.C-08-button.focusColor */
+
+  /* component.C-09-input */
+  --component-c-09-input-height: 36px; /* component.C-09-input.height */
+  --component-c-09-input-radius: var(--semantic-radius-control); /* component.C-09-input.radius */
+  --component-c-09-input-variants-default-background: var(--semantic-color-background-surface-raised); /* component.C-09-input.variants.default.background */
+  --component-c-09-input-variants-default-border: var(--semantic-color-border-control); /* component.C-09-input.variants.default.border */
+  --component-c-09-input-variants-default-text: var(--semantic-color-text-primary); /* component.C-09-input.variants.default.text */
+  --component-c-09-input-variants-hover-border: var(--semantic-color-border-control-hover); /* component.C-09-input.variants.hover.border */
+  --component-c-09-input-variants-invalid-border: var(--semantic-color-status-error-text); /* component.C-09-input.variants.invalid.border */
+  --component-c-09-input-variants-readonly-background: var(--semantic-color-background-surface-soft); /* component.C-09-input.variants.readonly.background */
+  --component-c-09-input-variants-readonly-text: var(--semantic-color-text-secondary); /* component.C-09-input.variants.readonly.text */
+  --component-c-09-input-text-size: var(--semantic-typography-size-body); /* component.C-09-input.textSize */
+  --component-c-09-input-text-weight: var(--semantic-typography-weight-regular); /* component.C-09-input.textWeight */
+  --component-c-09-input-line-height: var(--semantic-typography-line-height-normal); /* component.C-09-input.lineHeight */
+  --component-c-09-input-label-size: var(--semantic-typography-size-meta); /* component.C-09-input.labelSize */
+  --component-c-09-input-label-color: var(--semantic-color-text-primary); /* component.C-09-input.labelColor */
+  --component-c-09-input-field-gap: var(--semantic-spacing-space4); /* component.C-09-input.fieldGap */
+  --component-c-09-input-required-tag-radius: var(--semantic-radius-tag); /* component.C-09-input.requiredTagRadius */
+  --component-c-09-input-required-tag-size: var(--semantic-typography-size-micro); /* component.C-09-input.requiredTagSize */
+  --component-c-09-input-focus-width: var(--component-c-08-button-focus-width); /* component.C-09-input.focusWidth */
+  --component-c-09-input-focus-offset: var(--component-c-08-button-focus-offset); /* component.C-09-input.focusOffset */
+  --component-c-09-input-focus-color: var(--semantic-color-border-focus); /* component.C-09-input.focusColor */
+
+  /* component.C-10-composer */
+  --component-c-10-composer-background: var(--semantic-color-background-surface-raised); /* component.C-10-composer.background */
+  --component-c-10-composer-border: var(--semantic-color-border-control); /* component.C-10-composer.border */
+  --component-c-10-composer-radius: var(--semantic-radius-panel); /* component.C-10-composer.radius */
+  --component-c-10-composer-shadow: var(--semantic-shadow-resting); /* component.C-10-composer.shadow */
+  --component-c-10-composer-text: var(--semantic-color-text-primary); /* component.C-10-composer.text */
+  --component-c-10-composer-placeholder: var(--semantic-color-text-muted); /* component.C-10-composer.placeholder */
+  --component-c-10-composer-text-size: var(--semantic-typography-size-body); /* component.C-10-composer.textSize */
+  --component-c-10-composer-line-height: var(--semantic-typography-line-height-normal); /* component.C-10-composer.lineHeight */
+  --component-c-10-composer-row-gap: var(--semantic-spacing-space3); /* component.C-10-composer.rowGap */
+  --component-c-10-composer-focus-width: var(--component-c-08-button-focus-width); /* component.C-10-composer.focusWidth */
+  --component-c-10-composer-focus-offset: var(--component-c-08-button-focus-offset); /* component.C-10-composer.focusOffset */
+  --component-c-10-composer-focus-color: var(--semantic-color-border-focus); /* component.C-10-composer.focusColor */
+
+  /* component.C-11-run-step-table */
+  --component-c-11-run-step-table-background: var(--semantic-color-background-surface); /* component.C-11-run-step-table.background */
+  --component-c-11-run-step-table-border: var(--semantic-color-border-default); /* component.C-11-run-step-table.border */
+  --component-c-11-run-step-table-radius: var(--semantic-radius-card); /* component.C-11-run-step-table.radius */
+  --component-c-11-run-step-table-shadow: var(--semantic-shadow-resting); /* component.C-11-run-step-table.shadow */
+  --component-c-11-run-step-table-header-background: var(--semantic-color-background-surface-soft); /* component.C-11-run-step-table.headerBackground */
+  --component-c-11-run-step-table-header-color: var(--semantic-color-text-muted); /* component.C-11-run-step-table.headerColor */
+  --component-c-11-run-step-table-header-family: var(--semantic-typography-family-mono); /* component.C-11-run-step-table.headerFamily */
+  --component-c-11-run-step-table-header-size: var(--semantic-typography-size-micro); /* component.C-11-run-step-table.headerSize */
+  --component-c-11-run-step-table-header-weight: var(--semantic-typography-weight-semibold); /* component.C-11-run-step-table.headerWeight */
+  --component-c-11-run-step-table-cell-padding-inline: var(--semantic-spacing-space3); /* component.C-11-run-step-table.cellPaddingInline */
+  --component-c-11-run-step-table-row-size: var(--semantic-typography-size-body-small); /* component.C-11-run-step-table.rowSize */
+  --component-c-11-run-step-table-row-color: var(--semantic-color-text-primary); /* component.C-11-run-step-table.rowColor */
+  --component-c-11-run-step-table-row-line-height: var(--semantic-typography-line-height-normal); /* component.C-11-run-step-table.rowLineHeight */
+
+  /* component.C-12-facts-panel */
+  --component-c-12-facts-panel-width: 300px; /* component.C-12-facts-panel.width */
+  --component-c-12-facts-panel-width-narrow: 280px; /* component.C-12-facts-panel.widthNarrow */
+  --component-c-12-facts-panel-background: var(--semantic-color-background-surface); /* component.C-12-facts-panel.background */
+  --component-c-12-facts-panel-border: var(--semantic-color-border-default); /* component.C-12-facts-panel.border */
+  --component-c-12-facts-panel-radius: var(--semantic-radius-panel); /* component.C-12-facts-panel.radius */
+  --component-c-12-facts-panel-shadow: var(--semantic-shadow-resting); /* component.C-12-facts-panel.shadow */
+  --component-c-12-facts-panel-padding: var(--semantic-spacing-space5); /* component.C-12-facts-panel.padding */
+  --component-c-12-facts-panel-title-size: var(--semantic-typography-size-panel-title); /* component.C-12-facts-panel.titleSize */
+  --component-c-12-facts-panel-title-color: var(--semantic-color-text-primary); /* component.C-12-facts-panel.titleColor */
+  --component-c-12-facts-panel-label-size: var(--semantic-typography-size-micro); /* component.C-12-facts-panel.labelSize */
+  --component-c-12-facts-panel-label-color: var(--semantic-color-text-muted); /* component.C-12-facts-panel.labelColor */
+  --component-c-12-facts-panel-value-size: var(--semantic-typography-size-body); /* component.C-12-facts-panel.valueSize */
+  --component-c-12-facts-panel-value-color: var(--semantic-color-text-primary); /* component.C-12-facts-panel.valueColor */
+
+  /* component.C-13-state-panel */
+  --component-c-13-state-panel-width: 560px; /* component.C-13-state-panel.width */
+  --component-c-13-state-panel-background: var(--semantic-color-background-surface); /* component.C-13-state-panel.background */
+  --component-c-13-state-panel-border: var(--semantic-color-border-default); /* component.C-13-state-panel.border */
+  --component-c-13-state-panel-radius: var(--semantic-radius-panel); /* component.C-13-state-panel.radius */
+  --component-c-13-state-panel-shadow: var(--semantic-shadow-resting); /* component.C-13-state-panel.shadow */
+  --component-c-13-state-panel-padding-inline: var(--semantic-spacing-space7); /* component.C-13-state-panel.paddingInline */
+  --component-c-13-state-panel-headline-family: var(--semantic-typography-family-display); /* component.C-13-state-panel.headlineFamily */
+  --component-c-13-state-panel-headline-size: var(--semantic-typography-size-section); /* component.C-13-state-panel.headlineSize */
+  --component-c-13-state-panel-headline-weight: var(--semantic-typography-weight-medium); /* component.C-13-state-panel.headlineWeight */
+  --component-c-13-state-panel-headline-line-height: var(--semantic-typography-line-height-snug); /* component.C-13-state-panel.headlineLineHeight */
+  --component-c-13-state-panel-headline-color: var(--semantic-color-text-primary); /* component.C-13-state-panel.headlineColor */
+  --component-c-13-state-panel-paragraph-size: var(--semantic-typography-size-lead); /* component.C-13-state-panel.paragraphSize */
+  --component-c-13-state-panel-paragraph-color: var(--semantic-color-text-secondary); /* component.C-13-state-panel.paragraphColor */
+  --component-c-13-state-panel-paragraph-line-height: var(--semantic-typography-line-height-relaxed); /* component.C-13-state-panel.paragraphLineHeight */
+
+  /* component.C-14-dialog */
+  --component-c-14-dialog-width: 460px; /* component.C-14-dialog.width */
+  --component-c-14-dialog-background: var(--semantic-color-background-surface); /* component.C-14-dialog.background */
+  --component-c-14-dialog-border: var(--semantic-color-border-strong); /* component.C-14-dialog.border */
+  --component-c-14-dialog-radius: var(--semantic-radius-panel); /* component.C-14-dialog.radius */
+  --component-c-14-dialog-shadow: var(--semantic-shadow-overlay); /* component.C-14-dialog.shadow */
+  --component-c-14-dialog-scrim: var(--semantic-color-background-scrim); /* component.C-14-dialog.scrim */
+  --component-c-14-dialog-padding: var(--semantic-spacing-space6); /* component.C-14-dialog.padding */
+  --component-c-14-dialog-focus-width: var(--component-c-08-button-focus-width); /* component.C-14-dialog.focusWidth */
+  --component-c-14-dialog-focus-offset: var(--component-c-08-button-focus-offset); /* component.C-14-dialog.focusOffset */
+  --component-c-14-dialog-focus-color: var(--semantic-color-border-focus); /* component.C-14-dialog.focusColor */
+
+  /* component.C-16-skeleton */
+  --component-c-16-skeleton-background: var(--semantic-color-background-surface-soft); /* component.C-16-skeleton.background */
+  --component-c-16-skeleton-shimmer: var(--semantic-color-background-surface-hover); /* component.C-16-skeleton.shimmer */
+  --component-c-16-skeleton-radius: var(--semantic-radius-control); /* component.C-16-skeleton.radius */
+}
+
+/* tokens projected: 384 */
