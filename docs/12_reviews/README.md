@@ -2,7 +2,8 @@
 
 Status: Draft
 Originating stage: Stage 13 — Review
-Authoritative assets: None yet. This folder will own independent review and verification records named `CHG-nnn-review.md`.
+Authoritative assets:
+- `docs/12_reviews/CHG-001-review.md` — independent review of the Stage 2 PRD (Status: Reviewed).
 Allowed status: Draft / Reviewed / Frozen. `Frozen` requires explicit user approval recorded in the Frozen assets section below.
 Update entry point: Verifier appends a review record per change record; the Tech Lead links it from the change record. Open decisions only via `docs/00_setup/open_items.md`.
 

@@ -6,9 +6,9 @@ Authority: This file is the single tool-agnostic engineering-rules authority for
 
 ## 1. Precedence and conflict handling
 
-1. Confirmed user decisions (P1) — **missing at Stage 0**.
+1. Confirmed user decisions (P1) — goal, MVP scope, and deployment recorded in [docs/01_product/prd.md](docs/01_product/prd.md); unresolved decisions remain in `open_items.md`.
 2. `docs/00_setup/environment_baseline.md` (P2) — **missing; Stage 1 not started** (TBD-INFRA-004).
-3. Existing repository content (P3) — currently only the Stage 0 governance files.
+3. Existing repository content (P3) — governance documents and the Stage 2 PRD.
 4. This file and the current task contract (P4).
 
 - A lower-precedence instruction MUST NOT override a higher-precedence one.
@@ -17,10 +17,11 @@ Authority: This file is the single tool-agnostic engineering-rules authority for
 
 ## 2. Current state and scope
 
-- Stage 0 — Repository Initialization (close-out). Stage 1 — Environment Baseline not started.
+- Stage 2 — Product Definition: PRD v0.1 (Draft) at [docs/01_product/prd.md](docs/01_product/prd.md).
+- Stage 0 governance documents remain `Draft` pending user sign-off. Stage 1 — Environment Baseline not started.
 - `frontend/` and `backend/` contain boundary documentation only: no business code, scaffold, dependency manifest, lockfile, or tool configuration.
 - Frontend stack, backend stack, data store, dependency tooling, Git remote/CI, and verified commands are unconfirmed TBDs. See `open_items.md`.
-- This stage MUST NOT create business features, PRDs, architecture, data models, APIs, visual design, runnable scaffolding, or `.env.example` placeholders.
+- Implementation is not authorized until the PRD is accepted and the stack is confirmed. This stage MUST NOT create business code, scaffolding, manifests, or tool configuration.
 
 ## 3. Ownership boundaries
 
@@ -34,6 +35,7 @@ Authority: This file is the single tool-agnostic engineering-rules authority for
 
 - Path ownership is mutually exclusive. A cross-boundary change MUST be recorded as an explicit handoff with both owners' acceptance in the change record (RULE-019).
 - Stage 0 bootstrap exception: the Tech Lead creates `frontend/README.md` and `backend/README.md` as boundary documents; ownership transfers when those roles activate.
+- Stage 2 handoff: the Docs Agent is dormant; the Tech Lead authored `docs/01_product/prd.md` under `CHG-001`. Ownership returns to the Docs Agent when that role activates.
 
 ## 4. Agent Team roster
 

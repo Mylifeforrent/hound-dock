@@ -2,9 +2,11 @@
 
 Status: Draft
 
-**Goal:** TBD — not yet confirmed; tracked as [TBD-BIZ-001](docs/00_setup/open_items.md).
+**Goal:** Build a self-hosted internal agent workspace where the team can chat with an AI, register and invoke skills and MCP servers, and define and run reusable tasks.
 
-**Current stage:** Stage 0 — Repository Initialization (close-out). Stage 1 — Environment Baseline has not started.
+**Current stage:** Stage 2 — Product Definition (PRD v0.1, Draft). Implementation has not started.
+
+**MVP scope:** Chat with search, skill registry, MCP registry, and manual task runs; self-hosted with local accounts.
 
 ## Directory navigation
 
@@ -13,7 +15,7 @@ Status: Draft
 | `frontend/` | Future frontend application. Currently contains boundary documentation only — no code, scaffold, or manifest. | [frontend/README.md](frontend/README.md) |
 | `backend/` | Future backend application. Currently contains boundary documentation only — no code, scaffold, or manifest. | [backend/README.md](backend/README.md) |
 | `docs/00_setup/` | Governance, numbered rules, open-item registry, environment baseline. | [README](docs/00_setup/README.md) |
-| `docs/01_product/` | Goal, scope, users, non-goals, PRD. | [README](docs/01_product/README.md) |
+| `docs/01_product/` | Goal, scope, users, non-goals, PRD. | [README](docs/01_product/README.md) · [PRD](docs/01_product/prd.md) |
 | `docs/02_architecture/` | Architecture and decision records. | [README](docs/02_architecture/README.md) |
 | `docs/03_design/` | UX/UI and interaction design. | [README](docs/03_design/README.md) |
 | `docs/04_data/` | Data models, schemas, retention, migrations. | [README](docs/04_data/README.md) |

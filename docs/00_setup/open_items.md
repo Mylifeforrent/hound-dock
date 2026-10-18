@@ -17,8 +17,8 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 
 | Prefix | Open | Resolved |
 |---|---|---|
-| `TBD-BIZ` | 3 | 0 |
-| `TBD-INFRA` | 7 | 1 |
+| `TBD-BIZ` | 5 | 2 |
+| `TBD-INFRA` | 10 | 1 |
 | `CONFLICT` | 0 | 0 |
 
 ---
@@ -26,24 +26,24 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-BIZ-001 — Product goal and one-sentence description
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Stage 2 — Product Definition
-- **Impact:** The root `README.md` goal, product scope, and all downstream acceptance criteria remain undefined. Product, architecture, API, and design work MUST NOT start.
-- **Candidate options:** None proposed. This requires direct user input; it is not a technology choice.
-- **Decision criteria:** Not applicable until the user states the product intent.
-- **Resolution source:** —
+- **Impact:** The root `README.md` goal, product scope, and downstream acceptance criteria were undefined. Resolved by the Stage 2 PRD.
+- **Candidate options:** None proposed. This required direct user input.
+- **Decision criteria:** Not applicable; business input.
+- **Resolution source:** User request of 2026-10-18 defining the internal agent workspace and its four capabilities; recorded in `docs/01_product/prd.md` v0.1.
 
 ## TBD-BIZ-002 — Target users, MVP scope, and non-goals
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Stage 2 — Product Definition
-- **Impact:** Feature boundaries, API surface, data model, and UI scope cannot be defined; any implementation would guess at requirements.
-- **Candidate options:** None proposed. Requires user input.
-- **Decision criteria:** Not applicable until the user states the intended users and MVP boundary.
-- **Resolution source:** —
+- **Impact:** Feature boundaries, API surface, data model, and UI scope cannot be defined without an MVP boundary.
+- **Candidate options:** None proposed. Required direct user input.
+- **Decision criteria:** Not applicable; business input.
+- **Resolution source:** User selected MVP "Chat + registries + manual tasks" and deployment "Self-hosted + local accounts for MVP" on 2026-10-18; recorded in `docs/01_product/prd.md` v0.1. Team size, roles, and publication policy split to TBD-BIZ-004.
 
 ## TBD-BIZ-003 — Data sensitivity and PII boundaries
 
@@ -56,11 +56,55 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Decision criteria:** Regulatory and legal exposure; product need; operating cost of the required controls.
 - **Resolution source:** —
 
+## TBD-BIZ-004 — Team size, roles, and skill/MCP publication policy
+
+- **Category:** Business boundary
+- **Status:** Open
+- **Owner:** User
+- **Must confirm by:** Stage 2 close-out (PRD review)
+- **Impact:** Determines the RBAC model, whether non-admins can author or publish skills, and how much review/approval workflow is required. PRD §6 and §13 depend on it.
+- **Candidate options:** (a) admin-only publishing; (b) anyone may draft, admin approves publication; (c) anyone may publish with audit only.
+- **Decision criteria:** risk tolerance; adoption speed; operating cost of review.
+- **Resolution source:** —
+
+## TBD-BIZ-005 — First MCP integrations and first three MVP tasks
+
+- **Category:** Business boundary
+- **Status:** Open
+- **Owner:** User
+- **Must confirm by:** Stage 2 close-out (PRD review) / Stage 3
+- **Impact:** Defines the integration scope, the acceptance demo, and which internal data enters the product. Without it, the MVP has no concrete workflow to validate.
+- **Candidate options:** (a) documentation/wiki search; (b) issue tracker; (c) Git provider; (d) read-only database; (e) chat/notification. Candidate first tasks: summarize a document, create a ticket, produce a weekly report.
+- **Decision criteria:** user value; data risk; integration effort.
+- **Resolution source:** —
+
+## TBD-BIZ-006 — MVP success metrics and go-live threshold
+
+- **Category:** Business boundary
+- **Status:** Open
+- **Owner:** User
+- **Must confirm by:** Stage 2 close-out (PRD review)
+- **Impact:** Acceptance and rollout cannot be judged without measurable targets. PRD §14 proposes metrics but they are not confirmed.
+- **Candidate options:** (a) weekly active members; (b) tasks run per week; (c) task success rate; (d) time saved; (e) zero secret-exposure incidents.
+- **Decision criteria:** measurable with low instrumentation cost; reflects real adoption.
+- **Resolution source:** —
+
+## TBD-BIZ-007 — Skill and task execution model in v1
+
+- **Category:** Business boundary
+- **Status:** Open
+- **Owner:** User
+- **Must confirm by:** Stage 2 close-out (PRD review)
+- **Impact:** Determines whether v1 skills are prompt-only or include API/code execution, and whether task steps are linear or branching. Affects security controls, sandbox requirements, and MVP effort. PRD §5 and §7 currently propose prompt-only skills and linear steps.
+- **Candidate options:** (a) prompt-only skills and task steps limited to skill invocation; (b) prompt skills plus MCP tool steps, linear execution (current proposal); (c) code-execution skills and branching/loops.
+- **Decision criteria:** user value; security risk; build and operating effort.
+- **Resolution source:** —
+
 ## TBD-INFRA-001 — Frontend stack
 
 - **Category:** Engineering decision
 - **Status:** Open
-- **Owner:** User; Tech Lead prepares a three-point justification once TBD-BIZ-001 and TBD-BIZ-002 are confirmed
+- **Owner:** User; Tech Lead prepares the comparison after PRD review
 - **Must confirm by:** Stage 3 — Architecture
 - **Impact:** `frontend/` MUST remain empty of code, manifests, and commands until this is resolved.
 - **Candidate options:** (a) React + TypeScript + Vite; (b) Next.js; (c) Vue 3 + Vite; (d) SvelteKit.
@@ -71,7 +115,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 
 - **Category:** Engineering decision
 - **Status:** Open
-- **Owner:** User; Tech Lead prepares a three-point justification once TBD-BIZ-001 and TBD-BIZ-002 are confirmed
+- **Owner:** User; Tech Lead prepares the comparison after PRD review
 - **Must confirm by:** Stage 3 — Architecture
 - **Impact:** `backend/` MUST remain empty of code, manifests, and commands until this is resolved.
 - **Candidate options:** (a) Python 3.12 + FastAPI + uv; (b) Node.js 22 + TypeScript (Fastify or NestJS); (c) Java 21 + Spring Boot; (d) Go 1.23.
@@ -143,6 +187,39 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Candidate options:** (a) 15-stage model with `docs/00_setup` covering Stages 0–1 and `docs/01_product` = Stage 2 through `docs/13_changes` = Stage 14; (b) folder index equals stage number; (c) a user-supplied model.
 - **Decision criteria:** consistency with the P2 reference to Stage 1; one docs home per stage; no unlabeled directory.
 - **Resolution source:** User selected option (a) during Stage 0 plan confirmation on 2026-10-18 (this session). Applied in `docs/00_setup/README.md` and every docs README.
+
+## TBD-INFRA-009 — LLM provider, model gateway, and data residency
+
+- **Category:** Engineering decision
+- **Status:** Open
+- **Owner:** User
+- **Must confirm by:** Stage 3 — Architecture
+- **Impact:** Determines model access, tool-calling reliability, data boundary, and cost. PRD §12 and §17 depend on it; no external model call may be configured before it is resolved.
+- **Candidate options:** (a) internal OpenAI-compatible gateway; (b) Azure OpenAI; (c) a hosted API such as DeepSeek; (d) local vLLM or Ollama.
+- **Decision criteria:** data boundary; tool-calling capability; operating cost.
+- **Resolution source:** —
+
+## TBD-INFRA-010 — SSO/IdP for post-MVP
+
+- **Category:** Engineering decision
+- **Status:** Open
+- **Owner:** User
+- **Must confirm by:** Stage 9 — Security, and before any wider rollout
+- **Impact:** The MVP uses local accounts by user decision. Production rollout needs SSO; the identity provider affects user provisioning and session design.
+- **Candidate options:** (a) Feishu; (b) DingTalk; (c) Azure AD/Entra ID; (d) Keycloak/Authentik; (e) Google Workspace.
+- **Decision criteria:** existing identity provider; integration effort; security requirements.
+- **Resolution source:** —
+
+## TBD-INFRA-011 — Search provider and data boundary
+
+- **Category:** Engineering decision
+- **Status:** Open
+- **Owner:** User
+- **Must confirm by:** Stage 3 — Architecture
+- **Impact:** The chat search capability (FR-004, FR-010, FR-011) cannot be implemented without a provider and a data boundary. Determines whether queries leave the internal network.
+- **Candidate options:** (a) internal document/knowledge search only; (b) a web search API such as Tavily, Bing, or Google; (c) both, with per-request choice.
+- **Decision criteria:** data boundary; result quality; operating cost.
+- **Resolution source:** —
 
 ---
 
