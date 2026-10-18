@@ -8,6 +8,7 @@ Authoritative assets:
 - `docs/13_changes/CHG-001-stage-2-prd.md` — Stage 2 product requirements document.
 - `docs/13_changes/CHG-002-prototype-ui.md` — Stage 2 clickable UI prototype.
 - `docs/13_changes/CHG-003-prototype-ia.md` — prototype IA revision: chat-first home and Manage entry.
+- `docs/13_changes/CHG-004-prototype-ia-v2.md` — prototype IA v2: Tasks shortcut, history actions, expanded Manage.
 Allowed status: Draft / Reviewed / Frozen. A merged record MUST be `Reviewed` before the next change lands; `CHG-000` remains `Draft` until the user's Stage 0 sign-off. `Frozen` is reserved for a record locked at a stage gate. Records MUST NOT be deleted; corrections MUST be appended.
 Update entry point: Tech Lead opens every change record; other owners supply evidence through the Task Brief handoff and do not edit this folder.
 

@@ -35,6 +35,7 @@
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></symbol>
     <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M10 7l-5 5 5 5"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 3h6l-1 6 4 3v2H6v-2l4-3-1-6ZM12 14v7"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v6H4V6h6"/></symbol>
   </svg>
 
@@ -61,20 +62,25 @@
         <span>New chat</span>
       </button>
 
+      <button class="daily-link" type="button" data-view="tasks">
+        <svg class="icon"><use href="#i-tasks"/></svg>
+        <span>Tasks</span>
+        <span class="daily-count" id="daily-task-count">2</span>
+      </button>
+
       <nav class="history" aria-label="Chat history">
         <div class="history-head">
           <p class="sidebar-label">Chats</p>
           <span class="history-count" id="history-count"></span>
         </div>
+        <label class="history-search">
+          <svg class="icon"><use href="#i-search"/></svg>
+          <input id="chat-search" type="search" placeholder="Search chats…" autocomplete="off" aria-label="Search chats">
+        </label>
         <div id="chat-history"></div>
       </nav>
 
       <div class="sidebar-foot">
-        <button class="manage-btn" id="manage-btn" type="button" aria-haspopup="dialog">
-          <svg class="icon"><use href="#i-grid"/></svg>
-          <span>Manage workspace</span>
-          <svg class="icon manage-chevron"><use href="#i-chevron"/></svg>
-        </button>
         <div class="stamp">Prototype<br><span>Mock data</span></div>
         <div class="sidebar-user">
           <span class="avatar avatar-sm">AC</span>
@@ -97,8 +103,9 @@
           <span class="crumb-current" id="crumb-current">Chat</span>
         </div>
         <div class="topbar-right">
-          <button class="icon-btn" type="button" data-open-manage aria-label="Manage workspace" title="Manage workspace">
+          <button class="manage-top-btn" type="button" data-open-manage aria-label="Manage workspace" title="Manage workspace">
             <svg class="icon"><use href="#i-grid"/></svg>
+            <span>Manage</span>
           </button>
           <span class="mock-pill">MOCK</span>
           <span class="avatar">AC</span>
@@ -264,13 +271,89 @@
           <div class="ledger" id="runs-table"></div>
         </section>
 
+        <!-- USAGE -->
+        <section class="view" id="view-usage" data-view-panel="usage" aria-labelledby="usage-title" hidden>
+          <div class="view-head">
+            <div>
+              <p class="kicker">Operations / Usage</p>
+              <h1 class="page-title" id="usage-title">Usage.</h1>
+              <p class="page-sub">How the workspace is being used, at a glance.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" type="button" data-toast="Period selection is a mock in this prototype.">Last 30 days</button>
+            </div>
+          </div>
+          <div class="usage-stats">
+            <div class="usage-stat"><p class="kicker">Conversations</p><strong id="usage-conversations">6</strong><span id="usage-conversations-sub">2 pinned · 4 active</span></div>
+            <div class="usage-stat"><p class="kicker">Runs</p><strong id="usage-runs">5</strong><span id="usage-runs-sub">4 succeeded · 1 failed</span></div>
+            <div class="usage-stat"><p class="kicker">Published skills</p><strong id="usage-skills">3</strong><span id="usage-skills-sub">of 6 total</span></div>
+            <div class="usage-stat"><p class="kicker">MCP servers</p><strong id="usage-mcp">2</strong><span id="usage-mcp-sub">connected of 4</span></div>
+          </div>
+          <div class="usage-grid">
+            <section class="usage-card">
+              <div class="admin-card-head"><div><p class="kicker">Activity</p><h2>Runs per day</h2></div><span class="status neutral">Mock</span></div>
+              <div class="bar-chart" aria-label="Mock runs per day">
+                <div class="bar" style="--h:42%"><span>Mon</span></div>
+                <div class="bar" style="--h:66%"><span>Tue</span></div>
+                <div class="bar" style="--h:31%"><span>Wed</span></div>
+                <div class="bar" style="--h:84%"><span>Thu</span></div>
+                <div class="bar" style="--h:58%"><span>Fri</span></div>
+                <div class="bar" style="--h:18%"><span>Sat</span></div>
+                <div class="bar" style="--h:12%"><span>Sun</span></div>
+              </div>
+            </section>
+            <section class="usage-card">
+              <div class="admin-card-head"><div><p class="kicker">Efficiency</p><h2>Tokens &amp; spend</h2></div></div>
+              <dl class="kv">
+                <div><dt>Tokens</dt><dd>42.5k</dd></div>
+                <div><dt>Estimated spend</dt><dd>$1.03</dd></div>
+                <div><dt>Avg run</dt><dd>1m 08s</dd></div>
+                <div><dt>Failed runs</dt><dd>1 of 5</dd></div>
+              </dl>
+            </section>
+            <section class="usage-card wide">
+              <div class="admin-card-head"><div><p class="kicker">Top work</p><h2>Most-run tasks</h2></div></div>
+              <table class="mini-table">
+                <thead><tr><th>Task</th><th>Runs</th><th>Success</th><th>Owner</th></tr></thead>
+                <tbody>
+                  <tr><td>Weekly Release Brief</td><td>2</td><td>1 / 2</td><td>Alex Chen</td></tr>
+                  <tr><td>Triage New Tickets</td><td>2</td><td>2 / 2</td><td>Priya Nair</td></tr>
+                  <tr><td>Onboarding Checklist Refresh</td><td>1</td><td>1 / 1</td><td>Sam Ito</td></tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        </section>
+
+        <!-- AUDIT -->
+        <section class="view" id="view-audit" data-view-panel="audit" aria-labelledby="audit-title" hidden>
+          <div class="view-head">
+            <div>
+              <p class="kicker">Operations / Audit</p>
+              <h1 class="page-title" id="audit-title">Audit.</h1>
+              <p class="page-sub">Registry changes, tool calls, runs, and access.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" type="button" data-toast="Audit export is a mock in this prototype.">Export</button>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="filter-chips" id="audit-filters" role="group" aria-label="Filter audit events"></div>
+            <span class="toolbar-note" id="audit-count"></span>
+          </div>
+          <table class="audit-table">
+            <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th><th>Outcome</th></tr></thead>
+            <tbody id="audit-body"></tbody>
+          </table>
+        </section>
+
         <!-- ADMIN -->
         <section class="view" id="view-admin" data-view-panel="admin" aria-labelledby="admin-title" hidden>
           <div class="view-head">
             <div>
-              <p class="kicker">Settings / Admin</p>
-              <h1 class="page-title" id="admin-title">Admin.</h1>
-              <p class="page-sub">Local accounts and the model gateway for the MVP.</p>
+              <p class="kicker">Settings / Workspace</p>
+              <h1 class="page-title" id="admin-title">Settings.</h1>
+              <p class="page-sub">Workspace settings, identity, and the model gateway.</p>
             </div>
             <div class="head-actions">
               <button class="btn btn-primary" type="button" data-toast="Settings saved (mock).">Save settings</button>

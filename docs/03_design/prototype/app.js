@@ -372,6 +372,7 @@
       title: 'Release notes & blockers',
       group: 'Today',
       updated: '2h ago',
+      pinned: true,
       messages: INITIAL_MESSAGES.map((message) => ({ ...message }))
     },
     {
@@ -415,6 +416,7 @@
       title: 'Token rotation runbook',
       group: 'Previous 7 days',
       updated: '3d ago',
+      pinned: true,
       messages: [
         { role: 'user', text: 'Search the runbook for the token rotation steps.' },
         {
@@ -433,6 +435,18 @@
     { id: 'chat-incident', title: 'Incident postmortem', group: 'Previous 7 days', updated: '5d ago', messages: [] }
   ];
 
+
+  const AUDIT = [
+    { time: '2h ago', actor: 'Alex Chen', action: 'skill.publish', target: 'Release Notes Writer v3', category: 'Registry', outcome: 'Succeeded' },
+    { time: '4h ago', actor: 'Priya Nair', action: 'mcp.tool.toggle', target: 'jira.create → off', category: 'Tools', outcome: 'Succeeded' },
+    { time: '5h ago', actor: 'Sam Ito', action: 'task.run', target: 'Weekly Release Brief', category: 'Runs', outcome: 'Failed' },
+    { time: '1d ago', actor: 'Alex Chen', action: 'run.complete', target: 'RUN-1042', category: 'Runs', outcome: 'Succeeded' },
+    { time: '2d ago', actor: 'Alex Chen', action: 'mcp.register', target: 'Confluence MCP', category: 'Tools', outcome: 'Succeeded' },
+    { time: '3d ago', actor: 'Priya Nair', action: 'user.invite', target: 'Sam Ito', category: 'Access', outcome: 'Succeeded' },
+    { time: '5d ago', actor: 'System', action: 'secret.rotate', target: 'llm/internal-key', category: 'Access', outcome: 'Succeeded' },
+    { time: '6d ago', actor: 'Sam Ito', action: 'skill.deprecate', target: 'Incident Postmortem Helper v2', category: 'Registry', outcome: 'Succeeded' }
+  ];
+
   const state = {
     view: 'chat',
     skills: SKILLS,
@@ -448,7 +462,9 @@
     typing: false,
     skillFilter: 'All',
     skillQuery: '',
+    chatQuery: '',
     runFilter: 'All',
+    auditFilter: 'All',
     nextRun: 1043
   };
 
@@ -489,7 +505,9 @@
     skills: 'Skills',
     mcp: 'MCP',
     runs: 'Runs',
-    admin: 'Admin'
+    usage: 'Usage',
+    audit: 'Audit',
+    admin: 'Settings'
   };
 
   let toastTimer = null;
@@ -600,20 +618,32 @@
   function renderHistory() {
     const container = $('#chat-history');
     if (!container) return;
+    const query = state.chatQuery.trim().toLowerCase();
+    const searchable = (chat) => [chat.title, ...chat.messages.flatMap((message) => [message.text || '', message.body || ''])]
+      .join(' ')
+      .replace(/<[^>]*>/g, ' ')
+      .toLowerCase();
+    const visible = state.chats.filter((chat) => !query || searchable(chat).includes(query));
+    const pinned = visible.filter((chat) => chat.pinned);
     const groups = ['Today', 'Yesterday', 'Previous 7 days'];
     const count = $('#history-count');
-    if (count) count.textContent = String(state.chats.length);
-    container.innerHTML = groups.map((group) => {
-      const chats = state.chats.filter((chat) => chat.group === group);
-      if (!chats.length) return '';
-      return `<div class="history-group">
-        <p class="history-label">${group}</p>
-        ${chats.map((chat) => `<button type="button" class="history-item ${chat.id === state.activeChatId ? 'is-active' : ''}" data-chat-id="${chat.id}" ${chat.id === state.activeChatId ? 'aria-current="true"' : ''}>
-          <span class="history-title">${esc(chat.title)}</span>
-          <span class="history-meta">${esc(chat.updated)}</span>
-        </button>`).join('')}
-      </div>`;
-    }).join('') || `<p class="small muted" style="padding:8px">No chats yet.</p>`;
+    if (count) count.textContent = query ? `${visible.length}/${state.chats.length}` : String(state.chats.length);
+    const row = (chat) => `<div class="history-row ${chat.id === state.activeChatId ? 'is-active' : ''}">
+      <button type="button" class="history-item ${chat.id === state.activeChatId ? 'is-active' : ''}" data-chat-id="${chat.id}" ${chat.id === state.activeChatId ? 'aria-current="true"' : ''}>
+        <span class="history-title">${chat.pinned ? `<span class="history-pin">${icon('pin')}</span>` : ''}<span class="history-title-text">${esc(chat.title)}</span></span>
+        <span class="history-meta">${esc(chat.updated)}</span>
+      </button>
+      <button type="button" class="history-more" data-chat-actions="${chat.id}" aria-label="Actions for ${esc(chat.title)}">⋯</button>
+    </div>`;
+    const section = (label, chats) => chats.length ? `<div class="history-group">
+        <p class="history-label">${label}</p>
+        ${chats.map(row).join('')}
+      </div>` : '';
+    const sections = [
+      section('Pinned', pinned),
+      ...groups.map((group) => section(group, visible.filter((chat) => !chat.pinned && chat.group === group)))
+    ].join('');
+    container.innerHTML = sections || `<p class="small muted" style="padding:8px">No chats match.</p>`;
   }
 
   function selectChat(id) {
@@ -708,6 +738,8 @@
         <div class="task-foot"><span>${esc(task.owner)}</span><span>Last run ${esc(task.lastRun)}</span></div>
       </article>
     `).join('');
+    const dailyCount = $('#daily-task-count');
+    if (dailyCount) dailyCount.textContent = String(state.tasks.filter((task) => task.status === 'Published').length);
   }
 
   /* ---------------- render: runs ---------------- */
@@ -747,6 +779,53 @@
     `;
   }
 
+
+  /* ---------------- render: audit ---------------- */
+
+  function renderAudit() {
+    const body = $('#audit-body');
+    if (!body) return;
+    const categories = ['All', 'Registry', 'Tools', 'Runs', 'Access'];
+    const filters = $('#audit-filters');
+    if (filters) {
+      filters.innerHTML = categories.map((category) => `
+        <button type="button" class="filter-chip ${state.auditFilter === category ? 'is-active' : ''}" data-audit-filter="${category}">${category}</button>
+      `).join('');
+    }
+    const events = AUDIT.filter((event) => state.auditFilter === 'All' || event.category === state.auditFilter);
+    const count = $('#audit-count');
+    if (count) count.textContent = `${events.length} events · append-only`;
+    body.innerHTML = events.length
+      ? events.map((event) => `<tr>
+          <td class="mono">${esc(event.time)}</td>
+          <td>${esc(event.actor)}</td>
+          <td><code>${esc(event.action)}</code></td>
+          <td>${esc(event.target)}</td>
+          <td>${statusBadge(event.outcome)}</td>
+        </tr>`).join('')
+      : `<tr><td colspan="5" class="muted" style="text-align:center;padding:24px">No events match this filter.</td></tr>`;
+  }
+
+
+  /* ---------------- render: usage ---------------- */
+
+  function renderUsage() {
+    const pinned = state.chats.filter((chat) => chat.pinned).length;
+    const succeeded = state.runs.filter((run) => run.status === 'Succeeded').length;
+    const failed = state.runs.filter((run) => run.status === 'Failed').length;
+    const published = state.skills.filter((skill) => skill.status === 'Published').length;
+    const connected = state.mcps.filter((mcp) => mcp.status === 'Connected').length;
+    const set = (id, value) => { const node = $(`#${id}`); if (node) node.textContent = value; };
+    set('usage-conversations', String(state.chats.length));
+    set('usage-conversations-sub', `${pinned} pinned · ${state.chats.length - pinned} active`);
+    set('usage-runs', String(state.runs.length));
+    set('usage-runs-sub', `${succeeded} succeeded · ${failed} failed`);
+    set('usage-skills', String(published));
+    set('usage-skills-sub', `of ${state.skills.length} total`);
+    set('usage-mcp', String(connected));
+    set('usage-mcp-sub', `connected of ${state.mcps.length}`);
+  }
+
   /* ---------------- render all / navigation ---------------- */
 
   function renderAll() {
@@ -758,6 +837,8 @@
     renderTasks();
     renderRunFilters();
     renderRuns();
+    renderAudit();
+    renderUsage();
   }
 
   function navigate(view) {
@@ -768,7 +849,9 @@
       panel.hidden = !active;
       panel.classList.toggle('is-active', active);
     });
-    $('#crumb-current').textContent = view === 'chat' ? 'Chat' : `Manage · ${viewNames[view]}`;
+    const crumb = view === 'chat' ? 'Chat' : view === 'tasks' ? 'Tasks' : `Manage · ${viewNames[view]}`;
+    $('#crumb-current').textContent = crumb;
+    $$('.daily-link').forEach((link) => link.classList.toggle('is-active', link.dataset.view === view));
     const back = $('#back-to-chat');
     if (back) back.hidden = view === 'chat';
     document.body.classList.remove('nav-open');
@@ -778,8 +861,11 @@
     window.scrollTo({ top: 0, behavior: 'auto' });
     try { history.replaceState(null, '', `#${view}`); } catch (error) { /* file:// can reject replaceState */ }
     if (view === 'chat') renderHistory();
+    if (view === 'tasks') renderTasks();
     if (view === 'skills') { renderSkillFilters(); renderSkills(); }
     if (view === 'runs') renderRuns();
+    if (view === 'audit') renderAudit();
+    if (view === 'usage') renderUsage();
   }
 
   /* ---------------- drawer ---------------- */
@@ -977,22 +1063,43 @@
     const publishedSkills = state.skills.filter((skill) => skill.status === 'Published').length;
     const connectedMcp = state.mcps.filter((mcp) => mcp.status === 'Connected').length;
     const publishedTasks = state.tasks.filter((task) => task.status === 'Published').length;
-    const rows = [
-      { view: 'skills', icon: 'skills', title: 'Skills', desc: 'Versioned instructions', meta: `${publishedSkills} published · ${state.skills.length} total` },
-      { view: 'mcp', icon: 'mcp', title: 'MCP servers', desc: 'Governed tool connections', meta: `${connectedMcp} connected · ${state.mcps.length} total` },
-      { view: 'tasks', icon: 'tasks', title: 'Tasks', desc: 'Reusable work definitions', meta: `${publishedTasks} published · ${state.tasks.length} total` },
-      { view: 'runs', icon: 'runs', title: 'Runs', desc: 'Execution history and artifacts', meta: `${state.runs.length} recorded` },
-      { view: 'admin', icon: 'admin', title: 'Admin', desc: 'Local accounts and model gateway', meta: 'MVP settings' }
+    const sections = [
+      {
+        label: 'Registries',
+        rows: [
+          { view: 'skills', icon: 'skills', title: 'Skills', desc: 'Versioned instructions', meta: `${publishedSkills} published · ${state.skills.length} total` },
+          { view: 'mcp', icon: 'mcp', title: 'MCP servers', desc: 'Governed tool connections', meta: `${connectedMcp} connected · ${state.mcps.length} total` },
+          { view: 'tasks', icon: 'tasks', title: 'Tasks', desc: 'Reusable work definitions', meta: `${publishedTasks} published · ${state.tasks.length} total` }
+        ]
+      },
+      {
+        label: 'Operations',
+        rows: [
+          { view: 'runs', icon: 'runs', title: 'Runs', desc: 'Execution history and artifacts', meta: `${state.runs.length} recorded` },
+          { view: 'usage', icon: 'spark', title: 'Usage', desc: 'Adoption, tokens, and spend', meta: 'Last 30 days' },
+          { view: 'audit', icon: 'shield', title: 'Audit', desc: 'Registry, tool, run, and access events', meta: 'Append-only' }
+        ]
+      },
+      {
+        label: 'Configuration',
+        rows: [
+          { view: 'admin', icon: 'admin', title: 'Settings', desc: 'Accounts, model gateway, and policy', meta: 'MVP settings' }
+        ]
+      }
     ];
+    const rowHtml = (row) => `<button type="button" class="manage-row" data-view="${row.view}">
+      <span class="manage-icon">${icon(row.icon)}</span>
+      <span><strong>${row.title}</strong><small>${row.desc} · ${row.meta}</small></span>
+      <span class="manage-chevron-row">→</span>
+    </button>`;
     openDrawer(`
-      ${drawerHead('Workspace', 'Manage.', 'Registries and administration — occasional configuration.', '')}
-      <p class="drawer-desc">The daily flow stays in chat. Open a registry only when you need to configure or inspect it.</p>
+      ${drawerHead('Workspace', 'Manage.', 'Registries, operations, and settings — occasional configuration.', '')}
+      <p class="drawer-desc">The daily flow stays in chat and Tasks. Open Manage only when you need to configure or inspect the workspace.</p>
       <div class="manage-list">
-        ${rows.map((row) => `<button type="button" class="manage-row" data-view="${row.view}">
-          <span class="manage-icon">${icon(row.icon)}</span>
-          <span><strong>${row.title}</strong><small>${row.desc} · ${row.meta}</small></span>
-          <span class="manage-chevron-row">→</span>
-        </button>`).join('')}
+        ${sections.map((section) => `<div class="manage-section">
+          <p class="manage-section-label">${section.label}</p>
+          ${section.rows.map(rowHtml).join('')}
+        </div>`).join('')}
       </div>
       <p class="small muted" style="margin-top:16px">All registry changes are audited. Write-capable tools are disabled in v1.</p>
     `);
@@ -1016,6 +1123,45 @@
       <div><p class="kicker">${kicker}</p><h2 class="modal-title" id="modal-title">${title}</h2><p class="modal-sub">${subtitle}</p></div>
       <button type="button" class="icon-btn" data-close-modal aria-label="Close dialog">${icon('close')}</button>
     </div>${body}`;
+  }
+
+  function showModal(html) {
+    if (modal.hidden) rememberFocus();
+    modal.innerHTML = html;
+    modal.hidden = false;
+    $('#scrim').hidden = false;
+    syncScrollLock();
+    setTimeout(() => modal.querySelector('input, textarea, select, button')?.focus(), 30);
+  }
+
+  function openChatActions(id) {
+    const chat = state.chats.find((item) => item.id === id);
+    if (!chat) return;
+    showModal(modalShell('Chat', 'Chat actions.', 'Rename, pin, or delete this conversation.', `
+      <form data-form="rename-chat" data-chat-id="${chat.id}">
+        <div class="field"><label for="chat-rename">Title</label><input id="chat-rename" name="title" required value="${esc(chat.title)}"></div>
+        <div class="form-actions">
+          <button type="button" class="btn" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn-primary">Save title</button>
+        </div>
+      </form>
+      <div class="drawer-actions" style="margin-top:16px;border-top:1px solid var(--line);padding-top:14px">
+        <button type="button" class="btn" data-pin-chat="${chat.id}">${chat.pinned ? 'Unpin' : 'Pin'} chat</button>
+        <button type="button" class="btn btn-danger" data-delete-chat="${chat.id}">Delete chat</button>
+      </div>
+    `));
+  }
+
+  function confirmDeleteChat(id) {
+    const chat = state.chats.find((item) => item.id === id);
+    if (!chat) return;
+    showModal(modalShell('Chat', 'Delete this chat?', 'This is a mock; the conversation disappears from history.', `
+      <p class="drawer-desc">“${esc(chat.title)}” will be removed from the prototype.</p>
+      <div class="form-actions">
+        <button type="button" class="btn" data-close-modal>Cancel</button>
+        <button type="button" class="btn btn-danger" data-confirm-delete-chat="${chat.id}">Delete chat</button>
+      </div>
+    `));
   }
 
   const toolOptions = () => state.mcps.flatMap((mcp) => mcp.tools.map((tool) => ({ mcp, tool })));
@@ -1173,6 +1319,9 @@
   }
 
   function newChat() {
+    state.chatQuery = '';
+    const search = $('#chat-search');
+    if (search) search.value = '';
     const existing = state.chats.find((chat) => chat.title === 'New conversation' && chat.messages.length === 0);
     if (existing) {
       selectChat(existing.id);
@@ -1378,6 +1527,22 @@
       renderTasks();
       openTask(task.id);
       showToast(`Task saved as draft: ${name} (mock).`);
+      return;
+    }
+
+    if (type === 'rename-chat') {
+      const chatId = form.dataset.chatId;
+      const title = String(data.get('title') || '').trim();
+      if (!title) { showToast('A title is required.'); return; }
+      const chat = state.chats.find((item) => item.id === chatId);
+      if (chat) {
+        chat.title = title;
+        chat.updated = 'now';
+      }
+      closeModal();
+      renderHistory();
+      if (state.activeChatId === chatId) renderChat();
+      showToast('Chat renamed (mock).');
     }
   }
 
@@ -1422,7 +1587,8 @@
     if (viewButton) { event.preventDefault(); navigate(viewButton.dataset.view); return; }
 
     if (hit('[data-toggle-nav]')) { document.body.classList.toggle('nav-open'); return; }
-    if (hit('#manage-btn') || hit('[data-open-manage]')) { openManage(); return; }
+    if (hit('[data-open-manage]')) { openManage(); return; }
+    if (hit('[data-chat-actions]')) { openChatActions(hit('[data-chat-actions]').dataset.chatActions); return; }
     if (hit('[data-chat-id]')) { selectChat(hit('[data-chat-id]').dataset.chatId); return; }
     if (hit('[data-action="new-chat"]')) { newChat(); return; }
     if (hit('[data-prompt]')) {
@@ -1500,6 +1666,36 @@
     }
     if (hit('[data-run-task]')) { runTask(hit('[data-run-task]').dataset.runTask); return; }
     if (hit('[data-rerun]')) { runTask(hit('[data-rerun]').dataset.rerun); return; }
+    if (hit('[data-pin-chat]')) {
+      const chat = state.chats.find((item) => item.id === hit('[data-pin-chat]').dataset.pinChat);
+      if (chat) {
+        chat.pinned = !chat.pinned;
+        closeModal();
+        renderHistory();
+        showToast(chat.pinned ? 'Chat pinned (mock).' : 'Chat unpinned (mock).');
+      }
+      return;
+    }
+    if (hit('[data-delete-chat]')) { confirmDeleteChat(hit('[data-delete-chat]').dataset.deleteChat); return; }
+    if (hit('[data-confirm-delete-chat]')) {
+      const id = hit('[data-confirm-delete-chat]').dataset.confirmDeleteChat;
+      const index = state.chats.findIndex((chat) => chat.id === id);
+      if (index >= 0) state.chats.splice(index, 1);
+      if (state.activeChatId === id) {
+        if (state.chats.length) selectChat(state.chats[0].id);
+        else newChat();
+      } else {
+        closeModal();
+        renderHistory();
+      }
+      showToast('Chat deleted (mock).');
+      return;
+    }
+    if (hit('[data-audit-filter]')) {
+      state.auditFilter = hit('[data-audit-filter]').dataset.auditFilter;
+      renderAudit();
+      return;
+    }
     if (hit('[data-toast]')) { showToast(hit('[data-toast]').dataset.toast); return; }
 
     if (hit('#scrim')) { closeDrawer(); closeModal(); return; }
@@ -1571,6 +1767,10 @@
     if (event.target.id === 'skill-search') {
       state.skillQuery = event.target.value;
       renderSkills();
+    }
+    if (event.target.id === 'chat-search') {
+      state.chatQuery = event.target.value;
+      renderHistory();
     }
   });
 
