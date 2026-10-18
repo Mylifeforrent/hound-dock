@@ -20,6 +20,7 @@ Authority: This file is the single tool-agnostic engineering-rules authority for
 - Stage 2 — Product Definition: PRD v0.1 (Draft) at [docs/01_product/prd.md](docs/01_product/prd.md).
 - Stage 0 governance documents remain `Draft` pending user sign-off. Stage 1 — Environment Baseline not started.
 - `frontend/` and `backend/` contain boundary documentation only: no business code, scaffold, dependency manifest, lockfile, or tool configuration.
+- A throwaway clickable UI prototype with mock data and no backend exists at `docs/03_design/prototype/`. It is a design artifact, not implementation, and MUST NOT be promoted to `frontend/` unchanged.
 - Frontend stack, backend stack, data store, dependency tooling, Git remote/CI, and verified commands are unconfirmed TBDs. See `open_items.md`.
 - Implementation is not authorized until the PRD is accepted and the stack is confirmed. This stage MUST NOT create business code, scaffolding, manifests, or tool configuration.
 
@@ -29,13 +30,13 @@ Authority: This file is the single tool-agnostic engineering-rules authority for
 |---|---|---|---|
 | `frontend/**` | Frontend Agent | Frontend application assets after activation | Backend logic, secrets, PII, governance docs, manifests before TBD-INFRA-001 |
 | `backend/**` | Backend Agent | Backend application assets after activation | Frontend assets, secrets, PII, governance docs, manifests before TBD-INFRA-002 |
-| `docs/01_product/**` … `docs/11_quality/**` | Docs Agent | Product, architecture, design, data, API, development, testing, security, deployment, operations, quality docs | Source code, root governance, change records, review records |
+| `docs/01_product/**` … `docs/11_quality/**` | Docs Agent | Product, architecture, design, data, API, development, testing, security, deployment, operations, quality docs; throwaway design prototypes under `docs/03_design/` | Production source code, root governance, change records, review records |
 | `docs/12_reviews/**` | Verifier | Independent review and verification records | Any source or docs edit outside `docs/12_reviews/**` |
 | `README.md`, `AGENTS.md`, `.gitignore`, `docs/00_setup/**`, `docs/13_changes/**` | Tech Lead | Governance, numbered rules, open-item registry, change records | Business code or assets owned by another role |
 
 - Path ownership is mutually exclusive. A cross-boundary change MUST be recorded as an explicit handoff with both owners' acceptance in the change record (RULE-019).
 - Stage 0 bootstrap exception: the Tech Lead creates `frontend/README.md` and `backend/README.md` as boundary documents; ownership transfers when those roles activate.
-- Stage 2 handoff: the Docs Agent is dormant; the Tech Lead authored `docs/01_product/prd.md` under `CHG-001`. Ownership returns to the Docs Agent when that role activates.
+- Stage 2 handoff: the Docs Agent is dormant; the Tech Lead authored `docs/01_product/prd.md` under `CHG-001` and `docs/03_design/prototype/` under `CHG-002`. Ownership returns to the Docs Agent when that role activates.
 
 ## 4. Agent Team roster
 

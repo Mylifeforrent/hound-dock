@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="hound-dock clickable UI prototype — mock data only, not production.">
+  <title>hound-dock — prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9l-5 4v-15Z"/><path d="M8 10h8M8 13h5"/></symbol>
+    <symbol id="i-tasks" viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="m8 9 1.5 1.5L12 8M8 15h6"/></symbol>
+    <symbol id="i-skills" viewBox="0 0 24 24"><path d="m12 3 2.4 5.2L20 10l-4.2 4.1.9 6.4L12 17.8 7.3 20.5l.9-6.4L4 10l5.6-1.8L12 3Z"/></symbol>
+    <symbol id="i-mcp" viewBox="0 0 24 24"><path d="M8 4v5M16 4v5M6 9h12v4a6 6 0 0 1-12 0V9ZM12 19v3"/></symbol>
+    <symbol id="i-runs" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-admin" viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-4 6 4v11"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4 4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m4 12 16-7-4.5 14L11 13l-7-1Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.5"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 21 20H3L12 4Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M7 8h10v3a5 5 0 0 1-10 0V8ZM12 16v5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M14 7l5 5-5 5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 6M20 5v6h-6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 4.5-3.4 7.8-8 9-4.6-1.2-8-4.5-8-9V6l8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M15 12v2"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v6H4V6h6"/></symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="app">
+    <aside class="sidebar" aria-label="Workspace navigation">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><span>H</span><i></i></span>
+        <span class="brand-word">hound<span>/</span>dock</span>
+      </div>
+
+      <button class="workspace-switch" type="button" data-toast="Workspace switching is out of scope for this mock.">
+        <span class="workspace-dot"></span>
+        <span>
+          <strong>Platform team</strong>
+          <small>Internal workspace</small>
+        </span>
+        <svg class="icon"><use href="#i-chevron"/></svg>
+      </button>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-item is-active" type="button" data-view="chat" aria-current="page">
+          <svg class="icon"><use href="#i-chat"/></svg><span>Chat</span><kbd>1</kbd>
+        </button>
+        <button class="nav-item" type="button" data-view="tasks">
+          <svg class="icon"><use href="#i-tasks"/></svg><span>Tasks</span><kbd>2</kbd>
+        </button>
+        <button class="nav-item" type="button" data-view="skills">
+          <svg class="icon"><use href="#i-skills"/></svg><span>Skills</span><kbd>3</kbd>
+        </button>
+        <button class="nav-item" type="button" data-view="mcp">
+          <svg class="icon"><use href="#i-mcp"/></svg><span>MCP</span><kbd>4</kbd>
+        </button>
+        <button class="nav-item" type="button" data-view="runs">
+          <svg class="icon"><use href="#i-runs"/></svg><span>Runs</span><kbd>5</kbd>
+        </button>
+        <button class="nav-item" type="button" data-view="admin">
+          <svg class="icon"><use href="#i-admin"/></svg><span>Admin</span><kbd>6</kbd>
+        </button>
+      </nav>
+
+      <div class="pinned">
+        <p class="sidebar-label">Pinned</p>
+        <button class="pinned-item" type="button" data-open-task="task-release">
+          <span class="pin-mark"></span>Weekly release brief
+        </button>
+        <button class="pinned-item" type="button" data-open-task="task-triage">
+          <span class="pin-mark"></span>Triage new tickets
+        </button>
+      </div>
+
+      <div class="sidebar-foot">
+        <div class="stamp">Prototype<br><span>Mock data</span></div>
+        <div class="sidebar-user">
+          <span class="avatar avatar-sm">AC</span>
+          <span><strong>Alex Chen</strong><small>Admin · Platform</small></span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" type="button" data-toggle-nav aria-label="Toggle navigation">
+          <svg class="icon"><use href="#i-menu"/></svg>
+        </button>
+        <div class="crumb">
+          <span class="crumb-kicker">HOUND-DOCK</span>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-current" id="crumb-current">Chat</span>
+        </div>
+        <div class="topbar-right">
+          <button class="icon-btn" type="button" data-toast="Command search is a mock in this prototype." aria-label="Search">
+            <svg class="icon"><use href="#i-search"/></svg>
+          </button>
+          <span class="mock-pill">MOCK</span>
+          <span class="avatar">AC</span>
+        </div>
+      </header>
+
+      <div class="viewport">
+        <!-- CHAT -->
+        <section class="view is-active" id="view-chat" data-view-panel="chat" aria-labelledby="chat-title">
+          <div class="view-head">
+            <div>
+              <p class="kicker">Workspace / Conversation</p>
+              <h1 class="page-title" id="chat-title">Ask the room.</h1>
+              <p class="page-sub">Chat with a skill, search the workspace, or start a task.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" type="button" data-action="new-chat">New chat</button>
+              <button class="btn btn-primary" type="button" data-view="tasks">Run a task</button>
+            </div>
+          </div>
+
+          <div class="chat-layout">
+            <div class="chat-card">
+              <div class="chat-head">
+                <div>
+                  <p class="kicker">Session 04</p>
+                  <h2 class="chat-title">Release notes &amp; blockers</h2>
+                </div>
+                <span class="live"><i></i>Mock session</span>
+              </div>
+
+              <div class="chat-thread" id="chat-thread" aria-live="polite"></div>
+
+              <div class="suggestions" id="chat-suggestions">
+                <button type="button" data-prompt="Summarize this week's release notes and list Jira blockers for Platform.">Summarize this week's release</button>
+                <button type="button" data-prompt="Search Confluence for the onboarding checklist and cite the source.">Search Confluence</button>
+                <button type="button" data-prompt="Triage the new Jira tickets and propose owners.">Triage new tickets</button>
+              </div>
+
+              <div class="composer" id="composer">
+                <div class="composer-context" id="composer-context"></div>
+                <textarea id="chat-input" rows="2" placeholder="Ask, search, or run a task…" aria-label="Message"></textarea>
+                <div class="composer-bar">
+                  <div class="composer-tools">
+                    <button class="chip" type="button" data-menu="slash"><span class="slash">/</span> Skills</button>
+                    <button class="chip" type="button" data-menu="mention"><span class="at">@</span> Files</button>
+                    <button class="chip" type="button" id="search-toggle" aria-pressed="false"><svg class="icon"><use href="#i-search"/></svg> Search</button>
+                    <button class="chip chip-muted" type="button" data-toast="Model selection is a mock in this prototype.">gpt-4.1 · internal</button>
+                  </div>
+                  <button class="send-btn" type="button" id="send-btn" aria-label="Send message">
+                    <svg class="icon"><use href="#i-send"/></svg>
+                  </button>
+                </div>
+                <div class="popover" id="slash-menu" hidden>
+                  <p class="popover-label">Published skills</p>
+                  <div id="slash-items"></div>
+                </div>
+                <div class="popover" id="mention-menu" hidden>
+                  <p class="popover-label">Workspace files</p>
+                  <div id="mention-items"></div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="context-rail" aria-label="Run context">
+              <div class="rail-card">
+                <p class="kicker">Active skill</p>
+                <h3>Release Notes Writer</h3>
+                <p class="muted small">Turns merged PRs and Jira issues into a weekly brief.</p>
+                <button class="link-btn" type="button" data-open-skill="skill-release">View manifest <svg class="icon"><use href="#i-arrow"/></svg></button>
+              </div>
+              <div class="rail-card">
+                <p class="kicker">Tools in this run</p>
+                <ul class="tool-list">
+                  <li><span class="dot ok"></span><code>confluence.search</code><span class="mono">1.2s</span></li>
+                  <li><span class="dot ok"></span><code>jira.search</code><span class="mono">0.8s</span></li>
+                  <li><span class="dot idle"></span><code>web.search</code><span class="mono">off</span></li>
+                </ul>
+              </div>
+              <div class="rail-card rail-note">
+                <svg class="icon"><use href="#i-shield"/></svg>
+                <div>
+                  <p class="kicker">Guardrail</p>
+                  <p class="small">Read-only tools only. Write-capable tools are disabled in v1.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="view" id="view-skills" data-view-panel="skills" aria-labelledby="skills-title" hidden>
+          <div class="view-head">
+            <div>
+              <p class="kicker">Registry / Skills</p>
+              <h1 class="page-title" id="skills-title">Skills.</h1>
+              <p class="page-sub">Versioned instructions your team can invoke.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-primary" type="button" data-open-modal="skill"><svg class="icon"><use href="#i-plus"/></svg> New skill</button>
+            </div>
+          </div>
+          <div class="toolbar">
+            <label class="search-box">
+              <svg class="icon"><use href="#i-search"/></svg>
+              <input id="skill-search" type="search" placeholder="Search skills, owners, dependencies…" autocomplete="off">
+            </label>
+            <div class="filter-chips" id="skill-filters" role="group" aria-label="Filter skills by category"></div>
+          </div>
+          <div class="skill-grid" id="skill-grid"></div>
+        </section>
+
+        <!-- MCP -->
+        <section class="view" id="view-mcp" data-view-panel="mcp" aria-labelledby="mcp-title" hidden>
+          <div class="view-head">
+            <div>
+              <p class="kicker">Registry / MCP</p>
+              <h1 class="page-title" id="mcp-title">Connections.</h1>
+              <p class="page-sub">Governed tool servers. Only allowlisted tools are callable.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-primary" type="button" data-open-modal="mcp"><svg class="icon"><use href="#i-plus"/></svg> Add server</button>
+            </div>
+          </div>
+          <div class="notice">
+            <svg class="icon"><use href="#i-shield"/></svg>
+            <p><strong>Security posture.</strong> Credentials are stored as encrypted references, never as values in a manifest. HTTP/SSE transports only in v1.</p>
+          </div>
+          <div class="mcp-grid" id="mcp-grid"></div>
+        </section>
+
+        <!-- TASKS -->
+        <section class="view" id="view-tasks" data-view-panel="tasks" aria-labelledby="tasks-title" hidden>
+          <div class="view-head">
+            <div>
+              <p class="kicker">Registry / Tasks</p>
+              <h1 class="page-title" id="tasks-title">Tasks.</h1>
+              <p class="page-sub">Reusable work built from skills and MCP tools.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-primary" type="button" data-open-modal="task"><svg class="icon"><use href="#i-plus"/></svg> New task</button>
+            </div>
+          </div>
+          <div class="notice notice-quiet">
+            <svg class="icon"><use href="#i-clock"/></svg>
+            <p><strong>Manual runs only.</strong> Scheduling, approvals, and branching are out of scope for v1.</p>
+          </div>
+          <div class="task-grid" id="task-grid"></div>
+        </section>
+
+        <!-- RUNS -->
+        <section class="view" id="view-runs" data-view-panel="runs" aria-labelledby="runs-title" hidden>
+          <div class="view-head">
+            <div>
+              <p class="kicker">Audit / Runs</p>
+              <h1 class="page-title" id="runs-title">The ledger.</h1>
+              <p class="page-sub">Every run, step, and tool call, on the record.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-ghost" type="button" data-toast="Export is a mock in this prototype.">Export</button>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="filter-chips" id="run-filters" role="group" aria-label="Filter runs by status"></div>
+            <span class="toolbar-note" id="run-count"></span>
+          </div>
+          <div class="ledger" id="runs-table"></div>
+        </section>
+
+        <!-- ADMIN -->
+        <section class="view" id="view-admin" data-view-panel="admin" aria-labelledby="admin-title" hidden>
+          <div class="view-head">
+            <div>
+              <p class="kicker">Settings / Admin</p>
+              <h1 class="page-title" id="admin-title">Admin.</h1>
+              <p class="page-sub">Local accounts and the model gateway for the MVP.</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn btn-primary" type="button" data-toast="Settings saved (mock).">Save settings</button>
+            </div>
+          </div>
+
+          <div class="admin-grid">
+            <section class="admin-card">
+              <div class="admin-card-head">
+                <div>
+                  <p class="kicker">Model gateway</p>
+                  <h2>Internal endpoint</h2>
+                </div>
+                <span class="status ok"><span class="dot"></span>Connected</span>
+              </div>
+              <dl class="kv">
+                <div><dt>Base URL</dt><dd><code>https://llm.internal/v1</code></dd></div>
+                <div><dt>Model</dt><dd><code>gpt-4.1</code></dd></div>
+                <div><dt>Secret reference</dt><dd><code>secret://llm/internal-key</code></dd></div>
+                <div><dt>Data boundary</dt><dd>Internal only · TBD-INFRA-009</dd></div>
+              </dl>
+              <button class="btn btn-ghost" type="button" data-toast="Connection test passed (mock).">Test connection</button>
+            </section>
+
+            <section class="admin-card">
+              <div class="admin-card-head">
+                <div>
+                  <p class="kicker">Identity</p>
+                  <h2>Local accounts</h2>
+                </div>
+                <span class="status warn"><span class="dot"></span>MVP mode</span>
+              </div>
+              <p class="small muted">SSO is deferred. The identity provider is tracked as TBD-INFRA-010.</p>
+              <table class="mini-table">
+                <thead><tr><th>User</th><th>Role</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>Alex Chen</td><td><span class="role">Admin</span></td><td>Active</td></tr>
+                  <tr><td>Priya Nair</td><td><span class="role">Member</span></td><td>Active</td></tr>
+                  <tr><td>Sam Ito</td><td><span class="role">Author</span></td><td>Invited</td></tr>
+                </tbody>
+              </table>
+              <button class="btn btn-ghost" type="button" data-toast="Invite flow is a mock in this prototype.">Invite user</button>
+            </section>
+
+            <section class="admin-card">
+              <div class="admin-card-head">
+                <div>
+                  <p class="kicker">Registry policy</p>
+                  <h2>Publishing</h2>
+                </div>
+                <span class="status neutral"><span class="dot"></span>Proposed</span>
+              </div>
+              <p class="small">Admin-only publishing in v1. Delegated authorship is tracked as TBD-BIZ-004.</p>
+              <div class="toggle-row"><span>Require review before publish</span><span class="status neutral"><span class="dot"></span>Proposed · TBD-BIZ-004</span></div>
+              <div class="toggle-row"><span>Allow member-created drafts</span><span class="status neutral"><span class="dot"></span>Off in v1</span></div>
+              <div class="toggle-row"><span>Enable write-capable tools</span><span class="status error"><span class="dot"></span>Disabled in v1</span></div>
+            </section>
+
+            <section class="admin-card">
+              <div class="admin-card-head">
+                <div>
+                  <p class="kicker">Security</p>
+                  <h2>Audit &amp; retention</h2>
+                </div>
+                <span class="status ok"><span class="dot"></span>Append-only</span>
+              </div>
+              <dl class="kv">
+                <div><dt>Audit coverage</dt><dd>Registry changes, tool calls, runs</dd></div>
+                <div><dt>Secret storage</dt><dd>Encrypted references only</dd></div>
+                <div><dt>Retention</dt><dd>TBD-BIZ-003</dd></div>
+                <div><dt>Write tools</dt><dd>Disabled in v1</dd></div>
+              </dl>
+              <button class="btn btn-ghost" type="button" data-toast="Audit export is a mock in this prototype.">Open audit log</button>
+            </section>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Detail panel" hidden></aside>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <p class="noscript">This prototype needs JavaScript enabled to switch views and run the mock interactions.</p>
+  </noscript>
+
+  <script src="app.js"></script>
+</body>
+</html>

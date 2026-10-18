@@ -17,7 +17,7 @@ Status: Draft
 | `docs/00_setup/` | Governance, numbered rules, open-item registry, environment baseline. | [README](docs/00_setup/README.md) |
 | `docs/01_product/` | Goal, scope, users, non-goals, PRD. | [README](docs/01_product/README.md) · [PRD](docs/01_product/prd.md) |
 | `docs/02_architecture/` | Architecture and decision records. | [README](docs/02_architecture/README.md) |
-| `docs/03_design/` | UX/UI and interaction design. | [README](docs/03_design/README.md) |
+| `docs/03_design/` | UX/UI and interaction design. | [README](docs/03_design/README.md) · [Prototype](docs/03_design/prototype/index.html) |
 | `docs/04_data/` | Data models, schemas, retention, migrations. | [README](docs/04_data/README.md) |
 | `docs/05_api/` | API contracts and versioning. | [README](docs/05_api/README.md) |
 | `docs/06_development/` | Verified development environment and commands. | [README](docs/06_development/README.md) |
