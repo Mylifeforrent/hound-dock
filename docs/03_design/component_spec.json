@@ -1,0 +1,1186 @@
+{
+  "status": "Draft",
+  "title": "hound-dock component specification — C-01 to C-17",
+  "version": "0.1",
+  "asOf": "2026-10-18",
+  "scope": "Component specification for the components already named in highfi_page_map.md §8 for pages PG-001 to PG-012 as the page map defines them. It adds no component, no variant role, no page, and no capability. Values come only from design_tokens.json; behaviour comes only from interaction_design.md §4 and §5.",
+  "authority": [
+    "docs/03_design/highfi_page_map.md §8 (C-01 to C-17, the only component list), §3 to §5 (pages, states, reuse)",
+    "docs/03_design/design_tokens.json (the only value source)",
+    "docs/03_design/interaction_design.md §5 to §7 (interaction rules, nine states, desktop layout), with §4 for flow steps",
+    "docs/03_design/design_system.md §3 and §5 (token roles, component notes)",
+    "docs/01_product/prd.md (AC traceability only; v0.2 Draft, not Gate 1-accepted)"
+  ],
+  "structure": {
+    "idRule": "id is one of C-01 to C-17 and name is copied verbatim from highfi_page_map.md §8. No component outside §8 is specified, and Sidebar (C-01) and Topbar (C-02) remain separate.",
+    "pageRule": "pages[] uses only PG-001 to PG-012, each present in highfi_page_map.md §3. A page appears only where §8 places the component.",
+    "variantRule": "variants[] takes the names of component.<id>.variants keys when the component layer defines them (C-07, C-08, C-09). Where it does not, variants[] carries the content variants named in the §8 row and variantBasis says so. No variant is invented, and the token file defines no action-destructive variant.",
+    "variantReferenceRule": "A component variant value is referenced as {component.<id>.variants.<variant>.<role>}, descending through the token file's value wrapper. Semantic and layout references are written the same way.",
+    "stateRule": "states always carries the seven keys default, hover, focus, disabled, in-flight, error, readonly, in this order. A state that cannot occur on the component says 'N/A: <reason>'; no key is omitted and no reason is blank.",
+    "tokenRule": "tokens[] holds only dotted token names and {path.to.token} references into design_tokens.json. No hex, rgba, or raw dimension appears in this file. C-04, C-15, and C-17 have no component-layer entry and are composed from semantic tokens plus C-08 focus tokens, as recorded in their tokenBasis.",
+    "behaviourRule": "Every behavior item names the interaction_design.md §4 or §5 rule it applies. A component with no action of its own says exactly '无（只读）'.",
+    "authorityRule": "interaction_design.md is the behaviour authority. The throwaway prototype under docs/03_design/prototype/ is not a behaviour or visual source for this file.",
+    "exclusionRule": "No Navigation merge and no component outside C-01 to C-17. Card exists only as C-06, Table only as C-11, and the only overlay is the C-14 discard confirmation. No page below the narrowest adopted width, no theme, no authoring form, no denied capability rendered as a disabled control, and no framework, component library, design tool, or external artifact identifier."
+  },
+  "stateVocabulary": {
+    "default": "Steady state of the component with representative recorded data or a ready form (interaction_design.md §6.1).",
+    "hover": "Pointer over an interactive part. Hover never removes focus and never reveals an action that is absent at rest.",
+    "focus": "Keyboard focus. The shared ring uses the C-08 focus width, focus offset, and focus colour tokens; it is never removed by hover (interaction_design.md §5.6; design_system.md §3.3).",
+    "disabled": "The control cannot be activated. On effective pages this occurs only as the in-flight lock of the same operation; a denied capability is absent, not disabled (interaction_design.md §5.3 rule 3; §5.5 rule 1).",
+    "in-flight": "The component's own operation is unresolved. It is the component-level carrier of the page Loading and Submitting states (interaction_design.md §6.1). The label states the operation in progress, a second activation is ignored, and no outcome is presented early (interaction_design.md §5.2; §5.4).",
+    "error": "A retrieval, submission, or status-reporting failure. The failure is shown in words with a recovery, and a failed read is never presented as empty (interaction_design.md §5.2; §5.7).",
+    "readonly": "The component renders recorded content without an edit affordance. A read-only surface does not render a greyed-out editor (interaction_design.md §2.3; §5.5 rule 2)."
+  },
+  "components": [
+    {
+      "id": "C-01",
+      "name": "Sidebar rail",
+      "purpose": "Persistent navigation for every authenticated page: brand, New chat, exactly four destinations (Chat, Skills, MCP servers, Tasks), the signed-in person's own conversation list, and a neutral signed-in label. It is the only navigation surface; no Manage, Runs, Audit, Usage, or Settings destination exists.",
+      "pages": [
+        "PG-002",
+        "PG-003",
+        "PG-004",
+        "PG-005",
+        "PG-006",
+        "PG-007",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "default",
+        "active destination",
+        "active conversation"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-01 row. component.C-01-sidebar defines state knobs (activeBackground, activeText, activeRuleColor, activeRuleWidth) but no variants key.",
+      "states": {
+        "default": "Rail at its token width with the four destinations, New chat, the own conversation list, and the neutral signed-in label. Chat is the home. No search field and no row actions are rendered (highfi_page_map.md §8 C-01; interaction_design.md §3.1).",
+        "hover": "A destination or conversation row takes {component.C-01-sidebar.hoverBackground}; its label does not change and no hover-only action appears. Hover does not remove the focus ring (design_system.md §5).",
+        "focus": "The focused destination or conversation shows the shared focus ring and offset in {semantic.color.border.focus}. The sidebar is first in visual tab order (interaction_design.md §5.6).",
+        "disabled": "N/A: a destination is never disabled. A destination with no confirmed grant is absent, and an unauthenticated visit resolves to PG-001 (interaction_design.md §5.5 rules 1 and 4).",
+        "in-flight": "N/A: navigation is not an operation and has no pending state. Leaving a pending chat does not cancel it; the reported outcome is shown on return (interaction_design.md §5.2).",
+        "error": "N/A: the rail renders no record of its own. A failed conversation-list read is PG-002 Error with Retry, and the list is never rendered as empty (interaction_design.md §6.3; §5.2).",
+        "readonly": "N/A: navigation carries no editable content."
+      },
+      "behavior": [
+        "Activating a destination changes the page and moves focus to the page heading, not to the composer or the primary action (interaction_design.md §5.6).",
+        "Activating New chat or an own conversation opens it; a new conversation starts with no messages and only the person's own conversations are listed (interaction_design.md §4.2 N1).",
+        "A non-owned or unresolvable conversation reference shows the same generic panel as an unknown one; the rail stays usable and New chat is the recovery (interaction_design.md §5.5 rule 3; §3.4).",
+        "No account name, initials, account menu, or sign-out control is rendered; the account area is the neutral signed-in label only (interaction_design.md §3.1; §5.5 account-identity row)."
+      ],
+      "tokens": [
+        "{component.C-01-sidebar.width}",
+        "{component.C-01-sidebar.background}",
+        "{component.C-01-sidebar.text}",
+        "{component.C-01-sidebar.mutedText}",
+        "{component.C-01-sidebar.hoverBackground}",
+        "{component.C-01-sidebar.activeBackground}",
+        "{component.C-01-sidebar.activeText}",
+        "{component.C-01-sidebar.activeRuleColor}",
+        "{component.C-01-sidebar.activeRuleWidth}",
+        "{component.C-01-sidebar.itemHeight}",
+        "{component.C-01-sidebar.itemRadius}",
+        "{component.C-08-button.focusWidth}",
+        "{component.C-08-button.focusOffset}",
+        "{semantic.color.border.focus}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 460 (C-01)",
+        "pages": [
+          "§3 line 110 (PG-002)",
+          "§3 line 111 (PG-003)",
+          "§3 line 112 (PG-004)",
+          "§3 line 113 (PG-005)",
+          "§3 line 114 (PG-006)",
+          "§3 line 115 (PG-007)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.3 line 178 (PG-002 Default)",
+          "§4.3 line 181 (PG-002 No Result)",
+          "§5 line 326 (PG-003 reuse of the rail)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-01-sidebar",
+        "ac": "PRD §7.3 to §7.6 (AC-009 to AC-057) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-02",
+      "name": "Topbar and breadcrumb",
+      "purpose": "Sticky orientation strip above page content. It carries the workspace breadcrumb in two forms, `Workspace / section` and `Workspace / section / record`, where the record segment is a business name or reference and never an owner.",
+      "pages": [
+        "PG-002",
+        "PG-003",
+        "PG-004",
+        "PG-005",
+        "PG-006",
+        "PG-007",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "Workspace / section",
+        "Workspace / section / record"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-02 row. component.C-02-topbar defines breadcrumb tokens but no variants key.",
+      "states": {
+        "default": "Sticky topbar at its token height with a mono micro breadcrumb; the current location uses the accent colour and the separator the faint colour. The record label is the business name or reference, never an owner (interaction_design.md §3.1; highfi_page_map.md §8 C-02).",
+        "hover": "N/A: no breadcrumb segment is an interactive control in this phase; page navigation is the sidebar and the record Back link (interaction_design.md §3.1; §5.6).",
+        "focus": "N/A: the topbar holds no focusable product control, and no review or theme control is a product component (highfi_page_map.md §8 C-02; §9.3).",
+        "disabled": "N/A: no control exists to disable.",
+        "in-flight": "N/A: the breadcrumb reflects the current route and never shows a pending navigation state.",
+        "error": "N/A: the breadcrumb does not render read errors; route failures are rendered by C-13 on the page (interaction_design.md §3.4; §6.1).",
+        "readonly": "N/A: the breadcrumb is display text only."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{component.C-02-topbar.height}",
+        "{component.C-02-topbar.background}",
+        "{component.C-02-topbar.border}",
+        "{component.C-02-topbar.gap}",
+        "{component.C-02-topbar.breadcrumbFamily}",
+        "{component.C-02-topbar.breadcrumbSize}",
+        "{component.C-02-topbar.breadcrumbColor}",
+        "{component.C-02-topbar.breadcrumbCurrentColor}",
+        "{component.C-02-topbar.breadcrumbSeparatorColor}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 461 (C-02)",
+        "pages": [
+          "§3 line 110 (PG-002)",
+          "§3 line 111 (PG-003)",
+          "§3 line 112 (PG-004)",
+          "§3 line 113 (PG-005)",
+          "§3 line 114 (PG-006)",
+          "§3 line 115 (PG-007)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.3 line 178 (PG-002 Default)",
+          "§4.7 line 234 (PG-006 Default breadcrumb)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-02-topbar",
+        "ac": "PRD §7.3 to §7.6 — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-03",
+      "name": "Page header",
+      "purpose": "Page identity for the registry, record, and run patterns: eyebrow, serif title with the recorded count where the page has a collection, and a description. The count is part of the header, not a KPI.",
+      "pages": [
+        "PG-003",
+        "PG-004",
+        "PG-005",
+        "PG-006",
+        "PG-007",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "registry",
+        "record",
+        "run"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-03 row. component.C-03-page-header defines type and colour knobs but no variants key.",
+      "states": {
+        "default": "Eyebrow, serif title, optional recorded count, and description. On a registry the count sits in the title line and is supplied by C-04. The header stays visible in Loading, Empty, No Result, Error, and No Permission, so a failed or denied page is never blank (highfi_page_map.md §8 C-03 and C-13; interaction_design.md §7.2).",
+        "hover": "N/A: the header is not interactive.",
+        "focus": "Programmatic focus only: a page change moves focus to the page heading (interaction_design.md §5.6). The heading is not an interactive control, so no control ring is drawn; the rule is recorded here because this component owns the heading.",
+        "disabled": "N/A: no control exists to disable.",
+        "in-flight": "N/A: the header does not carry an operation state; a submitting operation is shown by C-08 and C-15, and the header stays visible (interaction_design.md §5.2).",
+        "error": "N/A: the header has no error rendering. On a failed read it stays visible while C-13 shows the error and C-04 shows an unknown count (interaction_design.md §5.2).",
+        "readonly": "N/A: the header is always display text."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{component.C-03-page-header.titleFamily}",
+        "{component.C-03-page-header.titleSize}",
+        "{component.C-03-page-header.titleWeight}",
+        "{component.C-03-page-header.titleLineHeight}",
+        "{component.C-03-page-header.titleColor}",
+        "{component.C-03-page-header.eyebrowFamily}",
+        "{component.C-03-page-header.eyebrowSize}",
+        "{component.C-03-page-header.eyebrowColor}",
+        "{component.C-03-page-header.descriptionSize}",
+        "{component.C-03-page-header.descriptionColor}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 462 (C-03)",
+        "pages": [
+          "§3 line 111 (PG-003)",
+          "§3 line 112 (PG-004)",
+          "§3 line 113 (PG-005)",
+          "§3 line 114 (PG-006)",
+          "§3 line 115 (PG-007)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.8 line 248 (PG-007 Default header)",
+          "§4.10 line 276 (PG-009 Default header)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-03-page-header",
+        "ac": "PRD §7.4 to §7.6 — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-04",
+      "name": "Recorded count",
+      "purpose": "Shows the number of recorded entries in a registry header, or an unresolved placeholder while the data is unknown. It never reports zero before the read resolves.",
+      "pages": [
+        "PG-003",
+        "PG-005",
+        "PG-007"
+      ],
+      "variants": [
+        "loaded",
+        "loading"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-04 row. design_tokens.json _meta.componentCoverage records that C-04 has no component-layer entry, so it is composed from semantic tokens.",
+      "tokenBasis": "No component tokens exist for C-04. The count is part of the C-03 title line, so it reuses the page-title family, size, weight, line height, and colour, with the muted text role for the unresolved placeholder.",
+      "states": {
+        "default": "A real count of recorded entries, rendered inside the header title line (highfi_page_map.md §8 C-03 and C-04; interaction_design.md §7.2).",
+        "hover": "N/A: the count is not interactive.",
+        "focus": "N/A: the count is not focusable.",
+        "disabled": "N/A: the count has no activation.",
+        "in-flight": "Loading: the count shows an em dash while the read is unresolved and is never 0 (highfi_page_map.md §8 C-04; interaction_design.md §5.2; AC-026).",
+        "error": "A failed read leaves the count unknown, shown as the em dash rather than 0. The C-13 Error panel takes over, and the count never becomes an Empty claim (interaction_design.md §5.2 no fabricated emptiness; highfi_page_map.md §4.4, §4.8).",
+        "readonly": "N/A: the count is display only and has no editable mode."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{semantic.typography.family.display}",
+        "{semantic.typography.size.pageTitle}",
+        "{semantic.typography.weight.medium}",
+        "{semantic.typography.lineHeight.tight}",
+        "{semantic.color.text.primary}",
+        "{semantic.color.text.muted}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 463 (C-04)",
+        "pages": [
+          "§3 line 111 (PG-003 Loading)",
+          "§3 line 113 (PG-005 Loading)",
+          "§3 line 115 (PG-007)"
+        ],
+        "states": [
+          "§4.4 line 193 (PG-003 Loading count)",
+          "§4.6 line 221 (PG-005 Loading with the unresolved count)",
+          "§4.8 line 249 (PG-007 Loading count)",
+          "§4.12 line 304 (count check table)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json semantic.typography and semantic.color (no component layer)",
+        "ac": "PRD §7.4 (AC-026, AC-027); §7.5 (AC-035) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-05",
+      "name": "Read-only notice",
+      "purpose": "States in text that a registry or record is read-only, so the absence of edit controls reads as a decision rather than a missing feature. It is not a disabled toolbar and not an icon-only hint.",
+      "pages": [
+        "PG-003",
+        "PG-004",
+        "PG-005",
+        "PG-006",
+        "PG-007"
+      ],
+      "variants": [
+        "registry",
+        "record",
+        "credential-reference"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-05 row. component.C-05-read-only-notice defines one token set for all three placements.",
+      "states": {
+        "default": "One or two sentences of text stating read-only status. On the MCP registry and record the notice also states that only a credential reference exists and that no credential value is shown (highfi_page_map.md §4.6 line 220, §4.7 line 234; interaction_design.md §2.3).",
+        "hover": "N/A: static text.",
+        "focus": "N/A: not focusable.",
+        "disabled": "N/A: the notice is text, not a control; presenting it as a disabled toolbar is explicitly excluded (highfi_page_map.md §8 C-05).",
+        "in-flight": "N/A: the notice states a property of the page and does not change with an operation.",
+        "error": "N/A: a failed read is rendered by C-13; the notice is not an error surface (interaction_design.md §5.2).",
+        "readonly": "The notice is itself the read-only statement; it has no editable counterpart and no toggle."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{component.C-05-read-only-notice.background}",
+        "{component.C-05-read-only-notice.border}",
+        "{component.C-05-read-only-notice.radius}",
+        "{component.C-05-read-only-notice.text}",
+        "{component.C-05-read-only-notice.strongText}",
+        "{component.C-05-read-only-notice.textSize}",
+        "{component.C-05-read-only-notice.strongWeight}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 464 (C-05)",
+        "pages": [
+          "§3 line 111 (PG-003)",
+          "§3 line 112 (PG-004)",
+          "§3 line 113 (PG-005)",
+          "§3 line 114 (PG-006)",
+          "§3 line 115 (PG-007)"
+        ],
+        "states": [
+          "§4.6 line 220 (PG-005 Default read-only and credential-reference notice)",
+          "§4.8 line 248 (PG-007 Default read-only notice)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-05-read-only-notice",
+        "ac": "PRD §7.4 to §7.6 (AC-025, AC-032, AC-033) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-06",
+      "name": "Registry card",
+      "purpose": "One recorded entry in a registry grid: name, supporting line, and one status or metadata marker. A task card adds the version label, the step count, and Run as its only action.",
+      "pages": [
+        "PG-003",
+        "PG-005",
+        "PG-007"
+      ],
+      "variants": [
+        "skill",
+        "MCP server",
+        "task"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-06 content variants. component.C-06-registry-card defines no variants key, so one token set serves all three and only the content differs.",
+      "states": {
+        "default": "Skill card: name, description, and the neutral Recorded marker. MCP card: server name, recorded health, and the credential-reference indicator, with no tool names and no tool count. Task card: name, description, version label, step count, and Run. No owner, lifecycle stripe, dependency list, or hover-only action (highfi_page_map.md §8 C-06; design_system.md §5).",
+        "hover": "Lift and shadow change through {component.C-06-registry-card.hoverLift} and {component.C-06-registry-card.hoverShadow}; layout bounds do not move and no action appears only on hover (design_system.md §3.3; highfi_page_map.md §8 C-06).",
+        "focus": "The card exposes exactly one activation target, which takes the shared focus ring. A task card's only focusable action is Run; a card contains no nested focusable region (interaction_design.md §5.6).",
+        "disabled": "N/A: a card is never disabled. A denied registry renders the No Permission panel instead, and an unavailable action is absent rather than greyed (interaction_design.md §5.5 rules 1 and 2).",
+        "in-flight": "N/A: while the registry loads the card is a C-16 skeleton and no Run action is available yet (highfi_page_map.md §4.8 line 249; interaction_design.md §5.2).",
+        "error": "N/A: a failed read replaces the grid with the C-13 Error panel and never with an empty card or a zero marker (interaction_design.md §5.2; AC-027, AC-035).",
+        "readonly": "The card content is display only: no inline edit, no lifecycle control, and no owner attribution. Run on a task card opens PG-008 and submits nothing itself (interaction_design.md §2.3; §5.5 rule 2)."
+      },
+      "behavior": [
+        "Activating a skill card opens PG-004 and activating an MCP card opens PG-006, for a recorded entry only; an unrecorded name resolves to No Result on the record page (interaction_design.md §3.4; §5.5 rule 2; highfi_page_map.md §3).",
+        "Activating Run on a task card opens PG-008 with the recorded task; the card never creates a run by itself (interaction_design.md §4.3 N1; highfi_page_map.md §8 C-06).",
+        "Run is not rendered in the Empty or Error state, because no recorded task exists or the read failed (highfi_page_map.md §4.8 lines 250 and 252; interaction_design.md §5.5)."
+      ],
+      "tokens": [
+        "{component.C-06-registry-card.background}",
+        "{component.C-06-registry-card.border}",
+        "{component.C-06-registry-card.radius}",
+        "{component.C-06-registry-card.padding}",
+        "{component.C-06-registry-card.gridGap}",
+        "{component.C-06-registry-card.shadow}",
+        "{component.C-06-registry-card.hoverShadow}",
+        "{component.C-06-registry-card.hoverLift}",
+        "{component.C-06-registry-card.titleFamily}",
+        "{component.C-06-registry-card.titleSize}",
+        "{component.C-06-registry-card.titleWeight}",
+        "{component.C-06-registry-card.titleLineHeight}",
+        "{component.C-06-registry-card.titleColor}",
+        "{semantic.layout.breakpoints.1440.registryColumns}",
+        "{semantic.layout.breakpoints.1280.registryColumns}",
+        "{semantic.layout.breakpoints.960.cardMinWidth}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 465 (C-06)",
+        "pages": [
+          "§3 line 111 (PG-003)",
+          "§3 line 113 (PG-005)",
+          "§3 line 115 (PG-007)"
+        ],
+        "states": [
+          "§4.8 line 248 (PG-007 Default task card)",
+          "§4.4 line 192 (PG-003 skill card)",
+          "§4.6 line 220 (PG-005 MCP card)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-06-registry-card",
+        "ac": "PRD §7.4 (AC-023, AC-025); §7.5 (AC-028, AC-029); §7.6 (AC-036, AC-038) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-07",
+      "name": "Status pill",
+      "purpose": "A compact text-plus-dot marker for recorded or reported state. Colour is supplementary; the label always carries the meaning.",
+      "pages": [
+        "PG-005",
+        "PG-006",
+        "PG-007",
+        "PG-009"
+      ],
+      "variants": [
+        "ok",
+        "warn",
+        "error",
+        "info",
+        "neutral"
+      ],
+      "variantBasis": "component.C-07-status-pill.variants keys, exactly these five. The §8 mapping is preserved verbatim and no sixth role is added.",
+      "mapping": {
+        "ok": [
+          "Succeeded"
+        ],
+        "warn": [
+          "Needs authentication"
+        ],
+        "error": [
+          "Failed"
+        ],
+        "info": [
+          "Running"
+        ],
+        "neutral": [
+          "Recorded",
+          "Skipped"
+        ],
+        "unassignedBySection8": "Initiated is shown on PG-009 but §8 C-07 does not assign it a variant; no variant is invented for it."
+      },
+      "states": {
+        "default": "Text label, dot, and the variant's text, background, and border triple; the pill is never colour alone (highfi_page_map.md §8 C-07; design_system.md §3.1).",
+        "hover": "N/A: the pill is not interactive and has no hover change.",
+        "focus": "N/A: the pill is not focusable.",
+        "disabled": "N/A: a state marker has no activation to disable.",
+        "in-flight": "The non-terminal Running state uses the info variant. Initiated and Running are never presented as a terminal outcome (interaction_design.md §6.10 terminal outcome; §5.2).",
+        "error": "N/A: Failed is the error variant, not an error condition of the pill. A failed status refresh keeps the last reported variant, and the page adds the Status unavailable marker with Retry (interaction_design.md §5.2; §6.10 Error).",
+        "readonly": "N/A: the pill is always display only; no state-transition control is rendered (interaction_design.md §4.5 flow notes)."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{component.C-07-status-pill.height}",
+        "{component.C-07-status-pill.radius}",
+        "{component.C-07-status-pill.labelFamily}",
+        "{component.C-07-status-pill.labelSize}",
+        "{component.C-07-status-pill.labelWeight}",
+        "{component.C-07-status-pill.variants.ok.text}",
+        "{component.C-07-status-pill.variants.ok.background}",
+        "{component.C-07-status-pill.variants.ok.border}",
+        "{component.C-07-status-pill.variants.warn.text}",
+        "{component.C-07-status-pill.variants.warn.background}",
+        "{component.C-07-status-pill.variants.warn.border}",
+        "{component.C-07-status-pill.variants.error.text}",
+        "{component.C-07-status-pill.variants.error.background}",
+        "{component.C-07-status-pill.variants.error.border}",
+        "{component.C-07-status-pill.variants.info.text}",
+        "{component.C-07-status-pill.variants.info.background}",
+        "{component.C-07-status-pill.variants.info.border}",
+        "{component.C-07-status-pill.variants.neutral.text}",
+        "{component.C-07-status-pill.variants.neutral.background}",
+        "{component.C-07-status-pill.variants.neutral.border}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 466 (C-07)",
+        "pages": [
+          "§3 line 113 (PG-005)",
+          "§3 line 114 (PG-006)",
+          "§3 line 115 (PG-007)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.10 line 276 (PG-009 Default state badge)",
+          "§4.10 line 284 (PG-009 terminal outcome mapping)",
+          "§4.6 line 220 (PG-005 health pill)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-07-status-pill",
+        "ac": "PRD §7.5 (AC-029); §7.6 (AC-051 to AC-053) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-08",
+      "name": "Button",
+      "purpose": "The single action control for sign-in, chat send, task run, and the one recovery action in a state panel. Its label states the operation, and it is disabled only while its own operation is in flight.",
+      "pages": [
+        "PG-001",
+        "PG-002",
+        "PG-003",
+        "PG-004",
+        "PG-005",
+        "PG-006",
+        "PG-007",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "primary",
+        "secondary",
+        "ghost"
+      ],
+      "variantBasis": "component.C-08-button.variants keys, exactly these three. §8 also lists disabled-in-flight, which is carried by states.disabled and states.in-flight rather than by a token variant. No action-destructive variant exists in the token file or in §8.",
+      "states": {
+        "default": "Height and radius from the button tokens. Primary uses the accent fill with on-accent text, secondary uses the surface plus a control border, and ghost is transparent. The label is the action verb (highfi_page_map.md §8 C-08; design_system.md §5).",
+        "hover": "Primary deepens to the accent-hover fill; secondary takes the hover border and hover fill; ghost takes the hover fill and primary text. Hover never removes the focus ring (design_system.md §5).",
+        "focus": "The shared focus ring and offset in {semantic.color.border.focus}; it is visible for keyboard focus and is not removed by hover (interaction_design.md §5.6; design_system.md §3.3).",
+        "disabled": "Disabled occurs only as the in-flight lock of the same control. It is never used for a denied or unbuilt capability and no inert action is rendered for later use (interaction_design.md §5.4; §5.3 rule 3; §5.5 rule 1). No separate disabled colour pair exists; the locked rendering is the in-flight state below.",
+        "in-flight": "The label becomes a verb in progress (Signing in…, Starting run…), the control ignores a second activation from click or Enter, and no spinner-only label or full-page overlay replaces the page (interaction_design.md §5.2; §5.4; highfi_page_map.md §8 C-08).",
+        "error": "N/A: the button does not own an error appearance. A failed operation shows its error through C-09, C-13, or the page's inline region, and the control returns to Default with its verb (interaction_design.md §5.2).",
+        "readonly": "N/A: a button has no read-only mode. A read-only page renders no button for a denied action, and the return route is C-17 (interaction_design.md §5.5 rule 2)."
+      },
+      "behavior": [
+        "Activation submits once; from activation to a terminal result the control is disabled and a second activation from click or Enter is ignored (interaction_design.md §5.4).",
+        "Sign in: the control is disabled and relabelled, both fields are read-only, and the wait is announced. A valid credential enters PG-002; a failure returns the control to Default on PG-001 with the credential cleared and the sign-in name kept (interaction_design.md §5.2; §4.1 F1, N2).",
+        "Send: submits a non-empty message and locks the composer. A zero-length message is rejected inline at C-10 and creates no turn (interaction_design.md §4.2 N2, F1; §5.1).",
+        "Start run: locks the declared inputs and relabels. A created run opens PG-009 with the run reference, while a creation failure stays on PG-008 with the entered values kept (interaction_design.md §4.3 N2, N3, F2; §5.4).",
+        "Enter in a single-line field does not submit; the explicit action is required, such as Start run. Space or Enter activates a focused button (interaction_design.md §5.6).",
+        "Retry and Try again are the one recovery action of their state panel. Try again prefills the same unsent text and starts a new attempt, never an automatic replay (interaction_design.md §4.2 F2, C2; §5.4)."
+      ],
+      "tokens": [
+        "{component.C-08-button.height}",
+        "{component.C-08-button.compactHeight}",
+        "{component.C-08-button.radius}",
+        "{component.C-08-button.labelFamily}",
+        "{component.C-08-button.labelSize}",
+        "{component.C-08-button.labelWeight}",
+        "{component.C-08-button.variants.primary.background}",
+        "{component.C-08-button.variants.primary.hoverBackground}",
+        "{component.C-08-button.variants.primary.text}",
+        "{component.C-08-button.variants.secondary.background}",
+        "{component.C-08-button.variants.secondary.border}",
+        "{component.C-08-button.variants.secondary.text}",
+        "{component.C-08-button.variants.secondary.hoverBorder}",
+        "{component.C-08-button.variants.secondary.hoverBackground}",
+        "{component.C-08-button.variants.ghost.background}",
+        "{component.C-08-button.variants.ghost.text}",
+        "{component.C-08-button.variants.ghost.hoverBackground}",
+        "{component.C-08-button.variants.ghost.hoverText}",
+        "{component.C-08-button.focusWidth}",
+        "{component.C-08-button.focusOffset}",
+        "{component.C-08-button.focusColor}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 467 (C-08)",
+        "pages": [
+          "§3 line 109 (PG-001)",
+          "§3 line 110 (PG-002)",
+          "§3 line 111 (PG-003)",
+          "§3 line 112 (PG-004)",
+          "§3 line 113 (PG-005)",
+          "§3 line 114 (PG-006)",
+          "§3 line 115 (PG-007)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.2 line 171 (PG-001 Submitting)",
+          "§4.3 line 185 (PG-002 Submitting)",
+          "§4.9 line 269 (PG-008 Submitting)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-08-button",
+        "ac": "PRD §7.2 (AC-005); §7.3 (AC-013); §7.6 (AC-040) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-09",
+      "name": "Input and field group",
+      "purpose": "A labelled field with an adjacent hint and error, used for sign-in and for every declared input on the run form. A credential field is masked and never echoed.",
+      "pages": [
+        "PG-001",
+        "PG-008"
+      ],
+      "variants": [
+        "default",
+        "hover",
+        "invalid",
+        "readonly"
+      ],
+      "variantBasis": "component.C-09-input.variants keys. §8 names content kinds instead (text, credential, declared input); those are recorded in contentVariants and share the same token set.",
+      "contentVariants": [
+        "text",
+        "credential",
+        "declared input"
+      ],
+      "states": {
+        "default": "Control at its token height with the default background, border, and text. The label sits adjacent, the hint follows, and the required tag uses the tag radius and micro size (highfi_page_map.md §8 C-09; interaction_design.md §5.1).",
+        "hover": "The boundary takes {component.C-09-input.variants.hover.border}; focus still wins over hover (design_system.md §5).",
+        "focus": "The shared focus ring and offset in {semantic.color.border.focus}, shared with C-08; the ring is not removed by hover (interaction_design.md §5.6).",
+        "disabled": "N/A: no field is disabled on an effective page. During submission the fields go read-only, and that read-only state is the lock (interaction_design.md §5.2; §6.2).",
+        "in-flight": "While its form submits, the field is read-only, keeps its value, and a credential field stays masked. There is no field-level spinner, and the page header stays visible (interaction_design.md §5.2).",
+        "error": "The invalid variant takes the error-text border, and an adjacent message states the problem in words, so colour is not the only signal. The first invalid field takes focus; more than one error adds a summary above the primary action, and that summary is reachable before the fields (interaction_design.md §5.1; §5.6).",
+        "readonly": "The read-only variant uses the soft surface and secondary text; the value is selectable and not editable. Sign-in keeps the sign-in name, clears the credential, and returns focus to the credential field (interaction_design.md §4.1 F1; §5.1 rule 3)."
+      },
+      "behavior": [
+        "Validation runs on submit for sign-in and on blur and on submit for declared inputs; no format, length, or numeric rule is invented beyond the declared definition (interaction_design.md §5.1).",
+        "A failure keeps the entered values except the credential, which is cleared on sign-in failure; a missing field shows an adjacent error and moves focus to the first invalid field (interaction_design.md §5.1; §4.1 F1).",
+        "Enter in a single-line field does not start a run; the explicit Start run action is required (interaction_design.md §5.6).",
+        "No error text contains a credential, a secret reference, an account-existence hint, a provider trace, or another account's data (interaction_design.md §5.1 rule 5; §5.7)."
+      ],
+      "tokens": [
+        "{component.C-09-input.height}",
+        "{component.C-09-input.radius}",
+        "{component.C-09-input.textSize}",
+        "{component.C-09-input.textWeight}",
+        "{component.C-09-input.lineHeight}",
+        "{component.C-09-input.labelSize}",
+        "{component.C-09-input.labelColor}",
+        "{component.C-09-input.fieldGap}",
+        "{component.C-09-input.requiredTagRadius}",
+        "{component.C-09-input.requiredTagSize}",
+        "{component.C-09-input.variants.default.background}",
+        "{component.C-09-input.variants.default.border}",
+        "{component.C-09-input.variants.default.text}",
+        "{component.C-09-input.variants.hover.border}",
+        "{component.C-09-input.variants.invalid.border}",
+        "{component.C-09-input.variants.readonly.background}",
+        "{component.C-09-input.variants.readonly.text}",
+        "{component.C-09-input.focusWidth}",
+        "{component.C-09-input.focusOffset}",
+        "{component.C-09-input.focusColor}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 468 (C-09)",
+        "pages": [
+          "§3 line 109 (PG-001)",
+          "§3 line 116 (PG-008)"
+        ],
+        "states": [
+          "§4.2 line 168 (PG-001 Error)",
+          "§4.2 line 170 (PG-001 Editing)",
+          "§4.9 line 268 (PG-008 Editing)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-09-input",
+        "ac": "PRD §7.2 (AC-002, AC-004); §7.6 (AC-042, AC-046) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-10",
+      "name": "Composer",
+      "purpose": "The pinned plain-text input for a chat message, with Send as its only action. Enter sends and Shift+Enter inserts a line; it locks while one message is pending.",
+      "pages": [
+        "PG-002"
+      ],
+      "variants": [
+        "idle",
+        "editing",
+        "locked"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-10 row. component.C-10-composer defines surface, type, and focus knobs but no variants key.",
+      "states": {
+        "default": "Pinned raised surface at the panel radius with a placeholder. Enter sends and Shift+Enter inserts a line; no attachment, mention, slash menu, model chip, or search toggle is rendered (highfi_page_map.md §8 C-10; design_system.md §5).",
+        "hover": "N/A: no hover token exists for C-10. Hover feedback belongs to Send (C-08), and the text area does not change on pointer hover.",
+        "focus": "The composer takes the shared focus ring and offset. Focus returns to it when a response completes and after a rejected empty message (interaction_design.md §5.6; §4.2 N4, F1).",
+        "disabled": "The locked variant is the disabled form of the composer: while one message is pending the field accepts no text and Send cannot be activated (interaction_design.md §4.2 N2; §5.4).",
+        "in-flight": "The pending user turn shows Sending and exactly one assistant turn shows Assistant is responding. The composer is locked, no assistant text is invented, and a second send is impossible (interaction_design.md §4.2 N2, N3; §5.2).",
+        "error": "A zero-length message shows an inline error at the composer, keeps the field usable, and creates no turn; the error clears as soon as the text becomes non-empty. A send failure removes the pending assistant turn, keeps the accepted user message, and shows an error with Try again that prefills the same text (interaction_design.md §5.1; §4.2 F2).",
+        "readonly": "N/A: the composer is either editable or locked; a read-only chat is not a designed state (interaction_design.md §6.3)."
+      },
+      "behavior": [
+        "Enter sends and Shift+Enter inserts a line; Send is also a button for pointer and assistive use (interaction_design.md §5.6).",
+        "A non-empty message is accepted for processing, appears as a pending user turn, and locks the composer; no assistant message is shown before the system reports one (interaction_design.md §4.2 N2, D1, N3).",
+        "When the response is reported, exactly one assistant message is appended, the composer unlocks, and focus returns to it; the thread is not re-ordered or scrolled away from the answer (interaction_design.md §4.2 N4, N5).",
+        "Leaving with unsent text opens the discard confirmation. Stay keeps the text, Discard loses it, and a reload loses it (interaction_design.md §6.3 Editing; §5.3)."
+      ],
+      "tokens": [
+        "{component.C-10-composer.background}",
+        "{component.C-10-composer.border}",
+        "{component.C-10-composer.radius}",
+        "{component.C-10-composer.shadow}",
+        "{component.C-10-composer.text}",
+        "{component.C-10-composer.placeholder}",
+        "{component.C-10-composer.textSize}",
+        "{component.C-10-composer.lineHeight}",
+        "{component.C-10-composer.rowGap}",
+        "{component.C-10-composer.focusWidth}",
+        "{component.C-10-composer.focusOffset}",
+        "{component.C-10-composer.focusColor}",
+        "{semantic.layout.breakpoints.1440.chatColumnWidth}",
+        "{semantic.layout.breakpoints.1280.chatColumnWidth}",
+        "{semantic.layout.breakpoints.960.chatColumnWidth}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 469 (C-10)",
+        "pages": [
+          "§3 line 110 (PG-002)"
+        ],
+        "states": [
+          "§4.3 line 184 (PG-002 Editing)",
+          "§4.3 line 185 (PG-002 Submitting)",
+          "§4.3 line 186 (PG-002 terminal outcome)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-10-composer",
+        "ac": "PRD §7.3 (AC-012, AC-013, AC-019) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-11",
+      "name": "Run-step table",
+      "purpose": "The one table in the product: one row per run step with ordinal, target kind, status, duration, and result or error, under a caption and scoped headers.",
+      "pages": [
+        "PG-009"
+      ],
+      "variants": [
+        "loaded",
+        "wrapped at 960"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-11 row. component.C-11-run-step-table defines table tokens but no variants key; the wrap is a layout behaviour, not a second token set.",
+      "states": {
+        "default": "Caption and scoped headers, one row per step. A skill target shows the skill name and an MCP tool target withholds the tool name. The last row is borderless. At the narrowest adopted step, duration and result move to a second line under each step while status stays visible (highfi_page_map.md §8 C-11; design_system.md §5; interaction_design.md §3.2; §7.3).",
+        "hover": "N/A: rows have no action and no hover state; no row opens, sorts, or expands.",
+        "focus": "N/A: the table is not focusable row by row and contains no control (interaction_design.md §5.6).",
+        "disabled": "N/A: no row is disabled; a Skipped step is a reported status, not a disabled control (interaction_design.md §6.10).",
+        "in-flight": "Non-terminal states render as reported: Initiated or Running with the current step statuses, updated in place, and never presented as terminal (interaction_design.md §6.10; §5.2).",
+        "error": "N/A: a failed run read keeps the last reported rows and marks the page Status unavailable with Retry, and a zero-step run is an Error rather than an empty table (interaction_design.md §5.2; highfi_page_map.md §4.10 line 278).",
+        "readonly": "The table is always read-only: no step can be edited, reordered, retried, or cancelled (interaction_design.md §6.10)."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{component.C-11-run-step-table.background}",
+        "{component.C-11-run-step-table.border}",
+        "{component.C-11-run-step-table.radius}",
+        "{component.C-11-run-step-table.shadow}",
+        "{component.C-11-run-step-table.headerBackground}",
+        "{component.C-11-run-step-table.headerColor}",
+        "{component.C-11-run-step-table.headerFamily}",
+        "{component.C-11-run-step-table.headerSize}",
+        "{component.C-11-run-step-table.headerWeight}",
+        "{component.C-11-run-step-table.cellPaddingInline}",
+        "{component.C-11-run-step-table.rowSize}",
+        "{component.C-11-run-step-table.rowColor}",
+        "{component.C-11-run-step-table.rowLineHeight}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 470 (C-11)",
+        "pages": [
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.10 line 276 (PG-009 Default)",
+          "§4.10 line 284 (PG-009 terminal outcome)",
+          "§7.3 line 449 (wrap at the narrowest step)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-11-run-step-table",
+        "ac": "PRD §7.6 (AC-050 to AC-053) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-12",
+      "name": "Facts and summary panel",
+      "purpose": "A read-only side panel of label and value rows: recorded facts on a record page, the run summary on PG-009, and the composition summary on PG-008. It withholds owner, secret, and individual tool names.",
+      "pages": [
+        "PG-004",
+        "PG-006",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "record facts",
+        "run summary",
+        "composition summary"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-12 content variants. component.C-12-facts-panel defines one token set for all three placements.",
+      "states": {
+        "default": "Label and value rows at the panel width, stacking below the main column at the narrower steps. Record facts carry the recorded marker and proposed-metadata labels, the run summary carries the task version and Initiated by you, and the composition summary carries the version, step count, and manual-run note (interaction_design.md §7.2; highfi_page_map.md §4.7, §4.9, §4.10).",
+        "hover": "N/A: the panel has no interactive row.",
+        "focus": "N/A: the panel is not focusable and holds no control.",
+        "disabled": "N/A: nothing in the panel activates.",
+        "in-flight": "N/A: the panel renders loaded facts only. During a read the page shows C-16 and the panel is not filled with placeholders that could read as data (interaction_design.md §5.2).",
+        "error": "N/A: the panel has no error appearance. On a failed refresh PG-009 keeps the last reported values and the header marks Status unavailable, so no stale value is presented as current (interaction_design.md §5.2).",
+        "readonly": "The panel is read-only by construction: no value is editable, and no owner, secret, or individual tool name is rendered (interaction_design.md §2.3; highfi_page_map.md §8 C-12)."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{component.C-12-facts-panel.width}",
+        "{component.C-12-facts-panel.widthNarrow}",
+        "{component.C-12-facts-panel.background}",
+        "{component.C-12-facts-panel.border}",
+        "{component.C-12-facts-panel.radius}",
+        "{component.C-12-facts-panel.shadow}",
+        "{component.C-12-facts-panel.padding}",
+        "{component.C-12-facts-panel.titleSize}",
+        "{component.C-12-facts-panel.titleColor}",
+        "{component.C-12-facts-panel.labelSize}",
+        "{component.C-12-facts-panel.labelColor}",
+        "{component.C-12-facts-panel.valueSize}",
+        "{component.C-12-facts-panel.valueColor}",
+        "{semantic.layout.breakpoints.1440.recordSplit.panel}",
+        "{semantic.layout.breakpoints.1280.recordSplit.panel}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 471 (C-12)",
+        "pages": [
+          "§3 line 112 (PG-004)",
+          "§3 line 114 (PG-006)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.7 line 234 (PG-006 Default facts)",
+          "§4.9 line 262 (PG-008 composition summary)",
+          "§4.10 line 276 (PG-009 summary)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-12-facts-panel",
+        "ac": "PRD §7.4 (AC-025); §7.5 (AC-030, AC-033); §7.6 (AC-048, AC-056) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-13",
+      "name": "State panel",
+      "purpose": "The single panel for Empty, No Result, Error, and No Permission: a panel at the state-panel width with a serif headline, one explanatory paragraph, and at most one primary recovery action, with the page header and Back still visible where the page has them.",
+      "pages": [
+        "PG-002",
+        "PG-003",
+        "PG-004",
+        "PG-005",
+        "PG-006",
+        "PG-007",
+        "PG-008",
+        "PG-009",
+        "PG-010",
+        "PG-011",
+        "PG-012"
+      ],
+      "variants": [
+        "Empty",
+        "No Result",
+        "Error",
+        "No Permission"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-13 row. component.C-13-state-panel defines one token set for all four variants.",
+      "copyAnchors": {
+        "Empty": "\"No skills recorded. Only recorded skills appear here.\" and the equivalents for MCP servers and tasks; no create action (interaction_design.md §5.7 Empty registry; highfi_page_map.md §4.4, §4.6, §4.8).",
+        "No Result": "\"This skill is not in the registry.\" / \"This server is not in the registry.\" / \"This task is not in the registry.\" / \"This run is not available.\" (interaction_design.md §5.7 No Result).",
+        "Error": "\"This page could not load.\" with Retry (interaction_design.md §5.7 Load error).",
+        "No Permission": "\"You do not have access to this item.\" with one route back (interaction_design.md §5.7 Permission denial; §5.5 rule 4)."
+      },
+      "states": {
+        "default": "One of the four variants renders in place of page content: serif headline, one paragraph, at most one recovery action. Empty states that no records exist and renders no create action; No Result states the reference is not in the registry or not available; Error says the page could not load with Retry; No Permission says access is denied and offers one readable route back (highfi_page_map.md §8 C-13; interaction_design.md §5.7).",
+        "hover": "N/A: the panel has no hover state; its one recovery action takes C-08 hover (interaction_design.md §5.6).",
+        "focus": "N/A: the panel is not a focus target. Its single action follows C-08 focus, and after a page change focus lands on the page heading (interaction_design.md §5.6).",
+        "disabled": "N/A: the recovery action is never rendered disabled; an unavailable capability is absent, not greyed (interaction_design.md §5.5 rule 1; §5.3 rule 3).",
+        "in-flight": "The panel persists while its one action is in flight and that action carries the C-08 in-flight label; the panel never becomes a spinner-only page (interaction_design.md §5.2; §5.4).",
+        "error": "The Error variant says the page could not load with Retry. It never falls back to Empty and never shows a zero count; a failed read is an error, not an empty collection (interaction_design.md §5.7; §5.2; AC-027, AC-035).",
+        "readonly": "N/A: the panel is informational apart from its one recovery action."
+      },
+      "behavior": [
+        "Retry performs the same read again; no automatic retry occurs and a reload never resubmits an operation (interaction_design.md §5.4; §5.2).",
+        "A No Permission panel offers exactly one route back to a readable page, and a back link only when its destination is readable. A role with no confirmed read grant gets only a neutral return to sign-in (interaction_design.md §5.5 rule 4).",
+        "No Result serves an unresolvable or non-owned reference and never reveals whether the object exists; an unauthenticated visit goes to PG-001 instead (interaction_design.md §3.4; §5.5).",
+        "The proposed editor routes PG-010 to PG-012 render No Permission only: no form, no draft, no disabled authoring control, and no promise that authoring will be enabled (highfi_page_map.md §4.11 line 297; interaction_design.md §5.5)."
+      ],
+      "tokens": [
+        "{component.C-13-state-panel.width}",
+        "{component.C-13-state-panel.background}",
+        "{component.C-13-state-panel.border}",
+        "{component.C-13-state-panel.radius}",
+        "{component.C-13-state-panel.shadow}",
+        "{component.C-13-state-panel.paddingInline}",
+        "{component.C-13-state-panel.headlineFamily}",
+        "{component.C-13-state-panel.headlineSize}",
+        "{component.C-13-state-panel.headlineWeight}",
+        "{component.C-13-state-panel.headlineLineHeight}",
+        "{component.C-13-state-panel.headlineColor}",
+        "{component.C-13-state-panel.paragraphSize}",
+        "{component.C-13-state-panel.paragraphColor}",
+        "{component.C-13-state-panel.paragraphLineHeight}",
+        "{semantic.layout.breakpoints.1440.statePanelWidth}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 472 (C-13)",
+        "pages": [
+          "§3 line 110 (PG-002)",
+          "§3 line 111 (PG-003)",
+          "§3 line 112 (PG-004)",
+          "§3 line 113 (PG-005)",
+          "§3 line 114 (PG-006)",
+          "§3 line 115 (PG-007)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)",
+          "§3 line 118 (PG-010)",
+          "§3 line 119 (PG-011)",
+          "§3 line 120 (PG-012)"
+        ],
+        "states": [
+          "§4.11 line 297 (PG-010 to PG-012 No Permission)",
+          "§4.10 line 279 (PG-009 No Result)",
+          "§4.8 line 250 (PG-007 Empty)",
+          "§4.8 line 252 (PG-007 Error)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-13-state-panel",
+        "ac": "PRD §7.2 to §7.6; AC gap G-01 (highfi_page_map.md §6.2) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-14",
+      "name": "Dialog",
+      "purpose": "The only effective overlay: the discard confirmation for unsent chat text or unsent run inputs. It is an alertdialog with Stay and Discard, a Tab trap, Escape acting as Stay, and focus returning to the trigger.",
+      "pages": [
+        "PG-002",
+        "PG-008"
+      ],
+      "variants": [
+        "discard confirmation"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-14 row, which names the discard confirmation as the only effective overlay. component.C-14-dialog defines one token set.",
+      "unresolved": "The chat wording and the run-input wording are two strings, and highfi_page_map.md §6.4 M-06 leaves the choice open. This file records the working label Discard unsent text? and decides neither; two strings must not ship.",
+      "states": {
+        "default": "Alertdialog over an inert shell with a scrim, one explanatory paragraph, and two actions, Stay and Discard. The copy is the single working label Discard unsent text? recorded by M-06 as undecided (highfi_page_map.md §8 C-14; §6.4 M-06; interaction_design.md §5.3).",
+        "hover": "N/A: the dialog body has no hover state; its two actions take C-08 hover.",
+        "focus": "Focus moves into the dialog on open, Tab is trapped inside it, Escape acts as Stay, and focus returns to the trigger on close; the shell is inert while the dialog is open (highfi_page_map.md §8 C-14; interaction_design.md §5.3; §5.6).",
+        "disabled": "N/A: neither action is disabled; Stay and Discard are both always available.",
+        "in-flight": "N/A: the dialog performs no asynchronous work; Stay and Discard take effect immediately (interaction_design.md §5.3).",
+        "error": "N/A: no validation or submission happens inside the dialog.",
+        "readonly": "N/A: the dialog contains no editable content; the unsent text is not shown as an editable field."
+      },
+      "behavior": [
+        "Leaving PG-002 with unsent composer text opens the dialog. Stay keeps the text and Discard discards it with no undo (interaction_design.md §5.3; §6.3 Editing).",
+        "Leaving PG-008 with a non-empty run form opens the same dialog. The unsent inputs exist only in the current page session and do not survive a reload or re-authentication (interaction_design.md §6.9 Editing; §5.3).",
+        "No other confirmation exists: sign-in, chat send, and run start are explicit actions without a dialog, and no delete action is rendered (interaction_design.md §5.3)."
+      ],
+      "tokens": [
+        "{component.C-14-dialog.width}",
+        "{component.C-14-dialog.background}",
+        "{component.C-14-dialog.border}",
+        "{component.C-14-dialog.radius}",
+        "{component.C-14-dialog.shadow}",
+        "{component.C-14-dialog.scrim}",
+        "{component.C-14-dialog.padding}",
+        "{component.C-14-dialog.focusWidth}",
+        "{component.C-14-dialog.focusOffset}",
+        "{component.C-14-dialog.focusColor}",
+        "{semantic.layout.breakpoints.1440.dialogWidth}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 473 (C-14)",
+        "pages": [
+          "§3 line 110 (PG-002)",
+          "§3 line 116 (PG-008)"
+        ],
+        "states": [
+          "§4.3 line 184 (PG-002 Editing discard)",
+          "§4.9 line 268 (PG-008 Editing discard)",
+          "§6.4 M-06 line 407 (dialog copy)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-14-dialog",
+        "ac": "PRD AC-019 and AC-046 (dialog opens); gap G-10 for the Stay and Discard behaviour (highfi_page_map.md §6.2) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-15",
+      "name": "Live region",
+      "purpose": "A polite status region that announces the sign-in result, chat completion, and run state change. The chat thread itself is not a live region.",
+      "pages": [
+        "PG-001",
+        "PG-002",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "polite status"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-15 row. design_tokens.json _meta.componentCoverage records that C-15 has no component-layer entry, so it is composed from semantic tokens.",
+      "tokenBasis": "No component tokens exist for C-15. The region carries text only; where the announcement is surfaced as text it uses the UI family, the small size, and the primary or secondary text role. It has no surface of its own and no colour role of its own.",
+      "states": {
+        "default": "An empty polite region receiving the visible outcome text of the operation it serves. It never announces a result the page does not show (interaction_design.md §5.2; §5.6).",
+        "hover": "N/A: the region has no pointer surface.",
+        "focus": "N/A: the region is not focusable and is never a tab stop.",
+        "disabled": "N/A: announcements cannot be disabled; no control exists.",
+        "in-flight": "During sign-in submission the region announces the wait. For chat and run, the pending state stays visible in the thread or on the page, and no fabricated progress message is invented (interaction_design.md §5.2; §4.2 N2).",
+        "error": "A failure that changes page state is announced with the same text the page shows, such as the generic sign-in denial or a failed run; no raw error code or provider name appears (interaction_design.md §5.2; §5.7).",
+        "readonly": "N/A: the region has no editable or read-only mode; a person does not interact with it."
+      },
+      "behavior": [
+        "The sign-in result is announced politely; a valid credential enters PG-002 without a separate confirmation screen (interaction_design.md §5.2; §4.1 N2).",
+        "Chat completion is announced when exactly one assistant message is appended; the thread itself is not a live region (interaction_design.md §5.2; §4.2 N4).",
+        "A run state change, including Succeeded or Failed, is announced politely; a terminal state is announced only when the system reports it (interaction_design.md §4.3 N5; §5.2)."
+      ],
+      "tokens": [
+        "{semantic.typography.family.ui}",
+        "{semantic.typography.size.small}",
+        "{semantic.color.text.primary}",
+        "{semantic.color.text.secondary}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 474 (C-15)",
+        "pages": [
+          "§3 line 109 (PG-001)",
+          "§3 line 110 (PG-002)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.2 line 171 (PG-001 Submitting announcement)",
+          "§4.3 line 186 (PG-002 completion)",
+          "§4.10 line 284 (PG-009 run state)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json semantic.typography and semantic.color (no component layer)",
+        "ac": "PRD §7.2 (AC-005); §7.3 (AC-015 to AC-018); §7.6 (AC-051) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-16",
+      "name": "Skeleton",
+      "purpose": "Layout-matched placeholders that reserve the page while a read is unresolved, preserving the header and the count placeholder. It is never a spinner-only page and never an Empty state before load.",
+      "pages": [
+        "PG-002",
+        "PG-003",
+        "PG-004",
+        "PG-005",
+        "PG-006",
+        "PG-007",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "list",
+        "card grid",
+        "record"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-16 content variants. component.C-16-skeleton defines one token set.",
+      "states": {
+        "default": "Placeholder rows, cards, or record fields in the shape of the loaded layout. The page header and the count placeholder remain, and no interaction is available inside a skeleton (highfi_page_map.md §8 C-16; interaction_design.md §5.2).",
+        "hover": "N/A: a skeleton has no pointer surface.",
+        "focus": "N/A: a skeleton is not focusable and contains no control.",
+        "disabled": "N/A: a skeleton is not a control. The page action it stands for is simply unavailable until the read resolves (highfi_page_map.md §4.8 line 249).",
+        "in-flight": "The skeleton is the Loading render: it persists until the system reports, with no invented timer, and a failure replaces it with C-13 Error rather than Empty (interaction_design.md §5.2; highfi_page_map.md §8 C-16).",
+        "error": "N/A: a skeleton never ends in Error inside itself; the failed read swaps it for the C-13 Error panel with Retry (interaction_design.md §5.2).",
+        "readonly": "N/A: placeholders carry no content and no editable field."
+      },
+      "behavior": "无（只读）",
+      "tokens": [
+        "{component.C-16-skeleton.background}",
+        "{component.C-16-skeleton.shimmer}",
+        "{component.C-16-skeleton.radius}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 475 (C-16)",
+        "pages": [
+          "§3 line 110 (PG-002 Loading)",
+          "§3 line 111 (PG-003 Loading)",
+          "§3 line 112 (PG-004 Loading)",
+          "§3 line 113 (PG-005 Loading)",
+          "§3 line 114 (PG-006 Loading)",
+          "§3 line 115 (PG-007 Loading)",
+          "§3 line 116 (PG-008 Loading)",
+          "§3 line 117 (PG-009 Loading)"
+        ],
+        "states": [
+          "§4.3 line 179 (PG-002 Loading)",
+          "§4.4 line 193 (PG-003 Loading)",
+          "§4.9 line 263 (PG-008 Loading)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json component.C-16-skeleton",
+        "ac": "PRD §7.4 (AC-026); §7.6 (AC-044, AC-045) — Draft, not Gate 1-accepted"
+      }
+    },
+    {
+      "id": "C-17",
+      "name": "Back link",
+      "purpose": "The explicit return from a record or a run to its readable parent: Back to Skills, Back to MCP servers, or Back to Tasks. It is rendered only when the destination is readable.",
+      "pages": [
+        "PG-004",
+        "PG-006",
+        "PG-008",
+        "PG-009"
+      ],
+      "variants": [
+        "record back",
+        "run back"
+      ],
+      "variantBasis": "highfi_page_map.md §8 C-17 row. design_tokens.json _meta.componentCoverage records that C-17 has no component-layer entry, so it is composed from semantic tokens and the shared focus pair.",
+      "tokenBasis": "No component tokens exist for C-17. The link uses the UI family, the small size, a medium weight, and the secondary text role, moving to primary text on hover, with the C-08 focus pair for keyboard focus.",
+      "states": {
+        "default": "A text link naming the parent destination, placed with the breadcrumb in the record or run header. It stays visible in Loading, No Result, and Error (highfi_page_map.md §8 C-17; interaction_design.md §5.5 rule 4).",
+        "hover": "The label moves from the secondary text role to the primary text role; the focus ring is unaffected (design_system.md §5).",
+        "focus": "The shared focus ring and offset in {semantic.color.border.focus} on keyboard focus (interaction_design.md §5.6).",
+        "disabled": "N/A: a back link is rendered when its destination is readable and absent otherwise; it is never disabled (interaction_design.md §5.5 rule 4).",
+        "in-flight": "N/A: following a back link is navigation, not an operation, and has no pending state.",
+        "error": "N/A: on a failed read the link stays as the safe route back rather than showing an error of its own (interaction_design.md §6.5, §6.7, §6.9).",
+        "readonly": "N/A: the link is navigation and has no editable mode."
+      },
+      "behavior": [
+        "Activating it returns to the readable parent: PG-003 from PG-004, PG-005 from PG-006, and PG-007 from PG-008 and PG-009. It is rendered only when that destination is readable (interaction_design.md §5.5 rule 4; §3.1; highfi_page_map.md §8 C-17).",
+        "Browser Back returns to the previous page, and navigation never re-submits an operation because no automatic replay occurs on Back or reload (interaction_design.md §5.4; §3.1).",
+        "An unrecorded reference renders No Result with this link as the only recovery; no partial record and no create action is offered (interaction_design.md §5.5; §3.4)."
+      ],
+      "tokens": [
+        "{semantic.typography.family.ui}",
+        "{semantic.typography.size.small}",
+        "{semantic.typography.weight.medium}",
+        "{semantic.color.text.secondary}",
+        "{semantic.color.text.primary}",
+        "{component.C-08-button.focusWidth}",
+        "{component.C-08-button.focusOffset}",
+        "{semantic.color.border.focus}"
+      ],
+      "source": {
+        "section8": "docs/03_design/highfi_page_map.md §8, line 476 (C-17)",
+        "pages": [
+          "§3 line 112 (PG-004)",
+          "§3 line 114 (PG-006)",
+          "§3 line 116 (PG-008)",
+          "§3 line 117 (PG-009)"
+        ],
+        "states": [
+          "§4.5 line 209 (PG-004 No Result back)",
+          "§4.7 line 237 (PG-006 No Result back)",
+          "§4.9 line 265 (PG-008 No Result back)",
+          "§4.10 line 279 (PG-009 No Result back)"
+        ],
+        "tokens": "docs/03_design/design_tokens.json semantic.typography, semantic.color, and the C-08 focus pair (no component layer)",
+        "ac": "PRD §7.4 (AC-024); §7.5 (AC-030); §7.6 (AC-043, AC-055) — Draft, not Gate 1-accepted"
+      }
+    }
+  ],
+  "openReferences": [
+    {
+      "ref": "M-01",
+      "handling": "Not resolved. No authoring surface, no disabled authoring control, and no decision about who may author. C-13 carries No Permission only, and the Empty registries are recorded as-is.",
+      "source": "docs/03_design/highfi_page_map.md §6.4 M-01 line 402 and §10.2 line 559"
+    },
+    {
+      "ref": "M-06",
+      "handling": "Not resolved. C-14 records the working label and states that the chat wording and the run-input wording must become one string; no side is chosen.",
+      "source": "docs/03_design/highfi_page_map.md §6.4 M-06 line 407"
+    },
+    {
+      "ref": "TBD-INFRA-001",
+      "handling": "Open. No framework, component library, design tool, handoff format, or external artifact identifier is named in this file.",
+      "source": "docs/03_design/design_tokens.json _meta.tbd"
+    },
+    {
+      "ref": "TBD-BIZ-004",
+      "handling": "Referenced only, with the divergence between the registry and the interaction design left intact. The read-only registries and the terminal Empty states are recorded as the page map states them.",
+      "source": "docs/03_design/highfi_page_map.md §6.4 M-01 line 402"
+    },
+    {
+      "ref": "C-07 Initiated",
+      "handling": "The §8 C-07 mapping assigns five variants and does not assign one to Initiated. No sixth variant is added and no colour role is invented for it.",
+      "source": "docs/03_design/highfi_page_map.md §8 line 466; §4.10 line 284"
+    }
+  ],
+  "selfCheck": [
+    {
+      "check": 1,
+      "criterion": "The file parses as JSON, and the component id set is exactly C-01 to C-17 with nothing added or missing.",
+      "result": "Pass",
+      "evidence": "17 components, ids C-01 through C-17 in order; names copied from highfi_page_map.md §8 lines 460 to 476."
+    },
+    {
+      "check": 2,
+      "criterion": "Every component has a §8 source row, and every PG reference exists in §3.",
+      "result": "Pass",
+      "evidence": "Each source.section8 names its §8 line; pages[] uses only PG-001 to PG-012, each present in §3 lines 109 to 120."
+    },
+    {
+      "check": 3,
+      "criterion": "Every token reference resolves in design_tokens.json, with zero hex literals and zero bare dimension literals.",
+      "result": "Pass",
+      "evidence": "Every entry in tokens[] resolves through component, semantic, or semantic.layout. No colour literal, rgba, or raw dimension appears anywhere in the file; all values are token references."
+    },
+    {
+      "check": 4,
+      "criterion": "Error, disabled, and loading are defined or explicitly N/A for every Input, Button, and Composer.",
+      "result": "Pass",
+      "evidence": "C-08 states.disabled, states.in-flight, and states.error are each defined; C-09 states.disabled is N/A with the read-only lock as the reason, and its error and in-flight states are defined; C-10 states.disabled, states.in-flight, and states.error are each defined."
+    },
+    {
+      "check": 5,
+      "criterion": "No action-destructive or extra status colour role, no new component, no denied capability, and no tool, framework, or artifact identifier.",
+      "result": "Pass",
+      "evidence": "C-07 uses only ok, warn, error, info, and neutral; C-08 uses only primary, secondary, and ghost; no component outside C-01 to C-17 is specified; Card is only C-06, Table only C-11, and the only overlay is the C-14 discard confirmation; no authoring form or disabled authoring control appears; no framework, component library, design tool, or external artifact identifier is named."
+    },
+    {
+      "check": 6,
+      "criterion": "Every state key is present, and every N/A carries a reason.",
+      "result": "Pass",
+      "evidence": "Each of the 17 components carries default, hover, focus, disabled, in-flight, error, and readonly in order, giving 119 state cells; every inapplicable cell begins with 'N/A: ' and states its reason."
+    }
+  ],
+  "residualLimits": [
+    "This file is Draft. PRD v0.2 is not Gate 1-accepted, and no component here is approved for build.",
+    "Values are the candidate tokens of design_tokens.json, not a Frozen design system. A token change requires a re-check of the references listed per component.",
+    "The §8 C-07 mapping does not assign a variant to Initiated; the run badge for the initial state remains undecided.",
+    "M-06 leaves the discard copy undecided, and this file deliberately records one working label rather than choosing.",
+    "No framework, component library, design tool, or external artifact identifier is selected, so no code-level mapping is claimed.",
+    "Only this file was written. docs/03_design/README.md and docs/13_changes were not modified, so the file is not yet listed in the folder index and no change record was authored here."
+  ]
+}
