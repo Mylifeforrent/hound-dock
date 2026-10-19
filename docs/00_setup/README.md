@@ -6,7 +6,7 @@ Authoritative assets:
 - `docs/00_setup/README.md` — this folder contract and the stage map.
 - `docs/00_setup/project_rules.md` — numbered engineering rules.
 - `docs/00_setup/open_items.md` — the single registry for TBD and CONFLICT entries.
-- `docs/00_setup/environment_baseline.md` — expected Stage 1 asset; **not created** (TBD-INFRA-004). Creating it without executed Stage 1 verification is prohibited.
+- `docs/00_setup/environment_baseline.md` — Stage 1 baseline, recorded 2026-10-20 by `CHG-022`; it records read-only host/tool observations and does not authorize installs or commands. `TBD-INFRA-004` is Resolved.
 Allowed status: Draft / Reviewed / Frozen. `Frozen` requires explicit user approval recorded in the Frozen assets section below. `open_items.md` is a living registry and MUST remain `Draft`.
 Update entry point: Tech Lead through a change record in `docs/13_changes/`; decisions are entered only in `open_items.md`.
 

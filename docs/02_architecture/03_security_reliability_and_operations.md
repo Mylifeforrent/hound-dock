@@ -94,7 +94,7 @@ Authentication is a system check, not a role permission. Sign-in is a person-lev
 
 An unknown sign-in name and a wrong credential must produce the same generic denial, no session, and no account-existence signal in content, state transition, or redirect. `FLOW-001 F1` requires this directly; the interaction copy rules forbid "account not found", any existence hint, and any credential echo. `[SRC: business_model.md#§4 FLOW-001]` `[SRC: interaction_design.md#§5.7]`
 
-Whether response timing or another observable difference can disclose existence is not designed here. No constant-time claim is made; the question is recorded as `CGAP-02` and belongs to the `CAND-023` security layer and the missing environment baseline, not to this document. `[TBD-INFRA-004]`
+Whether response timing or another observable difference can disclose existence is not designed here. No constant-time claim is made; the question is recorded as `CGAP-02` and belongs to the `CAND-023` security layer and the recorded Stage 1 environment, not to this document. `[TBD-INFRA-004]`
 
 ### 3.3 Session binding
 
@@ -111,7 +111,7 @@ Session termination, idle expiry, sign-out, credential recovery, and disabled-ac
 | Credential recovery | `CAP-021` excluded; `FLOW-001 C1` help destination does not exist | A member who cannot authenticate has no in-product recovery path | No reset flow, no recovery credential |
 | Disabled-account behavior | `STATE-006` proposed; `TBD-BIZ-013` open | A disabled account cannot be guaranteed to fail sign-in by this architecture | No disable-enforcement claim |
 | Revocation and concurrent sessions | Not stated | A compromised session has no confirmed revocation point and no concurrency limit | No revocation mechanism, no session count |
-| Session mechanics | `CAND-023` proposed; `TBD-INFRA-004` missing | Credential storage, session material, and request-forgery protection are unselected | No algorithm, no attribute, no mechanism |
+| Session mechanics | `CAND-023` proposed; Stage 1 baseline recorded; `TBD-INFRA-013` Open | Credential storage, session material, and request-forgery protection are unselected | No algorithm, no attribute, no mechanism |
 
 **Table tag:** each row references an existing gap or open item; no duration, flag, algorithm, or mechanism is defined here.
 
@@ -389,7 +389,7 @@ The impact of not measuring them: no per-account or per-run attribution; no way 
 
 ### 12.2 No readiness claim
 
-Deploying the runtime is not the same as an operable product: the registries have no confirmed authority to be populated, the model port is gated, and the environment baseline is missing. This document makes no operational-readiness claim. `OPS-04` `[TBD-BIZ-004]` `[TBD-INFRA-004]`
+Deploying the runtime is not the same as an operable product: the registries have no confirmed authority to be populated, the model port is gated, and the environment baseline is recorded but no measurement command exists. This document makes no operational-readiness claim. `OPS-04` `[TBD-BIZ-004]` `[TBD-INFRA-004]`
 
 ### 12.3 Operator interface
 
@@ -397,7 +397,7 @@ Deploying the runtime is not the same as an operable product: the registries hav
 
 ## 13. Measurement plan
 
-`NFR-001` to `NFR-012` are proposed or `TBD` targets, not rules. This plan defines what the architecture must expose for a later measurement; it adopts no threshold and does not claim a measurement was performed. The Stage 1 environment baseline is missing, so no backend measurement environment exists (`OPS-05`). `[SRC: business_model.md#§9]` `[TBD-INFRA-004]`
+`NFR-001` to `NFR-012` are proposed or `TBD` targets, not rules. This plan defines what the architecture must expose for a later measurement; it adopts no threshold and does not claim a measurement was performed. The Stage 1 baseline records the host, but no measurement command or backend measurement environment is verified (`OPS-05`). `[SRC: business_model.md#§9]` `[TBD-INFRA-004]`
 
 | MEAS | NFR | Measurement point | What the architecture must expose | Threshold status | Environment status |
 |---|---|---|---|---|---|
@@ -451,7 +451,7 @@ Each gap below is a boundary this document cannot complete without a product-own
 | `TBD-BIZ-013` | Blocks disabled-account and offboarding behavior | Open |
 | `TBD-BIZ-014` | Blocks any compliance conclusion and any authorization of processing | Open |
 | `TBD-INFRA-003` | Blocks persistence, durability verification, and backup | Open |
-| `TBD-INFRA-004` | Blocks the measurement environment and every security mechanism decision | Open |
+| `TBD-INFRA-004` | Baseline recorded; measurement commands and security mechanism decisions remain open under `TBD-INFRA-007` and the security change | Resolved (`CHG-022`) |
 | `TBD-INFRA-006` | Blocks CI-based security checks and remote review evidence | Open |
 | `TBD-INFRA-009` | Blocks the model port, provider, and any internal/external classification | Open |
 | `TBD-INFRA-010` | Keeps SSO and the future IdP boundary deferred | Open |
@@ -485,8 +485,8 @@ Each gap below is a boundary this document cannot complete without a product-own
 | No new `TBD`, `CONFLICT`, `CAP`, `BR`, `ENT`, `STATE`, or `NFR` identifier | Pass | Only `SEC-`, `RUN-`, `OPS-`, `MEAS-`, and `CGAP-` identifiers are introduced; all are declared architecture-local |
 | No `CONFLICT` resolved and no PRD acceptance claimed | Pass | `CONFLICT-001` and `CONFLICT-002` are referenced only; `TBD-BIZ-012` is resolved at the scope boundary (`CHG-021`), and this document still claims no PRD acceptance |
 | Client-side checks are not treated as authority | Pass | `SEC-08`, §4.3; `NFR-007` is used as a proposed reference, not an adopted target |
-| No operational-readiness claim | Pass | §12.2; the registries are empty-valid, the gate is closed, and the baseline is missing |
+| No operational-readiness claim | Pass | §12.2; the registries are empty-valid, the gate is closed, and the baseline is recorded but no command is verified |
 | No unqualified generic security slogan | Pass | Every boundary is stated as a specific crossing and control objective; no undefined industry label is invoked |
 | Residual limits are explicit | Pass | `CGAP-01` to `CGAP-13`; §14.3; the confirmed MVP is not operable under `TBD-BIZ-004`, and no positive registry path can be tested |
 
-**Residual limits.** This document is not a threat model, a control specification, a test record, or a compliance statement. It cannot verify a control because no environment baseline exists (`TBD-INFRA-004`), no store is selected (`TBD-INFRA-003`), no audit obligation is confirmed (`TBD-BIZ-009`), and no registry authority exists (`TBD-BIZ-004`). Its value is the boundary it refuses to overstate. `[SRC: 08_security/README.md#Boundaries]` `[SRC: 10_operations/README.md#Boundaries]`
+**Residual limits.** This document is not a threat model, a control specification, a test record, or a compliance statement. It cannot verify a control because no measurement command or verified environment exists (`TBD-INFRA-004` Resolved; `TBD-INFRA-007` Open), no store is selected (`TBD-INFRA-003`), no audit obligation is confirmed (`TBD-BIZ-009`), and no registry authority exists (`TBD-BIZ-004`). Its value is the boundary it refuses to overstate. `[SRC: 08_security/README.md#Boundaries]` `[SRC: 10_operations/README.md#Boundaries]`

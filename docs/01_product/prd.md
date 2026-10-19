@@ -369,7 +369,7 @@ No endpoint is orphaned. No acceptance criterion depends on an endpoint that the
 
 This PRD adds no data field, classification, retention period, or deletion rule. It cites the enterprise-internal baseline: Internal and Sensitive data only; no Highly Sensitive data; conversations and messages 90 days, runs and run steps 180 days, audit events 365 days; TLS in transit and encryption at rest; no message content, sign-in name, endpoint reference, tool name, or credential in operational logs. `[SRC: business_model.md#Appendix B.2]`
 
-The retention job, deletion trigger, encryption algorithm, key management, and masking rules remain later design under `TBD-INFRA-004` and the security folder. This PRD issues no compliance conclusion; `TBD-BIZ-014` remains Open. `[TBD-BIZ-014]`
+The retention job, deletion trigger, encryption algorithm, key management, and masking rules remain later design under the Stage 1 baseline and the security folder. This PRD issues no compliance conclusion; `TBD-BIZ-014` remains Open. `[TBD-BIZ-014]`
 
 ## 7. Acceptance criteria
 
@@ -564,7 +564,7 @@ The NFR identifiers and targets are cited as-is from `business_model.md` §9. No
 
 ### 9.2 Acceptance status
 
-No NFR is accepted. `TBD-BIZ-008` is Open, so every numeric threshold remains proposed. `TBD-INFRA-004` is Open, so no measurement environment is verified and no command, benchmark, or load result is claimed. `NFR-004`, `NFR-005`, and `NFR-009` keep a `TBD` target plus a suggested baseline; the suggested value is not an acceptance threshold. `[TBD-BIZ-008; TBD-INFRA-004]`
+No NFR is accepted. `TBD-BIZ-008` is Open, so every numeric threshold remains proposed. `TBD-INFRA-004` is Resolved and the Stage 1 baseline records the local environment, but no measurement command, benchmark, or load result is verified. `NFR-004`, `NFR-005`, and `NFR-009` keep a `TBD` target plus a suggested baseline; the suggested value is not an acceptance threshold. `[TBD-BIZ-008; TBD-INFRA-004]`
 
 `NFR-009` cites the retention periods recorded in Appendix B.2 for the persisted records. It does not create a retention rule, a deletion job, or a compliance conclusion. `TBD-BIZ-014` remains Open. `[TBD-BIZ-014]`
 
@@ -591,7 +591,7 @@ The canonical entries are in `docs/00_setup/open_items.md`. This table reference
 | **TBD-BIZ-014** | Open — legal, platform, or contractual constraints. | No compliance conclusion is issued; no result is claimed. |
 | **TBD-BIZ-015** | Open — state-model coverage interpretation. | No new state model or state diagram is added. |
 | **TBD-INFRA-003** | Resolved — persistence store decision recorded. | `NFR-012` references it; this PRD selects no store. |
-| **TBD-INFRA-004** | Open — missing Stage 1 environment baseline. | No measurement environment, command, or benchmark is verified. |
+| **TBD-INFRA-004** | Resolved — Stage 1 environment baseline recorded 2026-10-20 (`CHG-022`). | The local host/tool versions are recorded; no command, benchmark, or load result is verified. |
 | **TBD-INFRA-005** | Open — dependency and environment tooling. | `NFR-012` references it; this PRD selects no tooling. |
 | **TBD-INFRA-009** | Resolved — internal model gateway with no external egress. | `NFR-008` references it; this PRD selects no provider. |
 | **TBD-INFRA-011** | Open — search provider and data boundary. | `NFR-008` references it; search remains out of scope. |
@@ -673,7 +673,7 @@ No BR is without an AC. No AC carries more than one BR. `[SRC: business_model.md
 | 4 | Every UI-visible AC names a PG and a state that exists and is not N/A on that page. | Pass | §7: 53 UI ACs; §5.2 and §5.3 are the check table. The four non-UI ACs are AC-003, AC-006, AC-008, and AC-049. |
 | 5 | No new page, role, state, error code, or responsibility. | Pass | `PG-001` to `PG-012` and `ROLE-001` to `ROLE-004` are the only page and role IDs; the nine state names are §5.1; no error code is defined; `Blocked` is a capability status, not a state; no new role responsibility is assigned. |
 | 6 | Every divergence carries `[CONFLICT]`. | Pass | §10.2 Admin publication and audit read; §10.3 CAP-009 audit surface. No divergence is presented as settled. |
-| 7 | Every open decision carries `[TBD-xxx]`. | Pass | §2 targets `TBD-BIZ-006`; §4 execution `TBD-BIZ-007`; §9 thresholds `TBD-BIZ-008`; §10 `TBD-BIZ-005`, `-006`, `-007`, `-008`, `-012`, `-013`, `-014`, `-015`; `TBD-INFRA-004`, `-005`, `-011`. |
+| 7 | Every open decision carries `[TBD-xxx]`. | Pass | §2 targets `TBD-BIZ-006`; §4 execution `TBD-BIZ-007`; §9 thresholds `TBD-BIZ-008`; §10 `TBD-BIZ-005`, `-006`, `-007`, `-008`, `-012`, `-013`, `-014`, `-015`; `TBD-INFRA-005`, `-007`, `-011`. |
 | 8 | CAP-009 is blocked and no page, API, or AC is invented. | Pass | §3.2, §10.3; zero AC for CAP-009; no additional page or endpoint is defined. |
 | 9 | FLOW-004 to FLOW-006 are Proposed only, with no implementation AC. | Pass | §4.3; §7.7 records zero AC for PG-010 to PG-012. |
 | 10 | US-02, US-07, US-09, and the old §13 matrix are not carried over. | Pass | §12 records each removal; §7 contains no search, audit-page, or model-configuration AC; §5.5 contains the §2.2 matrix, not the old §13 columns. |
@@ -732,7 +732,7 @@ This table records the limits of the current draft. It creates no risk ID and no
 | `CAP-009` audit has no page or endpoint | The audit scope cannot be accepted or demonstrated. | Blocked in §3.2 and §10.3; no page, API, or AC invented. |
 | `TBD-BIZ-007` execution model is open | Step execution, branching, and retry semantics are undefined. | `FLOW-003` is limited to initiation and outcome; no step-type or retry requirement. |
 | `TBD-BIZ-006` metrics are open | The three objectives have no confirmed target or time window. | Every target cites `TBD-BIZ-006`; suggested values are not commitments. |
-| `TBD-BIZ-008` thresholds and `TBD-INFRA-004` environment are open | No NFR can be accepted or measured. | §9 cites the targets as proposed; no measurement claim is made. |
+| `TBD-BIZ-008` thresholds remain open; the `TBD-INFRA-004` environment is recorded | No NFR can be accepted or measured. | §9 cites the targets as proposed; no measurement claim is made. |
 | `TBD-BIZ-014` legal/policy reference is missing | No compliance conclusion can be issued. | No compliance requirement or conclusion; cited as Open. |
 | `TBD-BIZ-005` has no first integration or task | The acceptance demo has no concrete content. | No specific integration or task is required by an AC; cited as Open. |
 | No API or UI was executed | The ACs are definitions, not observed results. | §11.3 records a documentation self-check only; no pass is claimed. |
@@ -795,6 +795,6 @@ The v0.1 §19 acceptance conditions are withdrawn. This revision does not add a 
 | Gate 1 | Scope boundary accepted (option (b)) |
 | `TBD-BIZ-012` | Resolved |
 | Independent review | Not performed for PRD v0.2 (`CHG-014`); the `CHG-021` Gate 1 acceptance review is separate |
-| Implementation authorization | None — Stage 1/7 baseline and a separate implementation change remain required |
+| Implementation authorization | None — Stage 7 commands and a separate implementation change remain required |
 
-Gate 1 acceptance is recorded in `docs/00_setup/open_items.md` and `CHG-021`. It does not authorize implementation, deployment, or data handling; the Stage 1 environment baseline (`TBD-INFRA-004`), verified commands (`TBD-INFRA-007`), and an implementation `CHG` remain required. `[TBD-BIZ-012]`
+Gate 1 acceptance is recorded in `docs/00_setup/open_items.md` and `CHG-021`. It does not authorize implementation, deployment, or data handling; the Stage 1 baseline is recorded (`TBD-INFRA-004` Resolved; `CHG-022`), but verified commands (`TBD-INFRA-007`) and an implementation `CHG` remain required. `[TBD-BIZ-012]`

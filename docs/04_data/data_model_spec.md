@@ -46,9 +46,9 @@ The product owner selected the enterprise-internal baseline on 2026-10-18. The d
 | D-09 Store | PostgreSQL selected; physical design separate | Logical model only in this document |
 | D-10 Legal | Internal policy applies; policy reference pending; no compliance conclusion | `TBD-BIZ-014` remains open |
 
-**Resolved entries:** `TBD-BIZ-003`, `TBD-BIZ-004`, `TBD-BIZ-009`, `TBD-BIZ-011`, `TBD-INFRA-003`, `TBD-INFRA-009`; `CONFLICT-001` resolved toward Admin audit read.
+**Resolved entries:** `TBD-BIZ-003`, `TBD-BIZ-004`, `TBD-BIZ-009`, `TBD-BIZ-011`, `TBD-INFRA-003`, `TBD-INFRA-004`, `TBD-INFRA-009`; `CONFLICT-001` resolved toward Admin audit read.
 
-**Remaining open:** `TBD-BIZ-005`, `-006`, `-007`, `-008`, `-010`, `-012`, `-013`, `-014`, `-015`; `TBD-INFRA-004`, `-005`, `-006`, `-007`, `-010`, `-011`, `-012`, `-013`, `-014`; `CONFLICT-002`.
+**Remaining open:** `TBD-BIZ-005`, `-006`, `-007`, `-008`, `-010`, `-012`, `-013`, `-014`, `-015`; `TBD-INFRA-005`, `-006`, `-007`, `-010`, `-011`, `-012`, `-013`, `-014`; `CONFLICT-002`.
 
 `TBD-INFRA-001`/`-002` are resolved for the stack (`CHG-019`) and have no data-model effect. `TBD-INFRA-012`–`-014` gate the proposed support stores in §2.5.
 
@@ -753,7 +753,7 @@ flowchart LR
 
 1. PostgreSQL is selected (`TBD-INFRA-003` resolved); the physical type mapping and migration tooling are part of the separate physical-design change.
 2. `TBD-BIZ-014` remains open; no production-like data is handled until the internal-policy reference is recorded.
-3. The environment baseline and verified commands (`TBD-INFRA-004`, `TBD-INFRA-007`) must exist before any command is run.
+3. The Stage 1 baseline is recorded (`TBD-INFRA-004` Resolved; `CHG-022`); verified commands (`TBD-INFRA-007`) must exist before any command is run.
 4. Backup/restore is not assumed; `CAP-034` remains excluded.
 
 ### 10.2 Order

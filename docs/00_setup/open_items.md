@@ -18,7 +18,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 | Prefix | Open | Resolved |
 |---|---|---|
 | `TBD-BIZ` | 8 | 7 |
-| `TBD-INFRA` | 9 | 5 |
+| `TBD-INFRA` | 8 | 6 |
 | `CONFLICT` | 1 | 1 |
 
 ---
@@ -194,7 +194,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Status:** Resolved
 - **Owner:** User; Tech Lead prepares the comparison after PRD review
 - **Must confirm by:** Stage 3 — Architecture
-- **Impact:** `frontend/` MUST remain empty of code, manifests, and commands until activation, the Stage 1 baseline, and verified commands (`TBD-INFRA-004/007`). The resolution below is a decision, not implementation authority.
+- **Impact:** `frontend/` MUST remain empty of code, manifests, and commands until activation, the recorded Stage 1 baseline, and verified commands (`TBD-INFRA-004/007`). The resolution below is a decision, not implementation authority.
 - **Candidate options:** (a) React + TypeScript + Vite; (b) Next.js; (c) Vue 3 + Vite; (d) SvelteKit.
 - **Decision criteria:** requirement fit; familiarity; operating cost (build, hosting, maintenance).
 - **Resolution source:** User approved the Tech Lead comparison and selected candidate (a) on 2026-10-19 (Asia/Shanghai). Scope: React 19 (major) + TypeScript 5 (major) + Vite 7 (major), built as a client-only SPA with no SSR and no server runtime; the frontend route layer is React Router in declarative mode, and the test direction is Vitest with React Testing Library and MSW. Exact versions, the Node/pnpm build toolchain, dependency tooling, and every command remain `TBD-INFRA-004/005/007`. The scoring and the full component list are in `docs/13_changes/CHG-019-frontend-backend-stack.md`.
@@ -205,7 +205,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Status:** Resolved
 - **Owner:** User; Tech Lead prepares the comparison after PRD review
 - **Must confirm by:** Stage 3 — Architecture
-- **Impact:** `backend/` MUST remain empty of code, manifests, and commands until activation, the Stage 1 baseline, a dependency audit, and verified commands (`TBD-INFRA-004/005/007`). The resolution below is a decision, not implementation authority.
+- **Impact:** `backend/` MUST remain empty of code, manifests, and commands until activation, the recorded Stage 1 baseline, a dependency audit, and verified commands (`TBD-INFRA-004/005/007`). The resolution below is a decision, not implementation authority.
 - **Candidate options:** (a) Python 3.12 + FastAPI + uv; (b) Node.js 22 + TypeScript (Fastify or NestJS); (c) Java 21 + Spring Boot; (d) Go 1.23.
 - **Decision criteria:** requirement fit; familiarity; operating cost (runtime, deployment, maintenance).
 - **Resolution source:** User approved the Tech Lead comparison and selected candidate (a) on 2026-10-19 (Asia/Shanghai). Scope: Python 3.12, FastAPI (0.x), and uv with `uv.lock`; the recommended supporting runtime is Uvicorn, the ORM/driver pair is SQLAlchemy 2 + psycopg 3, migrations are Alembic behind a separate physical-design change, and the test framework is pytest. Exact versions and every command remain `TBD-INFRA-004/005/007`. The scoring and the full component list are in `docs/13_changes/CHG-019-frontend-backend-stack.md`.
@@ -224,13 +224,13 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-INFRA-004 — Missing Stage 1 environment baseline
 
 - **Category:** Engineering decision / missing input
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User; Tech Lead executes the baseline once tools are confirmed
 - **Must confirm by:** Stage 7 — Development Setup at the latest, and before any dependency installation
-- **Impact:** No tool version, safety constraint, package-manager availability, or command is verified. `docs/00_setup/environment_baseline.md` does not exist; any environment claim would be fabricated.
+- **Impact:** No tool version, safety constraint, package-manager availability, or command was verified before this change. `docs/00_setup/environment_baseline.md` did not exist; the Stage 1 baseline now records the observed host and tool versions. `TBD-INFRA-005` and `TBD-INFRA-007` remain Open, and no command is authorized.
 - **Candidate options:** (a) run Stage 1 immediately after Stage 0; (b) run Stage 1 before Stage 3 architecture; both require the same executed verification.
 - **Decision criteria:** requirement fit; risk of building on an unverified toolchain; operating cost of delay.
-- **Resolution source:** —
+- **Resolution source:** Executed Stage 1 baseline recorded at `docs/00_setup/environment_baseline.md` on 2026-10-20 (macOS 26.1 arm64; Python 3.12.9; uv 0.11.32; Node 22.23.2; pnpm 11.2.2; PostgreSQL 14.20; read-only probe exit codes in §6). Recorded in `CHG-022`. This resolves the missing-baseline entry only; `TBD-INFRA-005` (tooling/lockfile/audit policy) and `TBD-INFRA-007` (verified commands) remain Open, and no dependency or command is authorized.
 
 ## TBD-INFRA-005 — Dependency and virtual-environment tooling
 

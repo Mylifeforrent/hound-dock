@@ -2,7 +2,7 @@
 
 Status: Draft
 Owner: Tech Lead
-As-of: 2026-10-19
+As-of: 2026-10-20
 Authority: Sole tool-agnostic engineering-rules authority for `hound-dock`; applies to every human and AI agent. Enforceable numbered rules live in [docs/00_setup/project_rules.md](docs/00_setup/project_rules.md); open decisions and conflicts live only in [docs/00_setup/open_items.md](docs/00_setup/open_items.md). Every referenced asset is `Draft`; none is `Frozen`.
 
 ## 1. Authority, precedence, and conflict resolution
@@ -10,7 +10,7 @@ Authority: Sole tool-agnostic engineering-rules authority for `hound-dock`; appl
 Precedence, highest first:
 
 1. Confirmed user decisions and resolved registry entries — recorded in `docs/00_setup/open_items.md`; business detail in [docs/01_product/business_model.md](docs/01_product/business_model.md) (v0.3) and [docs/01_product/prd.md](docs/01_product/prd.md) (v0.2).
-2. `docs/00_setup/environment_baseline.md` — **missing**; Stage 1 has not started (`TBD-INFRA-004`).
+2. `docs/00_setup/environment_baseline.md` — recorded 2026-10-20 (`TBD-INFRA-004` Resolved; `CHG-022`); it records read-only observations and authorizes no command.
 3. Existing repository content — current docs, design artifacts, and change records.
 4. This file and the current task contract.
 
@@ -24,7 +24,7 @@ Precedence, highest first:
 
 `hound-dock` is a self-hosted internal agent workspace for one team. A signed-in member chats with an internal AI, reads governed skill and MCP registries, and manually runs a recorded task definition. MVP: chat + registries + manual task runs, self-hosted with local accounts, no external model egress. Sources: [PRD §2](docs/01_product/prd.md) and [business model Appendix B](docs/01_product/business_model.md); [README](README.md) is navigation only.
 
-- **Current state:** Stage 2–6 artifacts (PRD, architecture, design, data model, API contract) exist as `Draft`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); the Stage 1 baseline is missing; Stage 7 Development Setup has not started. Implementation is not authorized.
+- **Current state:** Stage 2–6 artifacts (PRD, architecture, design, data model, API contract) exist as `Draft`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); the Stage 1 baseline is recorded (`TBD-INFRA-004` Resolved; `CHG-022`); Stage 7 Development Setup has not started. Implementation is not authorized.
 - **Scope authority:** [PRD §3 and §8](docs/01_product/prd.md) (capabilities and exclusions) and [business model §3 and Appendix B](docs/01_product/business_model.md). Do not add, remove, or promote a capability, role, page, state, field, endpoint, or metric absent from those documents.
 - **Explicitly out of scope:** search/citations, file context, a streaming commitment, cost/usage, scheduling/webhooks, automatic retry, approvals/HITL, MCP registration/invocation/runtime, account administration/SSO, mobile, dark theme. See PRD §8 and [architecture §9](docs/02_architecture/architecture.md).
 - **Open items:** the only source is `open_items.md`. Never define, redefine, resolve, or delete an ID elsewhere.
@@ -39,13 +39,13 @@ hound-dock/
 ├── frontend/                  # boundary README only; no code, manifest, lockfile, or commands
 ├── backend/                   # boundary README only; no code, manifest, lockfile, or commands
 └── docs/
-    ├── 00_setup/              # rules, stage map, open-items registry; environment_baseline.md missing
+    ├── 00_setup/              # rules, stage map, open-items registry; environment_baseline.md recorded
     ├── 01_product/            # PRD, business model
     ├── 02_architecture/       # architecture, ADRs, enterprise-internal baseline
     ├── 03_design/             # visual authority: design_tokens.json, component_spec.json, highfi/; prototype/ is interaction reference only
     ├── 04_data/               # logical data model
     ├── 05_api/                # API interface contract
-    ├── 06_development/        # verified commands; empty until Stage 1/7 (TBD-INFRA-004/007)
+    ├── 06_development/        # verified commands; empty until Stage 7 (TBD-INFRA-005/007)
     ├── 07_testing/            # test strategy; empty until commands exist
     ├── 08_security/           # security/privacy policy; currently a boundary README only
     ├── 09_deployment/         # deployment; empty (TBD-INFRA-006)
@@ -59,16 +59,16 @@ No new top-level entry may be created (RULE-002). Business assets belong under t
 
 ## 4. Technology and architecture boundaries
 
-**The stack is selected at major-version level only.** Frontend: React 19 + TypeScript 5 + Vite 7 (SPA, no SSR). Backend: Python 3.12 + FastAPI + uv. The resolution is recorded in `docs/00_setup/open_items.md` (`TBD-INFRA-001`/`TBD-INFRA-002`); the comparison and the full component list are in `CHG-019`. Exact versions, the frontend Node/pnpm toolchain, dependency tooling, and every command remain unverified (`TBD-INFRA-004/005/007`). Do not infer a version, scaffold, migration, or command from the documents.
+**The stack is selected at major-version level only.** Frontend: React 19 + TypeScript 5 + Vite 7 (SPA, no SSR). Backend: Python 3.12 + FastAPI + uv. The resolution is recorded in `docs/00_setup/open_items.md` (`TBD-INFRA-001`/`TBD-INFRA-002`); the comparison and the full component list are in `CHG-019`. Exact project pins, the frontend Node/pnpm pair, dependency tooling, and every command remain unverified (`TBD-INFRA-005/007`); the Stage 1 baseline records the observed host and tool versions. Do not infer a project pin, scaffold, migration, or command from the documents.
 
 | Area | Status | Gate |
 |---|---|---|
-| Frontend | Selected — React 19 + TypeScript 5 + Vite 7 (SPA; no SSR) | `TBD-INFRA-001` Resolved; exact versions and commands `TBD-INFRA-004/005/007` |
-| Backend | Selected — Python 3.12 + FastAPI + uv | `TBD-INFRA-002` Resolved; exact versions and commands `TBD-INFRA-004/005/007` |
+| Frontend | Selected — React 19 + TypeScript 5 + Vite 7 (SPA; no SSR) | `TBD-INFRA-001` Resolved; exact versions and commands `TBD-INFRA-005/007`; Stage 1 baseline `CHG-022` |
+| Backend | Selected — Python 3.12 + FastAPI + uv | `TBD-INFRA-002` Resolved; exact versions and commands `TBD-INFRA-005/007`; Stage 1 baseline `CHG-022` |
 | Data store | PostgreSQL selected | `TBD-INFRA-003` Resolved; physical schema/migrations not authored |
 | Model access | Internal OpenAI-compatible gateway; no external egress | `TBD-INFRA-009` Resolved |
 | Dependency tooling | Partly recorded — uv (backend); pnpm/lockfile policy still open | `TBD-INFRA-005` Open |
-| Environment baseline | Missing | `TBD-INFRA-004` Open |
+| Environment baseline | Recorded — Stage 1 (2026-10-20) | `TBD-INFRA-004` Resolved; commands `TBD-INFRA-007` Open |
 | CI / hosting | TBD | `TBD-INFRA-006` Open |
 | Verified commands | TBD | `TBD-INFRA-007` Open |
 
@@ -82,7 +82,7 @@ No new top-level entry may be created (RULE-002). Business assets belong under t
 
 | Area | Owns after activation | MUST | MUST NOT |
 |---|---|---|---|
-| Frontend Agent | `frontend/**` | Render the effective PG-001–PG-009 surface and PG-010–PG-012 only as the shared No Permission panel, following the nine-state matrix in `docs/03_design/highfi/`; call only API-001–API-015; use business references in routes; treat server denial as authoritative; use tokens/components per §7 | Implement authorization or business rules; trust client-supplied identity/role/owner; render a denied capability as disabled; display owner/account/credential/tool-name/PII; copy `prototype/` into `frontend/`; scaffold before activation and the Stage 1/7 baseline (`TBD-INFRA-001` is Resolved, not an implementation authorization; `TBD-INFRA-004/007`) |
+| Frontend Agent | `frontend/**` | Render the effective PG-001–PG-009 surface and PG-010–PG-012 only as the shared No Permission panel, following the nine-state matrix in `docs/03_design/highfi/`; call only API-001–API-015; use business references in routes; treat server denial as authoritative; use tokens/components per §7 | Implement authorization or business rules; trust client-supplied identity/role/owner; render a denied capability as disabled; display owner/account/credential/tool-name/PII; copy `prototype/` into `frontend/`; scaffold before activation and the Stage 7 baseline (`TBD-INFRA-001` is Resolved, not an implementation authorization; `TBD-INFRA-005/007`) |
 | Backend Agent | `backend/**` | Enforce the matrix server-side, own-only scope, non-disclosure, idempotency, the error envelope, and §6 data constraints; persist per the logical model; return only contract fields | Bypass policy; return tokens, credentials, secrets, account/owner/initiator fields, tool names, step parameters, or audit fields; add endpoints, paging, sorting, filtering, or a version segment; create schema/migrations without a separate CHG |
 
 Contract authority: [api_interface_spec.md](docs/05_api/api_interface_spec.md) (Draft; not implementation authority).
@@ -147,14 +147,14 @@ Authority: [data_model_spec.md](docs/04_data/data_model_spec.md), [08_security/R
 
 | Command class | Status | Gate |
 |---|---|---|
-| Install / dependency add | TBD | `TBD-INFRA-004/005` |
+| Install / dependency add | TBD | `TBD-INFRA-005` |
 | Dev run | TBD | `TBD-INFRA-007` |
 | Build | TBD | `TBD-INFRA-007` |
 | Test | TBD | `TBD-INFRA-007` |
 | Lint / typecheck | TBD | `TBD-INFRA-007` |
 | Deploy | TBD | `TBD-INFRA-006/007` |
 
-No `package.json`, `pyproject.toml`, lockfile, `Makefile`, `Dockerfile`, CI workflow, or `.env.example` exists. Placeholder manifests and configuration are prohibited (RULE-017). The only environment facts are the resolved decisions in §4; no tool version, browser, database, gateway, or deployment is verified.
+No `package.json`, `pyproject.toml`, lockfile, `Makefile`, `Dockerfile`, CI workflow, or `.env.example` exists. Placeholder manifests and configuration are prohibited (RULE-017). The Stage 1 baseline records the observed host and tool versions; no project pin, command, browser, database, gateway, or deployment is verified.
 
 ## 9. Prohibitions (each is checkable)
 
@@ -182,8 +182,8 @@ No `package.json`, `pyproject.toml`, lockfile, `Makefile`, `Dockerfile`, CI work
 
 | Path | Owner | Write rule |
 |---|---|---|
-| `frontend/**` | Frontend Agent (dormant) | Only after activation; `TBD-INFRA-001` is Resolved, but the Stage 1/7 baseline and commands (`TBD-INFRA-004/007`) are still required. |
-| `backend/**` | Backend Agent (dormant) | Only after activation; `TBD-INFRA-002` is Resolved, but the Stage 1/7 baseline, dependency audit, and commands (`TBD-INFRA-004/005/007`) are still required. |
+| `frontend/**` | Frontend Agent (dormant) | Only after activation; `TBD-INFRA-001` is Resolved, but the Stage 7 baseline and commands (`TBD-INFRA-005/007`) are still required. |
+| `backend/**` | Backend Agent (dormant) | Only after activation; `TBD-INFRA-002` is Resolved, but the Stage 7 baseline, dependency audit, and commands (`TBD-INFRA-005/007`) are still required. |
 | `docs/01_product/**` … `docs/11_quality/**` | Docs Agent (dormant) | Docs and design only; no production code, root governance, `CHG`, or review. |
 | `docs/12_reviews/**` | Verifier (dormant) | Review records only; no source or doc edits. |
 | `README.md`, `AGENTS.md`, `.gitignore`, `docs/00_setup/**`, `docs/13_changes/**` | Tech Lead | Governance, rules, registry, and `CHG` records. |
@@ -192,7 +192,7 @@ No `package.json`, `pyproject.toml`, lockfile, `Makefile`, `Dockerfile`, CI work
 - A change is **Complex** when it touches two or more ownership areas, changes more than five files, adds or upgrades a dependency, changes a frozen asset, or changes root layout, this file, or `project_rules.md`. Complex changes need `## Plan` and `## Task Brief` in a `CHG` before implementation; every change needs a `CHG` and `## Verification` (RULE-018/RULE-020).
 - Order: Plan → Task Brief → implement → execute verification → record evidence → independent review (RULE-005) → merge. `CHG` numbers are sequential and never reused; commits after `CHG-000` carry `Refs: CHG-nnn`.
 - A frozen asset is any file with `Status: Frozen`; unfreezing requires explicit user approval in `open_items.md`, the owning-folder README, and the `CHG` (RULE-010). `open_items.md` is append-only; resolved entries stay with status `Resolved` and their source.
-- `docs/00_setup/environment_baseline.md` does not exist. Do not create it before the Stage 1 verification; doing so is an invented environment claim (RULE-017).
+- `docs/00_setup/environment_baseline.md` records the 2026-10-20 Stage 1 observations. Do not extend it with an unexecuted version, command, or environment claim (RULE-017).
 
 | Topic | Path |
 |---|---|

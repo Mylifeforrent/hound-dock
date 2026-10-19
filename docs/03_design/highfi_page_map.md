@@ -39,7 +39,7 @@ The seven inputs are all `Draft`. They are used in the order below; a lower rank
 | **Prototype status** | Draft, throwaway, opened over `file://` | P-README lines 4 to 8 and 134 to 143; P-README states it MUST NOT be treated as production code | Behaviour and layout evidence only. It is not a high-fidelity draft and not a design system. |
 | **Design tool** | **Not selected** | `TBD-INFRA-001` Open (REG) | No tool named, no frame link, no board or layer ID, no handoff format chosen. |
 | **Frozen asset** | **None** | `docs/03_design/README.md` and `docs/13_changes/README.md` both record none; a repository-wide `^Status: Frozen` scan returns no file | Nothing to unfreeze and nothing that may be modified silently. No existing file is touched by this change. |
-| **Stage 1 environment baseline** | Missing | `TBD-INFRA-004` Open; `docs/00_setup/environment_baseline.md` absent | No build, browser, or visual-regression command is claimed as project verification. |
+| **Stage 1 environment baseline** | Recorded — Stage 1 (2026-10-20) | `TBD-INFRA-004` Resolved (`CHG-022`); the baseline records the observed host and tool versions | No build, browser, or visual-regression command is claimed as project verification. |
 | **Prototype verification evidence** | Executed 2026-10-18 by the prototype author | P-README: 174 scenario checks, 67 edge/accessibility checks, widths 1440/1280/1080/960 | Proves behaviour was exercised; proves nothing about high-fidelity visual quality. |
 
 ### 1.3 Referenced decisions, status as-is
@@ -559,7 +559,7 @@ Two different things are separated here. The **phase gate** remains partly close
 3. `TBD-INFRA-001` — the frontend stack and, separately, whether any design tool is selected. Board IDs, handoff format, and any token pipeline depend on it.
 4. `TBD-BIZ-013` / M-05 — whether owner attribution or an offboarding state appears on registry records.
 5. The copy decision in M-06, so the shared dialog ships one string.
-6. `TBD-INFRA-004` — the Stage 1 baseline, before any visual-regression or browser verification command is named.
+6. `TBD-INFRA-004` — resolved by `CHG-022` (Stage 1 baseline recorded); no visual-regression or browser verification command is named until `TBD-INFRA-007`.
 
 ### 10.3 What does not block a board
 

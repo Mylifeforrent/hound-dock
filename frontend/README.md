@@ -10,7 +10,7 @@ Reserved for the future frontend application. This README is a boundary document
 
 ## Boundaries
 
-- MUST contain only frontend application assets once activation and the Stage 1/7 baseline are recorded; `TBD-INFRA-001` is Resolved ([open_items.md](../docs/00_setup/open_items.md)).
+- MUST contain only frontend application assets once activation, the recorded Stage 1 baseline, and the Stage 7 commands are in place; `TBD-INFRA-001` is Resolved ([open_items.md](../docs/00_setup/open_items.md)).
 - MUST NOT contain backend logic, secrets, production data, user PII, governance documents, or dependency manifests before activation and a separate change record.
 - MUST NOT state install, start, build, or test commands until they are verified and recorded in [docs/06_development/](../docs/06_development/README.md) (TBD-INFRA-007).
 - Writes MUST stay inside `frontend/` (RULE-019).

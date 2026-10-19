@@ -432,7 +432,7 @@ No question below is answered here. The canonical entry remains `docs/00_setup/o
 | `TBD-BIZ-015` | The state-coverage interpretation is not decided; this document uses state-bearing entities | Product Owner |
 | `TBD-INFRA-001/002` | Stack recorded at major-version level; modules and ports remain technology-neutral; exact versions and commands remain under `TBD-INFRA-004/005/007` | User / Tech Lead |
 | `TBD-INFRA-003` | PostgreSQL recorded; physical schema, indexes, and migrations are not authored, and `NFR-012` depends on that physical design | User / Tech Lead |
-| `TBD-INFRA-004` | No verified environment; no command or benchmark | User / Tech Lead |
+| `TBD-INFRA-004` | Stage 1 baseline recorded (`CHG-022`); no verified command or benchmark until `TBD-INFRA-007` | User / Tech Lead |
 | `TBD-INFRA-005/006/007` | Backend `uv` is recorded; the frontend toolchain, lockfile policy, CI, and verified commands remain open | User / Tech Lead |
 | `TBD-INFRA-009` | No model provider/gateway/residency; egress gate is unresolved | User |
 | `TBD-INFRA-010` | No SSO; auth extension point only | User |

@@ -144,7 +144,7 @@ The conditions are product decisions, not design defects:
 - `TBD-BIZ-007` leaves step execution, retry, branching, and code execution unresolved.
 - `TBD-BIZ-008` leaves every NFR threshold and the measurement environment unresolved.
 - `TBD-INFRA-001/002/003` leave the stack, store, and tooling unresolved.
-- `TBD-INFRA-004` leaves the environment baseline and verified commands missing.
+- `TBD-INFRA-004` is resolved by `CHG-022` (Stage 1 baseline recorded); verified commands remain missing under `TBD-INFRA-007`.
 - `TBD-INFRA-009/011` leave the model gateway, search provider, and data residency unresolved.
 - `CONFLICT-001` leaves ROLE-004 blocked; `CONFLICT-002` affects document routing only.
 - The MCP runtime, MCP authorization, tool invocation, HITL, approval, interrupt, checkpoint, and resume are not implemented.

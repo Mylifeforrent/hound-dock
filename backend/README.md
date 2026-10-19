@@ -10,7 +10,7 @@ Reserved for the future backend application. This README is a boundary document,
 
 ## Boundaries
 
-- MUST contain only backend application assets once activation, the Stage 1/7 baseline, and a dependency audit are recorded; `TBD-INFRA-002` is Resolved ([open_items.md](../docs/00_setup/open_items.md)).
+- MUST contain only backend application assets once activation, the recorded Stage 1 baseline, the Stage 7 commands, and a dependency audit are in place; `TBD-INFRA-002` is Resolved ([open_items.md](../docs/00_setup/open_items.md)).
 - MUST NOT contain frontend assets, secrets, production data, user PII, governance documents, or dependency manifests before activation and a separate change record.
 - MUST NOT state install, start, build, or test commands until they are verified and recorded in [docs/06_development/](../docs/06_development/README.md) (TBD-INFRA-007).
 - Data handling MUST NOT begin until data sensitivity is confirmed under TBD-BIZ-003.
