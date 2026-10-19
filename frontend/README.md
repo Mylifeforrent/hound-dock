@@ -2,7 +2,7 @@
 
 Status: Draft
 Owner after activation: Frontend Agent (see [AGENTS.md](../AGENTS.md))
-Current state: **empty of code** — no stack, scaffold, dependency manifest, lockfile, or runnable command.
+Current state: **empty of code** — frontend stack recorded as React 19 + TypeScript 5 + Vite 7 (client-only SPA, no SSR); no scaffold, dependency manifest, lockfile, or runnable command.
 
 ## Purpose
 
@@ -10,16 +10,17 @@ Reserved for the future frontend application. This README is a boundary document
 
 ## Boundaries
 
-- MUST contain only frontend application assets once the stack is confirmed under [TBD-INFRA-001](../docs/00_setup/open_items.md).
-- MUST NOT contain backend logic, secrets, production data, user PII, governance documents, or dependency manifests before the stack decision is recorded.
+- MUST contain only frontend application assets once activation and the Stage 1/7 baseline are recorded; `TBD-INFRA-001` is Resolved ([open_items.md](../docs/00_setup/open_items.md)).
+- MUST NOT contain backend logic, secrets, production data, user PII, governance documents, or dependency manifests before activation and a separate change record.
 - MUST NOT state install, start, build, or test commands until they are verified and recorded in [docs/06_development/](../docs/06_development/README.md) (TBD-INFRA-007).
 - Writes MUST stay inside `frontend/` (RULE-019).
 
 ## Open decisions affecting this area
 
-- Frontend stack: TBD-INFRA-001.
-- Package manager and dependency tooling: TBD-INFRA-005.
-- Verified commands: TBD-INFRA-007.
+- Frontend stack: `TBD-INFRA-001` — Resolved (React 19 + TypeScript 5 + Vite 7; exact versions `TBD-INFRA-004`; see [CHG-019](../docs/13_changes/CHG-019-frontend-backend-stack.md)).
+- Component library, design tool, and handoff format: not selected; the stack resolution does not select one.
+- Package manager and dependency tooling: `TBD-INFRA-005` (Node/pnpm build toolchain).
+- Verified commands: `TBD-INFRA-007`.
 
 ## Rules
 

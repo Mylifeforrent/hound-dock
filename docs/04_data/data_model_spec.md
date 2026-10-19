@@ -1,14 +1,14 @@
 # Logical Data Model Specification — hound-dock
 
 Status: Draft
-Version: 0.2
-As-of: 2026-10-18
+Version: 0.3
+As-of: 2026-10-19
 Owner: Data architect (Docs Agent scope for `docs/04_data/**`)
 Business authority: `docs/01_product/business_model.md` v0.3 Appendix B — enterprise-internal baseline
 Architecture authority: `docs/02_architecture/architecture.md`, `01_domain_and_service_architecture.md`, and `05_enterprise_internal_baseline.md`
 Interaction input: `docs/03_design/interaction_design.md` v0.1 — page fields are distinguished from persisted fields; `PG-010`/`PG-012` become effective under the baseline, `PG-011` remains denied
 Registry: `docs/00_setup/open_items.md` — resolved entries are referenced, remaining open entries are not answered
-Change record: `docs/13_changes/CHG-012-enterprise-internal-baseline.md`
+Change record: `docs/13_changes/CHG-020-support-stores-signin-session-idempotency.md` (this revision); baseline `CHG-012`.
 
 ## 1. Document control, authority, and baseline
 
@@ -48,7 +48,9 @@ The product owner selected the enterprise-internal baseline on 2026-10-18. The d
 
 **Resolved entries:** `TBD-BIZ-003`, `TBD-BIZ-004`, `TBD-BIZ-009`, `TBD-BIZ-011`, `TBD-INFRA-003`, `TBD-INFRA-009`; `CONFLICT-001` resolved toward Admin audit read.
 
-**Remaining open:** `TBD-BIZ-005`, `-006`, `-007`, `-008`, `-010`, `-012`, `-013`, `-014`, `-015`; `TBD-INFRA-001`, `-002`, `-004`, `-005`, `-006`, `-007`, `-010`, `-011`; `CONFLICT-002`.
+**Remaining open:** `TBD-BIZ-005`, `-006`, `-007`, `-008`, `-010`, `-012`, `-013`, `-014`, `-015`; `TBD-INFRA-004`, `-005`, `-006`, `-007`, `-010`, `-011`, `-012`, `-013`, `-014`; `CONFLICT-002`.
+
+`TBD-INFRA-001`/`-002` are resolved for the stack (`CHG-019`) and have no data-model effect. `TBD-INFRA-012`–`-014` gate the proposed support stores in §2.5.
 
 **Superseded task constraint.** The original data-model task required only `STATE-001`/`STATE-002` to be effective and no store selection. The product-owner decision in `CHG-012` supersedes that constraint: `STATE-003`/`STATE-005` are effective and PostgreSQL is selected. The document still does not write physical DDL or migration code.
 
@@ -72,8 +74,9 @@ No physical schema, DDL, SQL, migration code, API schema, MCP runtime, account c
 | **P1 — Effective persisted** | Required by a confirmed capability, rule, flow, or effective state | `account`, `conversation`, `message`, `skill`, `skill_version`, `mcp_server`, `task_definition`, `task_version`, `task_step`, `run`, `run_step`, `role_assignment`, `audit_event` |
 | **P2 — Structurally required minimal** | Minimal record required by an effective rule, without extra lifecycle | None remaining; `skill_version`, `task_version`, `task_step`, and `run_step` are now effective through D-05/D-07 |
 | **P3 — Reserved, not persisted** | Excluded or not required | `citation`, `mcp_tool` (as a table), `secret_reference`, `artifact`, `model_configuration` |
+| **S — Support store (proposed)** | Required by an effective contract but not a business entity; outside the 18-entity map | `account_credential`; `idempotency_key`; session is runtime state (no table) |
 
-### 2.2 Logical table inventory (13 tables)
+### 2.2 Logical table inventory (13 business tables)
 
 | Logical table | ENT | Class | Row grain | Business key | State field |
 |---|---|---|---|---|---|
@@ -114,19 +117,36 @@ No physical schema, DDL, SQL, migration code, API schema, MCP runtime, account c
 | **ENT-017** | Audit Event | `audit_event` | P1 | None — append-only |
 | **ENT-018** | Model Configuration | **Not persisted as a product record** | P3 | None — deployment configuration |
 
-Count: 13 logical tables; 5 entities are not persisted; 18 of 18 are adjudicated.
+Count: 13 business tables plus 2 proposed support stores (§2.5); 5 entities are not persisted; 18 of 18 are adjudicated.
 
 ### 2.4 Deliberately not a table
 
 | Concept | Why | Treatment |
 |---|---|---|
-| Session | Not an `ENT`; termination is `AGAP-01` | Runtime state; no table |
+| Session | Not an `ENT`; termination and cookie policy are `TBD-INFRA-013` | Runtime state; no table |
 | Submitted run input values | No rule states retention; execution is `TBD-BIZ-007` | Command payload; no table |
 | MCP tool metadata | MCP registration/allowlisting excluded; `McpTool.read` gap | Tool-name reference on a step only |
-| Credential verifier | Security-owned; `CAND-023` candidate | Not modelled |
+| Credential verifier | Security-owned; not a business table | Proposed support store `account_credential` (§2.5); `TBD-INFRA-012` |
+| Idempotency key | Required by `api_interface_spec.md` §9; not an `ENT` | Proposed support store `idempotency_key` (§2.5); `TBD-INFRA-014` |
 | Operational logs | Not audit | `MOD-06` only; no table |
 | Provider calls, tokens, cost | Excluded | No table |
 | Model configuration | Deployment configuration; `TBD-INFRA-009` resolved to internal gateway | No product table |
+
+### 2.5 Support stores (proposed; not business tables)
+
+Two persisted structures are required by an effective contract but are not business entities. They are not added to the 18-entity map and are not part of the 13-table business inventory. Both are `[P]` until their `TBD` closes; no DDL is authorized.
+
+| Support store | ENT | Class | Row grain | Key | State | TBD |
+|---|---|---|---|---|---|---|
+| `account_credential` | None — security-owned | S | One verifier per account | `account_id` (1:1 with `account`) | None — rotation replaces the verifier | `TBD-INFRA-012` |
+| `idempotency_key` | None — transport support | S | One accepted command per (actor, key) | (`actor_account_id`, `key`) | None — rows are purged by age | `TBD-INFRA-014` |
+
+Rules:
+
+- `account_credential` is security-owned. No credential value, password hash, verifier, or token is stored in any business table; `account` remains unchanged. The verifier is never returned, logged, or projected.
+- `idempotency_key` stores a request fingerprint and a minimal replay payload, not the request body and not a second copy of `Sensitive` content. It is never projected by an API response.
+- Session is **not** a table. It remains runtime state (§2.4, §6.5); its lifetime, cookie flags, and termination policy are `TBD-INFRA-013`.
+- Neither support store creates a business entity, page, endpoint, field, permission, or error code. Physical design, indexes, and migrations remain a separate authorized change (§10.1).
 
 ## 3. ER diagram
 
@@ -157,6 +177,7 @@ erDiagram
 3. `ROLE_ASSIGNMENT` is an assignment record, not a lifecycle. A revoked assignment keeps `revoked_at`; active means `revoked_at` is null.
 4. `RUN ||--|{ RUN_STEP` reflects the business-model invariant “a run has at least one run step.” The unresolved zero-step case for a run rejected before any step remains a recorded tension; this model does not decide it.
 5. Reserved entities are not in the diagram: `CITATION`, `MCP_TOOL` as a table, `SECRET_REFERENCE`, `ARTIFACT`, `MODEL_CONFIGURATION`.
+6. Support stores (§2.5) are not in the diagram because they are not business entities: `account_credential` is 1:1 with `ACCOUNT`, and `idempotency_key` references `ACCOUNT`. Session is runtime state and has no edge.
 
 ## 4. Field definitions
 
@@ -354,6 +375,36 @@ Active assignment = `revoked_at IS NULL`. The application ensures at most one ac
 
 Audit events are append-only: no update or delete path. No export field, no free-form details field.
 
+### 4.15 `account_credential` — support store, not an ENT
+
+| Field | Logical type | Null | Key | Status | Sensitivity | Basis |
+|---|---|---|---|---|---|---|
+| `account_id` | identifier | no | PK, FK → `account` | `[P]` | `Sensitive` | One verifier per account; `BR-001` |
+| `verifier` | text | no | — | `[P]` | `Sensitive` / secret | Opaque, algorithm-specific encoding; never returned or logged |
+| `algorithm` | text | no | CK | `[P]` | `Internal` | Permitted set is the security decision (`TBD-INFRA-012`) |
+| `parameters` | document | no | — | `[P]` | `Internal` | Cost and format parameters for the algorithm; no secret |
+| `created_at` | timestamp | no | — | `[P]` | `Sensitive` | Creation anchor |
+| `updated_at` | timestamp | no | — | `[P]` | `Sensitive` | Last verifier change |
+| `rotated_at` | timestamp | yes | — | `[P]` | `Sensitive` | Null until rotation |
+
+Not modelled: plaintext credential, sign-in name (held by `account`), session, role. Rotation replaces `verifier`, updates `parameters` if needed, and stamps `rotated_at`; the old verifier is not retained. The permitted `algorithm` values are not selected here.
+
+### 4.16 `idempotency_key` — support store, not an ENT
+
+| Field | Logical type | Null | Key | Status | Sensitivity | Basis |
+|---|---|---|---|---|---|---|
+| `actor_account_id` | identifier | no | PK, FK → `account` | `[P]` | `Sensitive` | The `(actor, key)` scope from `api_interface_spec.md` §9.1 |
+| `key` | text | no | PK; CK 1–128 printable ASCII | `[P]` | `Internal` | Client-supplied opaque key; no account, content, or secret data |
+| `request_fingerprint` | text | no | — | `[P]` | `Internal` | Hash over actor, method, path, and canonical body; never the body |
+| `method` | text | no | CK `POST` | `[P]` | `Internal` | Only the four keyed commands are `POST` |
+| `path` | text | no | — | `[P]` | `Sensitive` | May contain a `conversation_ref`; not returned |
+| `response_status` | integer | no | CK `IN (200,201,202)` | `[P]` | `Internal` | The replayed status |
+| `response_reference` | text | yes | — | `[P]` | `Sensitive` | `conversation_ref` or `run_reference`; null when the replay carries only a position |
+| `response_position` | integer | yes | CK `>= 1` | `[P]` | `Internal` | Message position; null when not applicable |
+| `created_at` | timestamp | no | — | `[P]` | `Sensitive` | Purge anchor; the 24-hour window is proposed (`TBD-BIZ-008`) |
+
+Not modelled: request body, response body, message text, task name, error text, and any second copy of a `Sensitive` field. A replay reconstructs the documented response from the stored status and reference/position; an absent row is treated as a new command. Purge is by `created_at` age; no `expires_at` column is added.
+
 ## 5. Keys, constraints, and index candidates
 
 ### 5.1 Primary and foreign keys
@@ -475,6 +526,18 @@ Physical index creation is part of the PostgreSQL physical design, not this docu
 
 `skill.registry_state` and `task_definition.registry_state` are membership markers, not lifecycle states. A skill or task is listable by a Member only when `registry_state = 'recorded'`; a draft identity with only draft versions is not listable. `draft` is the pre-publication membership value that makes admin authoring possible without inventing a new entity or a second lifecycle.
 
+### 5.6 Support-store keys and constraints
+
+| Store | Constraint | Enforcement |
+|---|---|---|
+| `account_credential` | PK `account_id`; FK → `account`; one row per account; `verifier` non-empty; `algorithm` in the permitted set (`TBD-INFRA-012`); `parameters` non-empty | Application for the algorithm set; data layer for PK/FK and non-empty |
+| `account_credential` | No plaintext credential, no credential in any business table | Application and review; AGENTS.md §6 |
+| `idempotency_key` | PK (`actor_account_id`, `key`); FK → `account`; `key` 1–128 printable ASCII; `request_fingerprint` non-empty; `method = 'POST'`; `response_status IN (200,201,202)` | Data layer candidate; application for the fingerprint input |
+| `idempotency_key` | No request or response body; no message text, task name, or error text; `response_reference`/`response_position` are the only replay payload | Application and review |
+| `idempotency_key` | An absent or purged row is a new command; a row with a different fingerprint is `40901` | Application, `api_interface_spec.md` §9.2 |
+
+Support-store constraints are not added to CK-01–CK-21, which remain the business-table constraints. Physical enforcement is part of the physical design (§10.1).
+
 ## 6. Data lifecycle
 
 ### 6.1 Creation
@@ -490,6 +553,8 @@ Physical index creation is part of the PostgreSQL physical design, not this docu
 | Run + run steps | `CMD-04` by a Member; manual only | One `Initiated` run, one initiator, one task version, ordered run steps | Scheduled/webhook/event run; run with no initiator |
 | Role assignment | Provisioned out of band | One `member` or `admin` assignment | Account-administration UI |
 | Audit event | System on each selected event | One append-only row | Update, delete, export, free-form details |
+| Credential verifier | Provisioning out of band | One `account_credential` row per account | Self-service registration, plaintext credential, verifier in `account` |
+| Idempotency key | First acceptance of a keyed command | One `idempotency_key` row with fingerprint and replay status | Body copy, a second row for the same (actor, key), key reuse with a different body |
 
 ### 6.2 Change
 
@@ -505,6 +570,8 @@ Physical index creation is part of the PostgreSQL physical design, not this docu
 | Run / run step | `STATE-001`/`STATE-002` transitions | Edit fields, reverse a terminal, retry in place |
 | Role assignment | `revoked_at` by provisioning | Self-service role change |
 | Audit event | None | Update, delete, export |
+| Credential verifier | Verifier replacement on rotation; `updated_at` and `rotated_at` | Plaintext, verifier history, self-service change |
+| Idempotency key | None after creation; the replay record is immutable | Change the fingerprint or response; reuse a key with a different body |
 
 ### 6.3 Terminal
 
@@ -529,15 +596,19 @@ Physical index creation is part of the PostgreSQL physical design, not this docu
 | Role assignment | While active plus audit period | Revocation is `revoked_at`; no hard delete |
 | MCP server | While recorded | Read-only; retirement out of MVP |
 | Citation, artifact, secret, model config | Not persisted | No retention |
+| Credential verifier | While the account is active; replaced on rotation | Security-owned; no verifier history |
+| Idempotency key | 24 hours from creation (proposed, `TBD-BIZ-008`); purge by age | No body stored; not audit |
 
 - No `expires_at`, `delete_after`, `archived_at`, or `retention_class` column. Retention is enforced from the required creation/occurrence timestamp by a later job.
+- Support stores (§2.5) are not business records; the no-`expires_at` rule above applies to the 13 business tables. `idempotency_key` is purged from `created_at`; `account_credential` is kept while the account is active.
 - No hard delete, cascade, or purge job is designed here. A future deletion rule must preserve terminal run/run-step readability within the 180-day period, audit append-only semantics within 365 days, and referential integrity.
 - Account offboarding, ownership transfer, and registry retirement remain `TBD-BIZ-013`/`TBD-BIZ-004`; no cascade is invented.
 - No retention period is applied to a non-persisted entity.
 
 ### 6.5 Session and non-persisted runtime state
 
-- Session is runtime state, not an `ENT`; no session table. Termination/expiry is `AGAP-01`, `[to be registered]`.
+- Session is runtime state, not an `ENT`; no session table. Lifetime, cookie flags, and termination are `TBD-INFRA-013`; `AGAP-01` remains the gap record.
+- The session store is a runtime port. The recommended adapter is in-memory (no table), which ends sessions on restart (`40102`) and requires a single process; a durable or external store is the alternative under `TBD-INFRA-013`.
 - Pending chat input, pending assistant turns, unsaved admin drafts, and status text are page state, not rows.
 - Submitted run inputs are a command payload; retention is not stated (`[to be registered]`).
 
@@ -564,8 +635,10 @@ No field is classified `Highly Sensitive`; `Public` is unused. If Highly Sensiti
 | Person-facing references | `conversation.conversation_ref`; `run.run_reference` | `Sensitive` |
 | User/model/admin content | `message.content_text`; `skill.description`; `skill_version.instructions_text`, `input_definition`, `declared_tool_dependencies`; `task_definition.description`; `task_version.input_definition`; `task_step.step_parameters`; `run_step.result_summary`, `error_summary` | `Sensitive` |
 | Registry/topology | `skill.skill_name`; `skill_version.version_label`; `mcp_server.server_name`, `endpoint_reference`; `task_definition.task_name`; `task_version.version_label`; `task_step.target_tool_name`; `run_step.target_tool_name` | `Sensitive` |
-| Behavioural metadata | `created_at`, `updated_at`, `published_at`, `started_at`, `ended_at`, `terminal_at`, `duration_ms`, `occurred_at`, `assigned_at`, `revoked_at`; `audit_event.target_id`, `correlation_id` | `Sensitive` |
+| Behavioural metadata | `created_at`, `updated_at`, `published_at`, `started_at`, `ended_at`, `terminal_at`, `duration_ms`, `occurred_at`, `assigned_at`, `revoked_at`, `rotated_at`; `audit_event.target_id`, `correlation_id` | `Sensitive` |
 | Structural metadata | Internal IDs, ordinals, `author_kind`, `registry_state`, `version_state`, `recorded_health`, `run_state`, `run_step_state`, `target_kind`, `trigger_type`, `role_name`, `actor_kind`, `action`, `target_type`, `outcome` | `Internal` |
+| Security and replay support | `account_credential.verifier` (secret); `account_credential.algorithm`, `parameters`; `idempotency_key.key`, `request_fingerprint`, `method`, `response_status`, `response_position` | `Sensitive` for the verifier; `Internal` for the rest |
+| Security and replay references | `idempotency_key.path`; `idempotency_key.response_reference` | `Sensitive` |
 
 Every field meeting the sensitive test carries `Sensitive`; no field is unlabelled.
 
@@ -576,6 +649,7 @@ Every field meeting the sensitive test carries `Sensitive`; no field is unlabell
 - Admin-only audit read; no audit export.
 - No masking rule is specified for UI display; the interface's non-disclosure rules are UI behaviour, not a data-masking policy.
 - No credential value or secret is stored in any business table. `ENT-010` remains not persisted; MCP registration is out of the MVP.
+- A local verifier may exist only in the security-owned support store `account_credential` (§2.5), and only after `TBD-INFRA-012` is resolved. It is never projected, logged, or copied into `account`.
 
 ## 8. Audit and temporal fields
 
@@ -603,6 +677,9 @@ Every field meeting the sensitive test carries `Sensitive`; no field is unlabell
 | `terminal_at` | `run` | `[P]` | Terminal time |
 | `occurred_at` | `audit_event` | `[E]` | Event time and 365-day anchor |
 | `assigned_at`, `revoked_at` | `role_assignment` | `[E]` / `[P]` | Assignment history |
+| `created_at`, `updated_at` | `account_credential` | `[P]` | Verifier creation and change |
+| `rotated_at` | `account_credential` | `[P]` | Rotation time |
+| `created_at` | `idempotency_key` | `[P]` | Purge anchor |
 
 `created_at`/`updated_at` and similar fields are not an audit trail. The audit trail is `audit_event`. Operational logs are not audit and cannot substitute. `TBD-BIZ-009` is resolved; the obligation is recorded in `business_model.md` B.4.
 
@@ -690,6 +767,8 @@ flowchart LR
 7. `role_assignment`
 8. `audit_event`
 
+Support stores (§2.5) follow `account`: `account_credential` and `idempotency_key`. Neither is a business table, and neither precedes `account`.
+
 No table precedes a table its foreign keys reference. This is a logical dependency order, not a migration script.
 
 ### 10.3 Constraints
@@ -704,6 +783,8 @@ No table precedes a table its foreign keys reference. This is a logical dependen
 - `audit_event` is append-only; no update/delete privilege.
 - No credential value, secret, or real PII in migration data.
 - No citation, artifact, secret-reference, MCP-tool, or model-config table.
+- Support stores are limited to `account_credential` and `idempotency_key`; no session, secret-reference, or MCP-tool table is created.
+- `account_credential` holds no plaintext credential; `idempotency_key` holds no request or response body.
 - No page-only field becomes a column without a confirmed requirement.
 
 ### 10.4 Rollback
@@ -729,6 +810,9 @@ No table precedes a table its foreign keys reference. This is a logical dependen
 11. No credential value or real PII; synthetic validation only.
 12. Completed run and steps readable after restart (NFR-012) once PostgreSQL physical design exists.
 13. Retention anchors (`created_at`, `occurred_at`) present and non-null.
+14. `account_credential` has one row per account, no plaintext credential, and no reference from any business projection.
+15. `idempotency_key` stores no body and no `Sensitive` content beyond `path` and `response_reference`; a purged row is absent.
+16. No support store is exposed by an API response.
 
 Validation queries, scripts, and migration code belong to the physical-design change, not this document.
 
@@ -818,14 +902,13 @@ Physical types/lengths/collations/timezone, index implementation, partitioning, 
 | `TBD-BIZ-013` | Offboarding/deletion; no cascade |
 | `TBD-BIZ-014` | Internal policy reference missing; no compliance conclusion |
 | `TBD-BIZ-015` | State coverage interpretation; only state-bearing fields modelled |
-| `TBD-INFRA-001/002/004/005/006/007/010/011` | Stacks, baseline, tooling, CI, SSO, search; no data-model change |
+| `TBD-INFRA-004/005/006/007/010/011/012/013/014` | Baseline, tooling, CI, SSO, search; `012`–`014` gate the proposed support stores; no change to the 18-entity map |
 | `CONFLICT-002` | Stage metadata; no data-model effect |
 
 ### 12.3 `[to be registered]`
 
 | Gap | Interim position |
 |---|---|
-| Session termination/expiry (`AGAP-01`) | No session table |
 | Submitted run input retention | No run-input table |
 | Audit read page/interaction contract | No page in `interaction_design.md` v0.1 |
 | Interaction design authoring surfaces | `PG-010`/`PG-012` still show No Permission in v0.1; a design update is required before UI implementation |
@@ -833,24 +916,32 @@ Physical types/lengths/collations/timezone, index implementation, partitioning, 
 | Account/role administration UI | Role assignments out of band |
 | Role-assignment audit event | Not in the selected audit catalog; out-of-band provisioning |
 | MCP registration/allowlisting/read (`AGAP-07`) | MCP read-only; no tool table |
-| Duplicate run/unconfirmed start (`AGAP-02/03`) | No idempotency key |
 | Orphaned `Running` run (`AGAP-04`) | No recovery field/job |
 | Registry paging (`AGAP-08`) | No pager/cursor |
 | `input_definition`/`step_parameters` format | Logical document only; `TBD-BIZ-007` |
 | Zero run-step rows for a rejected run | Recorded tension; not decided |
-| Credential verifier storage | Security-owned; no field |
 | Highly Sensitive data controls | Prohibited by baseline; enforcement not designed |
 
-No new `TBD`/`CONFLICT` ID is created.
+No new `TBD`/`CONFLICT` ID is defined here; the three support-store IDs below are registered in `open_items.md`.
+
+### 12.4 Registered support-store decisions
+
+These three gaps are now registered and modeled; none is resolved.
+
+| Gap | Registration | Model | Status |
+|---|---|---|---|
+| Credential verifier storage | `TBD-INFRA-012` | Security-owned support store `account_credential` (§2.5, §4.15) | Proposed; algorithm open |
+| Session termination/expiry (`AGAP-01`) | `TBD-INFRA-013` | Runtime state, no table (§6.5); in-memory adapter recommended | Proposed; durability/lifetime open |
+| Duplicate run/unconfirmed start (`AGAP-02/03`) | `TBD-INFRA-014` | Support store `idempotency_key` (§2.5, §4.16) | Proposed; window `TBD-BIZ-008` |
 
 ## 13. Self-check
 
 | # | Check | Verdict | Evidence |
 |---|---|---|---|
-| 1 | 18/18 entities mapped or explained | **Pass** | §2.3; 13 tables, 5 not persisted |
+| 1 | 18/18 entities mapped or explained | **Pass** | §2.3; 13 business tables plus 2 support stores, 5 entities not persisted |
 | 2 | Sensitive fields classified | **Pass** | §4 field tables; §7.2; every sensitive field `Sensitive`, no unlabelled sensitive field |
-| 3 | No new entity | **Pass** | 13 tables map to existing ENTs; no citation/artifact/secret/tool/model-config table |
-| 4 | Store decision recorded; no DDL | **Pass** | PostgreSQL selected by CHG-012; §10 requirements only |
+| 3 | No new business entity | **Pass** | 18/18 ENTs unchanged; 2 support stores (§2.5) are outside the entity map; no citation/artifact/secret/tool/model-config table |
+| 4 | Store decision recorded; no DDL | **Pass** | PostgreSQL selected by CHG-012; support stores proposed; §10 requirements only |
 | 5 | No migration code/API schema | **Pass** | Logical types; no SQL/DDL/endpoint |
 | 6 | STATE-001/002 unchanged; STATE-003/005 effective; STATE-004/006 reserved | **Pass** | §5.5 |
 | 7 | Admin authoring bounded to skills/tasks | **Pass** | §4.5–4.10; MCP read-only |
@@ -858,13 +949,13 @@ No new `TBD`/`CONFLICT` ID is created.
 | 9 | Retention 90/180/365 | **Pass** | §6.4; anchors required |
 | 10 | Classification levels confirmed; no Highly Sensitive field | **Pass** | §7.1–7.2 |
 | 11 | Page fields not automatically columns | **Pass** | Appendix A; PG-010/PG-012 effective, PG-011 denied |
-| 12 | No new `TBD`/`CONFLICT` ID | **Pass** | §12; existing IDs only |
+| 12 | No new `TBD`/`CONFLICT` defined here | **Pass** | §12; the three support-store IDs are registered in `open_items.md`, not defined here |
 | 13 | Remaining TBDs referenced, not answered | **Pass** | §12.2; no TBD as a value |
 | 14 | Mermaid statically valid | **Partial — static only** | Two diagrams (ER + flow), no renderer installed |
 
 **Verdict:** Pass 13 / Partial 1 / Fail 0. The document remains `Draft`; `TBD-BIZ-014` and `TBD-BIZ-012` remain open, and independent review is pending.
 
-**Residual limits:** PostgreSQL physical design is not in this document; no performance/retention-job/audit-page validation; `TBD-BIZ-007` leaves execution semantics open; Mermaid not rendered; no independent review.
+**Residual limits:** PostgreSQL physical design is not in this document; the two support stores are proposed and not physically designed; no performance/retention-job/audit-page validation; `TBD-BIZ-007` leaves execution semantics open; Mermaid not rendered; no independent review.
 
 ## Appendix A — Page fields and persistence disposition
 

@@ -31,7 +31,7 @@ Status: Draft
 
 ## Environment setup
 
-- **No toolchain is confirmed.** Frontend, backend, data store, and dependency tooling are open decisions: [TBD-INFRA-001](docs/00_setup/open_items.md), [TBD-INFRA-002](docs/00_setup/open_items.md), [TBD-INFRA-003](docs/00_setup/open_items.md), and [TBD-INFRA-005](docs/00_setup/open_items.md).
+- **Stack selected at major-version level; no toolchain is verified.** Frontend React 19 + TypeScript 5 + Vite 7 and backend Python 3.12 + FastAPI + uv are recorded in [open_items.md](docs/00_setup/open_items.md) (`TBD-INFRA-001`/`TBD-INFRA-002` Resolved; see [CHG-019](docs/13_changes/CHG-019-frontend-backend-stack.md)). PostgreSQL remains the selected store (`TBD-INFRA-003`). Exact versions, the frontend Node/pnpm toolchain, and all commands remain open: `TBD-INFRA-004/005/007`.
 - **The Stage 1 environment baseline does not exist yet.** It is required at `docs/00_setup/environment_baseline.md`; until it is produced and verified, no tool version, install step, or command in this repository is authoritative. Tracked as [TBD-INFRA-004](docs/00_setup/open_items.md).
 - **Install, start, build, and test commands: TBD.** They MUST NOT be stated until verified in the baseline and recorded in [docs/06_development/](docs/06_development/README.md) (RULE-017).
 - No dependency manifest, lockfile, or `.env.example` exists. Those MUST NOT be created as placeholders (RULE-017).

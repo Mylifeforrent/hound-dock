@@ -34,7 +34,7 @@ The architecture covers exactly the five confirmed capabilities:
 
 ### 2.2 Recommended shape
 
-A **modular monolith** with capability modules and explicit ports is the recommended shape, subject to the backend-stack decision (`TBD-INFRA-002`). It keeps one deployable unit for a self-hosted single-team workspace, while preserving boundaries that can be separated later. This is a recommendation, not a stack selection; it is reversible and does not decide language, framework, process model, or store.
+A **modular monolith** with capability modules and explicit ports is the recommended shape, following the backend-stack decision (`TBD-INFRA-002`, Resolved to Python 3.12 + FastAPI + uv). It keeps one deployable unit for a self-hosted single-team workspace, while preserving boundaries that can be separated later. This is a shape recommendation, not a further stack selection: the language and framework are recorded in `open_items.md`, while process model, exact versions, and store implementation remain separate decisions.
 
 Modules: identity/session, conversation/chat, registry read, run orchestration, policy/access, observability/operations, external integration ports, and a reserved change/audit boundary. Policy is called by every application service; no module bypasses it. Registry read is read-only. Run orchestration creates a run only from the manual command.
 
@@ -66,13 +66,13 @@ Define a backend architecture that is traceable to the effective business model,
 - Consistency, concurrency, idempotency, failure recovery, and compensation.
 - Interface principles, error classes, synchronization/asynchrony, progress and retry semantics, and frontend state mapping.
 - Trust boundaries, authentication/authorization, data-boundary posture, reliability, observability, operations, and cost posture.
-- Stack decision inputs: candidates, criteria, and impact, with no conclusion.
+- Stack decision inputs: candidates, criteria, impact, and the owner's recorded decision by reference (§12).
 - ADRs for high-cost-to-reverse decisions.
 - Open risks, gaps, and verification plan.
 
 ### 3.3 Non-goals
 
-- No frontend stack, backend stack, data store, dependency tooling, LLM gateway, search provider, hosting, or CI selection.
+- No stack, store, dependency-tooling, gateway, search-provider, hosting, or CI selection originating in this document; the recorded stack and store selections are references to `open_items.md` and `CHG-019`.
 - No endpoint, path, HTTP method, status code, request/response schema, OpenAPI document, event payload schema, or pagination contract.
 - No database schema, table, column, index, migration, or query.
 - No deployment manifest, command, environment file, or secret value.
@@ -104,7 +104,7 @@ The full trace is in [00_research_and_input_traceability.md](00_research_and_inp
 
 ### 4.3 What cannot be concluded here
 
-No data classification, retention, encryption, PII, residency, compliance, capacity, availability, backup objective, role grant, provider, store, or stack conclusion. Each is either a `TBD` or an unregistered gap. The architecture states the boundary and the measurement point; it does not fill the decision.
+No data classification, retention, encryption, PII, residency, compliance, capacity, availability, backup objective, role grant, provider, store, or stack conclusion originating here; the recorded stack and store selections are references to `open_items.md`. Each remaining item is either a `TBD` or an unregistered gap. The architecture states the boundary and the measurement point; it does not fill the decision.
 
 ## 5. System context and constraints
 
@@ -132,7 +132,7 @@ No data classification, retention, encryption, PII, residency, compliance, capac
 - **No scheduler or external trigger:** runs are manual only (`BR-006`).
 - **No MCP runtime:** the MCP registry is metadata and recorded health (`CAP-003`, `BR-004`).
 - **Model egress gate:** no external content before the data-boundary and gateway decisions (`NFR-008`).
-- **No stack/store decision:** every implementation choice remains a candidate (see §12).
+- **Stack and store recorded; runtime unverified:** the stack and store are recorded (`TBD-INFRA-001`–`003` Resolved); exact versions, deployment, and commands remain open (see §12).
 
 A text context view:
 
@@ -365,17 +365,19 @@ No token, cost, budget, or quota implementation is in the MVP (`TBD-BIZ-010`). T
 
 Official sources and per-item adopt/reject reasoning are in [00_research_and_input_traceability.md](00_research_and_input_traceability.md) §8.
 
-## 12. Stack decision inputs (no conclusion)
+## 12. Stack decision inputs and recorded decision
 
-The stack is **not selected**. The following is the candidate set and the impact of each choice on the architecture. None of these is a recommendation to choose a particular option.
+The stack was **not selected** when this section was drafted. On 2026-10-19 the product owner resolved `TBD-INFRA-001` and `TBD-INFRA-002`: frontend React 19 + TypeScript 5 + Vite 7 (SPA, no SSR); backend Python 3.12 + FastAPI + uv. The resolution, the scoring, and the remaining gates are recorded in `docs/00_setup/open_items.md` and `CHG-019`; this section keeps the candidate set as the decision input and does not restate the scoring.
+
+**What the decision settles and what it does not.** It settles the language, framework, build tool, and backend package manager at major-version level. It does not settle exact versions, the frontend Node/pnpm toolchain (`TBD-INFRA-005`), hosting/CI (`TBD-INFRA-006`), verified commands (`TBD-INFRA-007`), or the environment baseline (`TBD-INFRA-004`). No scaffolding, schema, migration, or command is authorized by it.
 
 | Decision | Candidates (from `open_items.md`) | Criteria | Architecture impact |
 |---|---|---|---|
-| Frontend (`TBD-INFRA-001`) | React + TypeScript + Vite; Next.js; Vue 3 + Vite; SvelteKit | Requirement fit; familiarity; operating cost | Affects the client for the nine states, own-only route handling, and future streaming; no backend contract changes |
-| Backend (`TBD-INFRA-002`) | Python 3.12 + FastAPI + uv; Node.js 22 + TypeScript (Fastify or NestJS); Java 21 + Spring Boot; Go 1.23 | Requirement fit; familiarity; operating cost | Affects module implementation, background execution, test tooling, and packaging; the module/port boundaries stay |
+| Frontend (`TBD-INFRA-001`, Resolved) | React + TypeScript + Vite; Next.js; Vue 3 + Vite; SvelteKit | Requirement fit; familiarity; operating cost | Affects the client for the nine states, own-only route handling, and future streaming; no backend contract changes |
+| Backend (`TBD-INFRA-002`, Resolved) | Python 3.12 + FastAPI + uv; Node.js 22 + TypeScript (Fastify or NestJS); Java 21 + Spring Boot; Go 1.23 | Requirement fit; familiarity; operating cost | Affects module implementation, background execution, test tooling, and packaging; the module/port boundaries stay |
 | Data store (`TBD-INFRA-003`) | PostgreSQL; SQLite; no persistence in the MVP | Requirement fit; operational cost; migration/exit path | `NFR-012` (proposed) calls for completed-run durability; "no persistence" would conflict with that target if it is adopted and would require the target to change |
 | LLM gateway (`TBD-INFRA-009`) | Internal OpenAI-compatible gateway; Azure OpenAI; hosted API; local vLLM/Ollama | Data boundary; tool-calling ability; operating cost | Affects the model port, egress gate, data residency, streaming, and cost visibility; no provider is chosen |
-| Dependency tooling (`TBD-INFRA-005`) | Follows the confirmed language | Reproducibility; auditability | No lockfile or command until the language and baseline are confirmed |
+| Dependency tooling (`TBD-INFRA-005`) | Follows the confirmed language | Reproducibility; auditability | Backend `uv` is recorded under `TBD-INFRA-002`; the frontend pnpm toolchain, lockfile policy, and commands remain `TBD-INFRA-005/007` |
 | Hosting/CI (`TBD-INFRA-006`) | GitHub Actions; GitLab CI; local-only | Requirement fit; operating cost | No deployment or automated verification claim now |
 
 **Architecture-level requirements that any stack must satisfy** (not a selection): server-side policy enforcement; a persistence boundary that can survive restart; a model port with an egress gate; a run executor port; background execution or an equivalent that does not create scheduled runs; the ability to expose the measurement points; testability of the matrix and state machines; self-hosted packaging without a vendor control plane.
@@ -403,8 +405,8 @@ The stack is **not selected**. The following is the candidate set and the impact
 | R-05 Missing `McpTool.read` and owner display | Tool names or owner identities could leak or be wrongly withheld | Withhold tool names; no owner fields; gap recorded |
 | R-06 Log PII vs `Account.read=denied` | Operational logs could expose identifiers | Internal actor id; minimized fields; `TBD-BIZ-003` still open |
 | R-07 Proposed material promoted by accident | Architecture promises a capability that is not effective | Effective/proposed labels; D review; no authoring commands |
-| R-08 Stack/API scope creep | Premature vendor or schema commitments | No stack/schema in the docs; 05_api and later stages own them |
-| R-09 Late stack decision | The architecture cannot be validated against a real runtime | Stack decision inputs; no implementation authorization |
+| R-08 Stack/API scope creep | Premature vendor or schema commitments | Stack recorded only at major-version level; no schema; 05_api and later stages own the contract and the physical design |
+| R-09 Late stack decision | The architecture cannot be validated against a real runtime | Stack recorded (`TBD-INFRA-001/002`); runtime still unvalidated until `TBD-INFRA-004/007`; no implementation authorization |
 | R-10 No verified environment (`TBD-INFRA-004`) | Performance and capacity claims cannot be tested | Measurement points only; no command or benchmark claim |
 | R-11 Naming and ownership drift | RULE-001 or path-ownership violation | `snake_case`; CHG-010 handoff; no writes outside the scope |
 | R-12 Documentation divergence | A/B/C/D and the integrated doc disagree | Lead integration; D review; traceability table |
@@ -428,10 +430,10 @@ No question below is answered here. The canonical entry remains `docs/00_setup/o
 | `TBD-BIZ-013` | No disable/delete/ownership-transfer cascade | Product Owner |
 | `TBD-BIZ-014` | No compliance or residency conclusion | Product Owner |
 | `TBD-BIZ-015` | The state-coverage interpretation is not decided; this document uses state-bearing entities | Product Owner |
-| `TBD-INFRA-001/002` | No stack; modules and ports remain technology-neutral | User / Tech Lead |
-| `TBD-INFRA-003` | No store; persistence is a port; `NFR-012` depends on it | User / Tech Lead |
+| `TBD-INFRA-001/002` | Stack recorded at major-version level; modules and ports remain technology-neutral; exact versions and commands remain under `TBD-INFRA-004/005/007` | User / Tech Lead |
+| `TBD-INFRA-003` | PostgreSQL recorded; physical schema, indexes, and migrations are not authored, and `NFR-012` depends on that physical design | User / Tech Lead |
 | `TBD-INFRA-004` | No verified environment; no command or benchmark | User / Tech Lead |
-| `TBD-INFRA-005/006/007` | No dependency tooling, CI, or verified commands | User / Tech Lead |
+| `TBD-INFRA-005/006/007` | Backend `uv` is recorded; the frontend toolchain, lockfile policy, CI, and verified commands remain open | User / Tech Lead |
 | `TBD-INFRA-009` | No model provider/gateway/residency; egress gate is unresolved | User |
 | `TBD-INFRA-010` | No SSO; auth extension point only | User |
 | `TBD-INFRA-011` | No search provider or data boundary | User |
@@ -458,7 +460,7 @@ The topical documents use **document-local** gap families: `AGAP-` in `01`, `BGA
 
 1. Every effective CAP/FLOW/STATE/BR/ROLE cell is traced to a module, command, state, or constraint.
 2. Every proposed flow/state/authoring path is labelled reserved and is absent from the implemented surface.
-3. No stack, endpoint, schema, DDL, migration, command, or code appears.
+3. No endpoint, schema, DDL, migration, command, or code appears; the recorded stack decision in §12 is a reference to `open_items.md` and `CHG-019`, not an implementation.
 4. The two effective state machines match the business model, including terminal states and failure destinations.
 5. The permission matrix is enforced server-side; own-only and not-found are non-disclosing; no administrator is invented.
 6. The run outcome rules match `BR-008`; no automatic retry; the executor is a port.
@@ -470,7 +472,7 @@ The topical documents use **document-local** gap families: `AGAP-` in `01`, `BGA
 ### 16.2 What remains unverified
 
 - Every numeric NFR target (`TBD-BIZ-008`).
-- The store, stack, gateway, and deployment behavior (`TBD-INFRA-001/002/003/009`).
+- Exact stack versions and runtime behavior, the store, the gateway, and deployment (`TBD-INFRA-001/002/003/004/005/007/009`).
 - Capacity, availability, backup, and recovery (`NFR-004/005`, `CAP-034`).
 - The actual security controls for credentials, sessions, CSRF, and rate limiting (`CAND-023`, `TBD-INFRA-004`).
 - The MCP runtime and authorization behavior (not implemented).
@@ -488,7 +490,7 @@ The topical documents use **document-local** gap families: `AGAP-` in `01`, `BGA
 ## 17. What this architecture does not authorize
 
 - Starting implementation, scaffolding, dependency installation, migrations, or deployment.
-- Selecting a stack, store, gateway, search provider, hosting, or CI.
+- Treating the recorded stack or store selection as implementation authorization; selecting a gateway, search provider, hosting, or CI.
 - Calling an external model, MCP server, or search provider.
 - Creating, publishing, registering, or allowlisting a registry entry.
 - Adding an administrator, an implicit author, or a hidden seed path.

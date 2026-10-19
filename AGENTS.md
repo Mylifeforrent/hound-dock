@@ -59,15 +59,15 @@ No new top-level entry may be created (RULE-002). Business assets belong under t
 
 ## 4. Technology and architecture boundaries
 
-**The stack is not selected.** Do not infer a stack, framework, package manager, version, or command from the documents.
+**The stack is selected at major-version level only.** Frontend: React 19 + TypeScript 5 + Vite 7 (SPA, no SSR). Backend: Python 3.12 + FastAPI + uv. The resolution is recorded in `docs/00_setup/open_items.md` (`TBD-INFRA-001`/`TBD-INFRA-002`); the comparison and the full component list are in `CHG-019`. Exact versions, the frontend Node/pnpm toolchain, dependency tooling, and every command remain unverified (`TBD-INFRA-004/005/007`). Do not infer a version, scaffold, migration, or command from the documents.
 
 | Area | Status | Gate |
 |---|---|---|
-| Frontend | TBD | `TBD-INFRA-001` Open |
-| Backend | TBD | `TBD-INFRA-002` Open |
+| Frontend | Selected — React 19 + TypeScript 5 + Vite 7 (SPA; no SSR) | `TBD-INFRA-001` Resolved; exact versions and commands `TBD-INFRA-004/005/007` |
+| Backend | Selected — Python 3.12 + FastAPI + uv | `TBD-INFRA-002` Resolved; exact versions and commands `TBD-INFRA-004/005/007` |
 | Data store | PostgreSQL selected | `TBD-INFRA-003` Resolved; physical schema/migrations not authored |
 | Model access | Internal OpenAI-compatible gateway; no external egress | `TBD-INFRA-009` Resolved |
-| Dependency tooling | TBD | `TBD-INFRA-005` Open |
+| Dependency tooling | Partly recorded — uv (backend); pnpm/lockfile policy still open | `TBD-INFRA-005` Open |
 | Environment baseline | Missing | `TBD-INFRA-004` Open |
 | CI / hosting | TBD | `TBD-INFRA-006` Open |
 | Verified commands | TBD | `TBD-INFRA-007` Open |
@@ -82,7 +82,7 @@ No new top-level entry may be created (RULE-002). Business assets belong under t
 
 | Area | Owns after activation | MUST | MUST NOT |
 |---|---|---|---|
-| Frontend Agent | `frontend/**` | Render the effective PG-001–PG-009 surface and PG-010–PG-012 only as the shared No Permission panel, following the nine-state matrix in `docs/03_design/highfi/`; call only API-001–API-015; use business references in routes; treat server denial as authoritative; use tokens/components per §7 | Implement authorization or business rules; trust client-supplied identity/role/owner; render a denied capability as disabled; display owner/account/credential/tool-name/PII; copy `prototype/` into `frontend/`; scaffold before `TBD-INFRA-001` |
+| Frontend Agent | `frontend/**` | Render the effective PG-001–PG-009 surface and PG-010–PG-012 only as the shared No Permission panel, following the nine-state matrix in `docs/03_design/highfi/`; call only API-001–API-015; use business references in routes; treat server denial as authoritative; use tokens/components per §7 | Implement authorization or business rules; trust client-supplied identity/role/owner; render a denied capability as disabled; display owner/account/credential/tool-name/PII; copy `prototype/` into `frontend/`; scaffold before activation and the Stage 1/7 baseline (`TBD-INFRA-001` is Resolved, not an implementation authorization; `TBD-INFRA-004/007`) |
 | Backend Agent | `backend/**` | Enforce the matrix server-side, own-only scope, non-disclosure, idempotency, the error envelope, and §6 data constraints; persist per the logical model; return only contract fields | Bypass policy; return tokens, credentials, secrets, account/owner/initiator fields, tool names, step parameters, or audit fields; add endpoints, paging, sorting, filtering, or a version segment; create schema/migrations without a separate CHG |
 
 Contract authority: [api_interface_spec.md](docs/05_api/api_interface_spec.md) (Draft; not implementation authority).
@@ -116,8 +116,8 @@ Contract authority: [api_interface_spec.md](docs/05_api/api_interface_spec.md) (
 
 Authority: [data_model_spec.md](docs/04_data/data_model_spec.md), [08_security/README.md](docs/08_security/README.md) (currently a boundary only), [business model Appendix B](docs/01_product/business_model.md), and [API §12](docs/05_api/api_interface_spec.md).
 
-- **Store:** PostgreSQL is selected (`TBD-INFRA-003` Resolved). The logical model defines 13 tables. **No DDL, SQL, migration, physical index, or schema may be authored** until a separate authorized physical-design change; the store decision is not a migration authorization.
-- **Classification:** `Internal` or `Sensitive` only. `Highly Sensitive` is prohibited; no `Public` product data. Credentials, secret values, tokens, password hashes, and verifiers MUST NOT be stored in any business table.
+- **Store:** PostgreSQL is selected (`TBD-INFRA-003` Resolved). The logical model defines 13 business tables plus the proposed support stores `account_credential` and `idempotency_key` (`data_model_spec.md` §2.5); session remains runtime state. **No DDL, SQL, migration, physical index, or schema may be authored** until a separate authorized physical-design change; neither the store decision nor the support-store model is a migration authorization.
+- **Classification:** `Internal` or `Sensitive` only. `Highly Sensitive` is prohibited; no `Public` product data. Credentials, secret values, tokens, password hashes, and verifiers MUST NOT be stored in any business table. A local verifier may exist only in the security-owned support store (`data_model_spec.md` §2.5), and only after `TBD-INFRA-012` is resolved; it is never returned, logged, or projected.
 - **Sensitive data** includes person-linked identifiers and sign-in names; conversation/message content; skill/task names, descriptions, instructions, inputs, and step parameters; MCP names and endpoints; version labels; tool names; run references; result/error summaries; timestamps/durations; audit actor/target/correlation. Structural IDs, ordinals, enums, and state values are `Internal`. See data model §7.2.
 - **Retention:** conversations/messages 90 days; runs/run steps 180 days; audit 365 days; accounts while active; registry records while recorded. No `expires_at` or retention column; the retention job is later. Offboarding/deletion is `TBD-BIZ-013`; do not invent a cascade.
 - **Audit:** `audit_event` is append-only, Admin-only read, no export, 365 days; reading appends an `audit_read` event. The API/UI audit surface is absent or blocked; do not invent an audit page, endpoint, or field (see §1).
@@ -135,19 +135,19 @@ Authority: [data_model_spec.md](docs/04_data/data_model_spec.md), [08_security/R
 - **Current rendered surface:** PG-001–PG-009 are effective; PG-010–PG-012 render the shared No Permission panel only. The Admin authoring divergence in §1 is unresolved; do not add an authoring form, disabled Publish, or audit page.
 - **Prohibited UI:** mobile or any layout below 960px; dark theme or theme switch; search/filter/pager/load-more; create/edit/publish/delete/test/allowlist/invoke/export/share controls; account menu, avatar, or owner display; credential values; tool names; "coming soon" disabled controls. A denied capability is absent, not disabled.
 - **Accessibility:** skip link, focusable main, 2px visible focus ring, focus moved to the page heading, polite live regions, and `prefers-reduced-motion` support. WCAG 2.2 AA is a proposed target (`NFR-011`, `TBD-BIZ-008`), not an accepted certification.
-- **Open design decisions:** unresolved copy, variant, and readiness decisions are recorded in `highfi_page_map.md` §6.4 and §10.2; do not invent copy, a second string, or a new variant. `TBD-INFRA-001` means no design tool, component library, or handoff format is selected.
+- **Open design decisions:** unresolved copy, variant, and readiness decisions are recorded in `highfi_page_map.md` §6.4 and §10.2; do not invent copy, a second string, or a new variant. `TBD-INFRA-001` is Resolved for the framework and build tool only; no design tool, component library, or handoff format is selected.
 
 ## 8. Verification, testing, and commands
 
 - **Before any commit:** executed verification is mandatory (RULE-011). The `CHG` MUST contain `## Verification` with each command, exit code, and observed result; "looks correct" is not evidence. The reviewer MUST re-run the commands.
-- **Tests:** every behavior change MUST add or update automated tests; tests MUST fail before and pass after (RULE-006). Documentation-only changes are exempt. No coverage threshold may be invented; it is a TBD until measured. No test framework is selected.
+- **Tests:** every behavior change MUST add or update automated tests; tests MUST fail before and pass after (RULE-006). Documentation-only changes are exempt. No coverage threshold may be invented; it is a TBD until measured. The recorded stack names pytest (backend) and Vitest (frontend); no test command is verified (`TBD-INFRA-007`).
 - **Documentation checks:** verify `Status:` lines, relative links, TBD/CONFLICT references against `open_items.md`, the frozen-asset scan, and the write set. Record them in the `CHG`.
 - **Design-artifact checks:** if highfi files change, re-run the documented token projection and record that `tokens.css` is generated, not hand-edited. This is not a project build or test command.
 - **Commands:** none of the project install/run/build/test/lint/typecheck/deploy commands is verified. Do not state, imply, or run one as project verification.
 
 | Command class | Status | Gate |
 |---|---|---|
-| Install / dependency add | TBD | `TBD-INFRA-001/002/004/005` |
+| Install / dependency add | TBD | `TBD-INFRA-004/005` |
 | Dev run | TBD | `TBD-INFRA-007` |
 | Build | TBD | `TBD-INFRA-007` |
 | Test | TBD | `TBD-INFRA-007` |
@@ -182,8 +182,8 @@ No `package.json`, `pyproject.toml`, lockfile, `Makefile`, `Dockerfile`, CI work
 
 | Path | Owner | Write rule |
 |---|---|---|
-| `frontend/**` | Frontend Agent (dormant) | Only after activation and `TBD-INFRA-001`; not before. |
-| `backend/**` | Backend Agent (dormant) | Only after activation and `TBD-INFRA-002`; not before. |
+| `frontend/**` | Frontend Agent (dormant) | Only after activation; `TBD-INFRA-001` is Resolved, but the Stage 1/7 baseline and commands (`TBD-INFRA-004/007`) are still required. |
+| `backend/**` | Backend Agent (dormant) | Only after activation; `TBD-INFRA-002` is Resolved, but the Stage 1/7 baseline, dependency audit, and commands (`TBD-INFRA-004/005/007`) are still required. |
 | `docs/01_product/**` … `docs/11_quality/**` | Docs Agent (dormant) | Docs and design only; no production code, root governance, `CHG`, or review. |
 | `docs/12_reviews/**` | Verifier (dormant) | Review records only; no source or doc edits. |
 | `README.md`, `AGENTS.md`, `.gitignore`, `docs/00_setup/**`, `docs/13_changes/**` | Tech Lead | Governance, rules, registry, and `CHG` records. |

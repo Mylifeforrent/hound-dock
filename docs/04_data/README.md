@@ -3,7 +3,7 @@
 Status: Draft
 Originating stage: Stage 5 — Data Design
 Authoritative assets:
-- `docs/04_data/data_model_spec.md` — Draft logical data model v0.2 (CHG-012).
+- `docs/04_data/data_model_spec.md` — Draft logical data model v0.3 (CHG-020; baseline CHG-012).
 - `docs/04_data/README.md` — this folder contract.
 This folder owns data models, schemas, retention, and migration strategy; physical design is a separate authorized change.
 Allowed status: Draft / Reviewed / Frozen. `Frozen` requires explicit user approval recorded in the Frozen assets section below.
@@ -25,7 +25,7 @@ Owns data design: entities, relationships, schemas, retention, and migration str
 
 | File | Purpose | Status |
 |---|---|---|
-| `data_model_spec.md` | Logical data model v0.2: 13 logical tables, 18/18 entity mapping, keys, constraints, index candidates, effective STATE-001/002/003/005, lifecycle, classification/retention, audit, migration requirements, traceability | Draft |
+| `data_model_spec.md` | Logical data model v0.3: 13 business tables plus 2 proposed support stores (`account_credential`, `idempotency_key`), 18/18 entity mapping, keys, constraints, index candidates, effective STATE-001/002/003/005, lifecycle, classification/retention, audit, migration requirements, traceability | Draft |
 
 ## Frozen assets
 

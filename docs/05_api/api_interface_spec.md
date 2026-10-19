@@ -6,8 +6,9 @@ As-of: 2026-10-18
 Owner: Docs Agent (API contract scope for `docs/05_api/**`); change record filed under the recorded Tech Lead handoff for `docs/13_changes/**`
 Change record: `docs/13_changes/CHG-013-api-interface-contract.md`
 Contract owner: `docs/05_api/` — this document owns endpoints, paths, methods, status codes, request/response schemas, versioning notation, and the error payload shape. `docs/02_architecture/02_api_workflow_and_review.md` remains the authority for interface principles and error classes.
-Framework status: framework-neutral. FastAPI is **not confirmed** (`TBD-INFRA-002` is Open). Pydantic appears only in the conditional, non-normative §13.
+Framework status: framework-neutral. The backend stack is recorded as Python 3.12 + FastAPI + uv (`TBD-INFRA-002` Resolved); this contract remains framework-neutral, binds to no framework version, and Pydantic appears only in the conditional, non-normative §13.
 PRD acceptance: not claimed (`TBD-BIZ-012` is Open). This contract is `Draft`, not `Reviewed`, not `Frozen`, and authorizes no implementation.
+Stack status note (2026-10-19, `CHG-019`): `TBD-INFRA-002` is Resolved to Python 3.12 + FastAPI + uv. This contract remains framework-neutral; §14.2 and §15 `CF-14` keep their authoring-time wording, which is superseded only as to that TBD status.
 
 ## 1. Purpose, scope, and non-goals
 
@@ -40,7 +41,7 @@ It is a contract, not an architecture document, a data-model document, a UI spec
 
 ### 1.4 Status and authorization
 
-This contract is `Draft`. It does not authorize backend implementation, a stack decision, a database schema, a deployment, or a model call. It is `Draft` until the independent Verifier review and the Tech Lead acceptance recorded against `CHG-013`. `TBD-INFRA-002` remains Open, so the HTTP binding below is a contract notation, not a framework commitment.
+This contract is `Draft`. It does not authorize backend implementation, a database schema, a deployment, or a model call. It is `Draft` until the independent Verifier review and the Tech Lead acceptance recorded against `CHG-013`. The stack is recorded (`TBD-INFRA-002` Resolved to Python/FastAPI/uv), but the HTTP binding below remains contract notation; this contract is framework-neutral and commits to no framework version.
 
 ## 2. Input provenance and precedence
 
@@ -51,7 +52,7 @@ This contract is `Draft`. It does not authorize backend implementation, a stack 
 | 1 | `docs/02_architecture/02_api_workflow_and_review.md` | v0.1, `Draft` | §2, §3, §4, §5, §6, §7, §8, §9, §10, §11 | Interface boundary, command/query split, enforcement points, effective surfaces, seven error classes, workflow sequencing, duplicate/disclosure rules, contract deferrals | `[SRC: 02 §2–§11]` |
 | 2 | `docs/03_design/interaction_design.md` §2 | v0.1, `Draft` | §2.2, plus §3.4, §4.1–§4.3, §5, §6 | Exhaustive page/action → matrix table; must-call operations; validation, feedback, duplicate, permission, copy, and state constraints | `[SRC: IXD §2.2]` |
 | 3 | `docs/02_architecture/architecture.md` and `docs/02_architecture/05_enterprise_internal_baseline.md` | v0.1, `Draft` | ARCH §6, §8; baseline §2–§5 | Module boundaries, sync/async classes, command/query behavior, and the audit-boundary context. The baseline is read as a conflict source, not as an API source (§15, CF-01) | `[SRC: ARCH §8; BASE §3–§5]` |
-| 4 | `docs/04_data/data_model_spec.md` | v0.2, `Draft` | §4, §5.5, §7, §8, Appendix A | Logical field names, types, keys, state vocabularies, classification, and page-field disposition. Baseline-only fields are trimmed from projections (§15, CF-02) | `[SRC: DATA §4, §7]` |
+| 4 | `docs/04_data/data_model_spec.md` | v0.3, `Draft` | §2.5, §4, §4.15–§4.16, §5.5, §7, §8, Appendix A | Logical field names, types, keys, state vocabularies, classification, support-store model, and page-field disposition. Baseline-only fields are trimmed from projections (§15, CF-02) | `[SRC: DATA §4, §7]` |
 | 5 | `docs/01_product/business_model.md` §6.2 | v0.3 with Appendix B, `Draft` | §6.2, §6.2.1; Appendix B.3 | The permission matrix is the single policy source (ADR-001). This contract uses the §6.2 ROLE-001 cells and records the Appendix B.3 Admin extension as a conflict, not as an API source (§15, CF-01) | `[SRC: BM §6.2; ADR-001]` |
 | — | `docs/00_setup/open_items.md` | `Draft` | Registry entries referenced by ID | `TBD`/`CONFLICT` resolution state and role/scope context. No entry is redefined | `[SRC: OI]` |
 
@@ -141,9 +142,10 @@ No `204`, `3xx`, or `422` appears in this contract. In particular, a framework's
 
 - Sign-in is the only anonymous operation. It verifies a local credential and creates a session bound to one account (`SYS-001`, `BR-001`) `[SRC: 02 §3.3, §5]`.
 - The session reference is conveyed as a server-set, `HttpOnly` session cookie. It is **not** returned in the response body, URL, or log. This satisfies the prohibition on returning tokens and preserves the session-bound actor rule `[CONTRACT; SRC: 02 §2.2, §5]`.
-- Cookie name, flags, lifetime, refresh, revocation, CSRF protection, and sign-out are security design. They are not fixed here. `docs/08_security/` and `TBD-INFRA-004` remain the owners `[SRC: 02 §11; OI]`.
+- Cookie name, flags, lifetime, refresh, revocation, CSRF protection, and sign-out are security design. They are not fixed here. `docs/08_security/` and `TBD-INFRA-013` own them; `TBD-INFRA-004` remains the environment baseline `[SRC: 02 §11; OI]`.
 - An absent, ended, or invalid session yields `40102` for every authenticated endpoint. No partial page and no partial write is implied `[SRC: 02 §6.1; IXD §5.5]`.
 - A rejected sign-in credential yields `40101` with one generic message. The contract does not distinguish an unknown account from a wrong credential `[SRC: 02 §6.1, §6.2; IXD §5.7]`.
+- Session state is runtime state with no table (`data_model_spec.md` §2.4, §6.5). The recommended in-memory adapter ends sessions on restart, and `40102` is the only signal; the alternative store is `TBD-INFRA-013`.
 
 ### 4.2 Default deny
 
@@ -1044,6 +1046,7 @@ No `detail`, `errors`, `data`, `provider`, `stack`, `request_body`, `account_id`
 - The server stores the key with a **request fingerprint**: the authenticated actor, method, path, and a canonical representation of the request body. Semantically equal JSON objects that differ only in member order are the same body; the canonicalization is not otherwise exposed. The scope is `(actor, Idempotency-Key)`; a key reused by a different actor is a different scope and cannot replay another actor's result `[CONTRACT]`.
 - The key-retention window is **24 hours, proposed**, pending `TBD-BIZ-008`. At minimum, the key MUST be retained until the accepted operation reaches a terminal outcome or the client receives a definitive response. The window is not a confirmed value `[PROPOSED: TBD-BIZ-008]`.
 - A missing required key is `40001` with `fields[].field = "Idempotency-Key"`. A key reused with a different fingerprint is `40901`; no state change occurs `[CONTRACT]`.
+- The key store is modeled as a proposed support store (`data_model_spec.md` §2.5, §4.16). Its persistence choice and replay payload are `TBD-INFRA-014`; the 24-hour window remains proposed (`TBD-BIZ-008`).
 
 ### 9.2 Replay semantics
 
@@ -1211,7 +1214,7 @@ Responses carrying `Sensitive` content SHOULD be sent with `Cache-Control: no-st
 
 ## 13. Conditional appendix — Pydantic layering (non-normative)
 
-> **Conditional.** FastAPI is not confirmed (`TBD-INFRA-002` is Open). This appendix is naming and layering guidance only. It is not an implementation, a stack selection, a dependency approval, or a requirement on any backend. If the backend is not Python/FastAPI, the semantic contract in §3–§12 still applies; only the model notation changes.
+> **Conditional.** FastAPI is the selected backend (`TBD-INFRA-002` Resolved), but this appendix remains non-normative naming and layering guidance. It is not an implementation, a dependency approval, or a requirement on any backend. If the backend is not Python/FastAPI, the semantic contract in §3–§12 still applies; only the model notation changes.
 
 ### 13.1 Layer contract
 

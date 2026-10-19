@@ -10,7 +10,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - Entries are appended in ID order, grouped by prefix (`TBD-BIZ`, `TBD-INFRA`, `CONFLICT`) and numerically within each group. An ID MUST NOT be deleted or reused.
 - A resolved entry MUST remain in place with status `Resolved` and a `Resolution source` naming the decision and its location.
 - Other files MAY reference an ID but MUST NOT define or redefine one (RULE-014).
-- No candidate below is a recommendation. No technology choice is settled. Selection requires confirmed requirements plus a recorded three-point justification: requirement fit, familiarity, and operating cost.
+- A candidate is not a recommendation until its entry is `Resolved` by the owner. Selection requires confirmed requirements plus a recorded three-point justification: requirement fit, familiarity, and operating cost. A resolved stack entry records the decision only; exact versions, tooling, and commands remain separate gates (`TBD-INFRA-004/005/007`).
 - No assumption is recorded as a settled decision. A temporary assumption MUST be logged here as a TBD.
 
 ## Summary
@@ -18,7 +18,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 | Prefix | Open | Resolved |
 |---|---|---|
 | `TBD-BIZ` | 9 | 6 |
-| `TBD-INFRA` | 8 | 3 |
+| `TBD-INFRA` | 9 | 5 |
 | `CONFLICT` | 1 | 1 |
 
 ---
@@ -191,24 +191,24 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-INFRA-001 — Frontend stack
 
 - **Category:** Engineering decision
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User; Tech Lead prepares the comparison after PRD review
 - **Must confirm by:** Stage 3 — Architecture
-- **Impact:** `frontend/` MUST remain empty of code, manifests, and commands until this is resolved.
+- **Impact:** `frontend/` MUST remain empty of code, manifests, and commands until activation, the Stage 1 baseline, and verified commands (`TBD-INFRA-004/007`). The resolution below is a decision, not implementation authority.
 - **Candidate options:** (a) React + TypeScript + Vite; (b) Next.js; (c) Vue 3 + Vite; (d) SvelteKit.
 - **Decision criteria:** requirement fit; familiarity; operating cost (build, hosting, maintenance).
-- **Resolution source:** —
+- **Resolution source:** User approved the Tech Lead comparison and selected candidate (a) on 2026-10-19 (Asia/Shanghai). Scope: React 19 (major) + TypeScript 5 (major) + Vite 7 (major), built as a client-only SPA with no SSR and no server runtime; the frontend route layer is React Router in declarative mode, and the test direction is Vitest with React Testing Library and MSW. Exact versions, the Node/pnpm build toolchain, dependency tooling, and every command remain `TBD-INFRA-004/005/007`. The scoring and the full component list are in `docs/13_changes/CHG-019-frontend-backend-stack.md`.
 
 ## TBD-INFRA-002 — Backend stack
 
 - **Category:** Engineering decision
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User; Tech Lead prepares the comparison after PRD review
 - **Must confirm by:** Stage 3 — Architecture
-- **Impact:** `backend/` MUST remain empty of code, manifests, and commands until this is resolved.
+- **Impact:** `backend/` MUST remain empty of code, manifests, and commands until activation, the Stage 1 baseline, a dependency audit, and verified commands (`TBD-INFRA-004/005/007`). The resolution below is a decision, not implementation authority.
 - **Candidate options:** (a) Python 3.12 + FastAPI + uv; (b) Node.js 22 + TypeScript (Fastify or NestJS); (c) Java 21 + Spring Boot; (d) Go 1.23.
 - **Decision criteria:** requirement fit; familiarity; operating cost (runtime, deployment, maintenance).
-- **Resolution source:** —
+- **Resolution source:** User approved the Tech Lead comparison and selected candidate (a) on 2026-10-19 (Asia/Shanghai). Scope: Python 3.12, FastAPI (0.x), and uv with `uv.lock`; the recommended supporting runtime is Uvicorn, the ORM/driver pair is SQLAlchemy 2 + psycopg 3, migrations are Alembic behind a separate physical-design change, and the test framework is pytest. Exact versions and every command remain `TBD-INFRA-004/005/007`. The scoring and the full component list are in `docs/13_changes/CHG-019-frontend-backend-stack.md`.
 
 ## TBD-INFRA-003 — Data store and persistence
 
@@ -238,7 +238,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Status:** Open
 - **Owner:** User; Tech Lead records the result in `docs/06_development/`
 - **Must confirm by:** Stage 7 — Development Setup
-- **Impact:** Lockfiles, audit commands, and reproducible installs cannot be defined. Depends on TBD-INFRA-002.
+- **Impact:** Lockfiles, audit commands, and reproducible installs cannot be defined. `TBD-INFRA-002` is Resolved (Python 3.12 + FastAPI + uv); this entry remains Open for the frontend Node/pnpm toolchain and the lockfile/audit policy.
 - **Candidate options:** (a) uv if Python is confirmed; (b) pnpm or npm if Node is confirmed; (c) Maven or Gradle if Java is confirmed; (d) Go modules if Go is confirmed.
 - **Decision criteria:** fit with the chosen stack; reproducibility; operating cost.
 - **Resolution source:** —
@@ -258,10 +258,10 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 
 - **Category:** Engineering decision
 - **Status:** Open
-- **Owner:** Tech Lead after TBD-INFRA-001, TBD-INFRA-002, TBD-INFRA-004, and TBD-INFRA-005 are resolved
+- **Owner:** Tech Lead after TBD-INFRA-004 and TBD-INFRA-005 are resolved
 - **Must confirm by:** Stage 7 — Development Setup
 - **Impact:** README, AGENTS, and change records cannot name a standard verification suite. Commands MUST NOT be invented in the meantime.
-- **Candidate options:** None until the stack and baseline are confirmed.
+- **Candidate options:** None until the baseline and the tooling decision are confirmed (`TBD-INFRA-004/005`).
 - **Decision criteria:** commands MUST be executed successfully in the verified baseline; no unverified command may be recorded.
 - **Resolution source:** —
 
@@ -307,6 +307,42 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Impact:** The chat search capability (FR-004, FR-010, FR-011) cannot be implemented without a provider and a data boundary. Determines whether queries leave the internal network.
 - **Candidate options:** (a) internal document/knowledge search only; (b) a web search API such as Tavily, Bing, or Google; (c) both, with per-request choice.
 - **Decision criteria:** data boundary; result quality; operating cost.
+- **Resolution source:** —
+
+## TBD-INFRA-012 — Local credential verification and verifier protection
+
+- **Category:** Engineering decision / security
+- **Status:** Open
+- **Owner:** User; Tech Lead records the result in `docs/08_security/` and `docs/04_data/`
+- **Must confirm by:** Stage 9 — Security, before `API-001` is implemented
+- **Impact:** `API-001` cannot be implemented end to end. `account` has no verifier field (`data_model_spec.md` §4.2), AGENTS.md §6 forbids storing a verifier in a business table, SSO is excluded in the MVP (`CAP-007`), and no hidden seed path is allowed. A security-owned support store is modeled as proposed in `data_model_spec.md` §2.5; the algorithm and parameters are not selected.
+- **Candidate options:** (a) Argon2id in a security-owned support store, with parameters recorded per row; (b) scrypt; (c) PBKDF2-HMAC-SHA256; (d) an external identity provider (excluded in the MVP; post-MVP `TBD-INFRA-010`).
+- **Decision criteria:** resistance to offline guessing; Python library maturity and maintenance; cost of parameter tuning on the target host; rehash-on-sign-in migration path.
+- **Recommendation (non-binding):** (a) Argon2id with per-row parameters, so a future parameter or algorithm change rehashes at sign-in. This is a recommendation, not a decision.
+- **Resolution source:** —
+
+## TBD-INFRA-013 — Session lifetime, cookie flags, and termination
+
+- **Category:** Engineering decision / security
+- **Status:** Open
+- **Owner:** User; Tech Lead records the result in `docs/08_security/`
+- **Must confirm by:** Stage 9 — Security, before `API-001` is implemented
+- **Impact:** `api_interface_spec.md` §4.1 requires a server-set opaque `HttpOnly` cookie; `CF-08` and `AGAP-01` leave the cookie name, flags, lifetime, refresh, revocation, CSRF, and sign-out open. `data_model_spec.md` §2.4 and §6.5 record session as runtime state with no table; an in-process store ends sessions on restart (`40102`) and cannot serve multiple workers.
+- **Candidate options:** (a) in-memory opaque token, single process, idle and absolute timeout, `HttpOnly; Secure; SameSite=Lax`, restart invalidates; (b) a durable session support store (multi-worker, explicit revocation); (c) a stateless signed cookie (no server store, no revocation); (d) an external store such as Redis (new infrastructure).
+- **Decision criteria:** tolerance for session loss on restart; multi-worker need; revocation; CSRF exposure; operating cost.
+- **Recommendation (non-binding):** (a) for the single-process MVP, with the timeout and flags recorded here on resolution; a future multi-worker need reopens the decision. This is a recommendation, not a decision.
+- **Resolution source:** —
+
+## TBD-INFRA-014 — Idempotency-key persistence and replay payload
+
+- **Category:** Engineering decision
+- **Status:** Open
+- **Owner:** User; Tech Lead records the result in `docs/04_data/` and `docs/05_api/`
+- **Must confirm by:** Stage 7 — Development Setup, before `API-002`, `API-005`, `API-006`, and `API-013` are implemented
+- **Impact:** `api_interface_spec.md` §9 requires the server to store `(actor, key)` with a request fingerprint and to replay the original result; `data_model_spec.md` §12.3 records "no idempotency key". A process-local store loses replays on restart; a support table adds a persisted structure outside the 13 business tables.
+- **Candidate options:** (a) support store `idempotency_key` with a hash fingerprint, a minimal replay payload, and the proposed 24-hour window; (b) in-process memory (no restart durability, single worker only); (c) no store (rejected: it contradicts `api_interface_spec.md` §9).
+- **Decision criteria:** replay durability across restart; no duplication of `Sensitive` content; purge cost; fit with the single-process MVP.
+- **Recommendation (non-binding):** (a); the retention window remains `TBD-BIZ-008`. This is a recommendation, not a decision.
 - **Resolution source:** —
 
 ---
