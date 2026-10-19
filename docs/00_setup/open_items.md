@@ -17,7 +17,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 
 | Prefix | Open | Resolved |
 |---|---|---|
-| `TBD-BIZ` | 9 | 6 |
+| `TBD-BIZ` | 8 | 7 |
 | `TBD-INFRA` | 9 | 5 |
 | `CONFLICT` | 1 | 1 |
 
@@ -147,13 +147,13 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-BIZ-012 — Gate 1 acceptance baseline of PRD v0.1
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Gate 1 — before Stage 3 Architecture
 - **Impact:** PRD v0.1 is `Draft` and its §19 acceptance criteria are not recorded as met. The Stage 5 contract permits Draft P4 material to become only `CAND` or `TBD-BIZ`, so the confirmed core of the business model is narrower than the PRD. Until the product owner accepts or amends the PRD, roles, permissions, metrics, audit, execution model, NFR thresholds, and data boundaries remain unconfirmed.
 - **Candidate options:** (a) accept PRD §2–§5, §8, §9, and §12 as the Gate 1 baseline; (b) accept the scope boundary only and keep roles, metrics, NFRs, and execution model as candidates; (c) revise the PRD and issue v0.2 before acceptance.
 - **Decision criteria:** which statements the product owner is prepared to own as commitments.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected option (b) on 2026-10-19 (Asia/Shanghai): accept the MVP scope boundary only and keep roles, metrics, NFRs, and the execution model as candidates, applied to the current PRD v0.2 baseline issued by CHG-014. Recorded in `CHG-021`. This closes the Gate 1 PRD-acceptance decision only. It does not resolve `TBD-BIZ-005`, `TBD-BIZ-006`, `TBD-BIZ-007`, `TBD-BIZ-008`, `TBD-BIZ-010`, `TBD-BIZ-013`, `TBD-BIZ-014`, `TBD-BIZ-015`, `TBD-INFRA-004`, `TBD-INFRA-005`, `TBD-INFRA-007`, `TBD-INFRA-012`, `TBD-INFRA-013`, `TBD-INFRA-014`, or `CONFLICT-002`, and it authorizes no implementation.
 
 ## TBD-BIZ-013 — Registry ownership and offboarding
 

@@ -10,7 +10,7 @@ Companion documents: [research and input traceability](00_research_and_input_tra
 
 ## 1. Document control and status
 
-This is the single integrated architecture draft for the confirmed hound-dock MVP. It is `Draft`. It is not a Gate 1 acceptance of the PRD (`TBD-BIZ-012`), it does not resolve `CONFLICT-001` or `CONFLICT-002`, and it does not answer any `TBD-BIZ` or `TBD-INFRA` entry.
+This is the single integrated architecture draft for the confirmed hound-dock MVP. It is `Draft`. It is not the Gate 1 acceptance of the PRD, which is recorded in `CHG-021`; it does not resolve `CONFLICT-001` or `CONFLICT-002`, and it does not answer any `TBD-BIZ` or `TBD-INFRA` entry.
 
 The document is technology-neutral. It defines boundaries, responsibilities, state, data flow, and operating constraints. It does **not** define endpoints, request/response schemas, database tables, migrations, deployment commands, or implementation code. Those belong to `docs/05_api/`, `docs/04_data/`, `docs/06_development/`, `docs/09_deployment/`, and the implementation stages.
 
@@ -426,7 +426,7 @@ No question below is answered here. The canonical entry remains `docs/00_setup/o
 | `TBD-BIZ-009` | No audit event, store, viewer, export, or retention | Product Owner |
 | `TBD-BIZ-010` | No token/cost/budget record | Product Owner |
 | `TBD-BIZ-011` | No search, history, configuration, file context, or streaming commitment | Product Owner |
-| `TBD-BIZ-012` | No PRD acceptance; the architecture remains Draft | Product Owner |
+| `TBD-BIZ-012` | Gate 1 scope boundary accepted (`CHG-021`); the architecture remains Draft | Product Owner |
 | `TBD-BIZ-013` | No disable/delete/ownership-transfer cascade | Product Owner |
 | `TBD-BIZ-014` | No compliance or residency conclusion | Product Owner |
 | `TBD-BIZ-015` | The state-coverage interpretation is not decided; this document uses state-bearing entities | Product Owner |

@@ -898,7 +898,7 @@ Physical types/lengths/collations/timezone, index implementation, partitioning, 
 | `TBD-BIZ-007` | Step execution/parameter format/retry; run execution remains a port |
 | `TBD-BIZ-008` | No NFR threshold; index candidates not commitments |
 | `TBD-BIZ-010` | No cost/token field |
-| `TBD-BIZ-012` | PRD acceptance; document remains Draft |
+| `TBD-BIZ-012` | Gate 1 scope boundary accepted (`CHG-021`); document remains Draft |
 | `TBD-BIZ-013` | Offboarding/deletion; no cascade |
 | `TBD-BIZ-014` | Internal policy reference missing; no compliance conclusion |
 | `TBD-BIZ-015` | State coverage interpretation; only state-bearing fields modelled |
@@ -953,7 +953,7 @@ These three gaps are now registered and modeled; none is resolved.
 | 13 | Remaining TBDs referenced, not answered | **Pass** | §12.2; no TBD as a value |
 | 14 | Mermaid statically valid | **Partial — static only** | Two diagrams (ER + flow), no renderer installed |
 
-**Verdict:** Pass 13 / Partial 1 / Fail 0. The document remains `Draft`; `TBD-BIZ-014` and `TBD-BIZ-012` remain open, and independent review is pending.
+**Verdict:** Pass 13 / Partial 1 / Fail 0. The document remains `Draft`; `TBD-BIZ-014` remains open, `TBD-BIZ-012` is resolved (Gate 1 scope boundary, `CHG-021`), and independent review is pending.
 
 **Residual limits:** PostgreSQL physical design is not in this document; the two support stores are proposed and not physically designed; no performance/retention-job/audit-page validation; `TBD-BIZ-007` leaves execution semantics open; Mermaid not rendered; no independent review.
 

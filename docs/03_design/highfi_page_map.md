@@ -33,7 +33,7 @@ The seven inputs are all `Draft`. They are used in the order below; a lower rank
 
 | Gate or asset | State | Evidence | Effect on this map |
 |---|---|---|---|
-| **Gate 1 acceptance** | **Not accepted** | `TBD-BIZ-012` is Open (REG); PRD §19; PRD header status note | The phase gate is closed. No board is approved, and no row below is an approved design. |
+| **Gate 1 acceptance** | **Scope boundary accepted** | `TBD-BIZ-012` Resolved (option (b), `CHG-021`); PRD §19; PRD header status note | The Gate 1 PRD-acceptance phase gate is satisfied at the scope boundary; the design tool, independent PRD review, and high-fidelity asset remain unresolved. No board is approved, and no row below is an approved design. |
 | **PRD v0.2 independent review** | **Not performed** | PRD §15, §18, §11.4; `docs/12_reviews/` holds reviews only through CHG-007 and none for CHG-014 | ACs are definitions, not observed results. AC coverage in §6 is a documentation trace, not a test pass. |
 | **High-fidelity asset to cite** | **None exists** | No Figma file, Make link, `frontend_design_spec`, or `prototype_review` in the repository; `docs/03_design/README.md` Frozen assets: None | Board IDs stay blank. There is no visual source to inherit from and no fidelity claim to verify against. |
 | **Prototype status** | Draft, throwaway, opened over `file://` | P-README lines 4 to 8 and 134 to 143; P-README states it MUST NOT be treated as production code | Behaviour and layout evidence only. It is not a high-fidelity draft and not a design system. |
@@ -47,7 +47,7 @@ The seven inputs are all `Draft`. They are used in the order below; a lower rank
 | ID | Registry status | What it constrains in this map | Flag |
 |---|---|---|---|
 | `TBD-BIZ-004` | **Resolved** — admin-only skill and task publication; MCP registration/allowlisting and account administration remain out; role assignments provisioned out of band | ID still declares it Open and denies every Admin cell; BM Appendix B.3 grants Admin publication. Affects the terminal Empty states and the no-create rule on PG-003, PG-005, PG-007 and the PG-010 to PG-012 No Permission treatment | `[TBD-UX]` + `[CONFLICT]` M-01 |
-| `TBD-BIZ-012` | **Open** | Gate 1 is closed. Its title still names PRD v0.1 while the current draft is v0.2 | `[TBD-PRD]` M-02 |
+| `TBD-BIZ-012` | **Resolved** — option (b), scope boundary (`CHG-021`) | Gate 1 is accepted at the scope boundary; the title still names PRD v0.1 while the resolution names v0.2 (M-02) | `[TBD-PRD]` M-02 |
 | `TBD-BIZ-013` | **Open** | Registry ownership and offboarding; owner attribution is omitted from every page | `[TBD-UX]` M-05 |
 | `CONFLICT-001` | **Resolved** — Admin-capability side; ROLE-004 remains proposed and denied | No page depends on an Auditor role | M-03 |
 | `CONFLICT-002` | **Open** | Stage-label and routing metadata only; REG records that no business rule is blocked | `[CONFLICT]` M-04 |
@@ -58,7 +58,7 @@ The seven inputs are all `Draft`. They are used in the order below; a lower rank
 
 ### 1.4 What this map does not claim
 
-- It does not claim Gate 1, an approved MVP, or implementation authority.
+- It does not claim more than the Gate 1 scope boundary; it does not claim an approved MVP or implementation authority.
 - It does not claim that the PRD was reviewed, or that any AC in §6 has passed.
 - It does not claim that the prototype is high fidelity, a design system, or a production reference.
 - It does not claim a palette, type scale, shadow set, radius set, theme, tool, or handoff format.
@@ -106,7 +106,7 @@ One row per logical page. `States to cover` uses the nine state names from ID §
 
 | PG | Page name | Prototype route | States to cover | Related AC | Produce draft? | Desktop breakpoints 1440/1280/1080/960 | Board ID | Notes |
 |---|---|---|---|---|---|---|---|---|
-| **PG-001** | Sign in | `#/sign-in` (product path `/sign-in`) | D, Er, Ed, S, SF — 5 HF. L, E, NR, NP — N/A | AC-001, AC-002, AC-004, AC-005, AC-007. AC-003, AC-006, AC-008 are non-UI | **Yes — must.** FLOW-001 N1, D1, N2; F1, F2 | 420px panel centred at all four widths; at 960 it sits inside the 648px content; no rail at any width | *(blank)* | No page-level blocker; still gated by `TBD-BIZ-012` and `TBD-INFRA-001`. No SSO, no help link, no role control. SF is a transition to PG-002, not a success screen |
+| **PG-001** | Sign in | `#/sign-in` (product path `/sign-in`) | D, Er, Ed, S, SF — 5 HF. L, E, NR, NP — N/A | AC-001, AC-002, AC-004, AC-005, AC-007. AC-003, AC-006, AC-008 are non-UI | **Yes — must.** FLOW-001 N1, D1, N2; F1, F2 | 420px panel centred at all four widths; at 960 it sits inside the 648px content; no rail at any width | *(blank)* | No page-level blocker; still gated by `TBD-INFRA-001` and the independent PRD review. No SSO, no help link, no role control. SF is a transition to PG-002, not a success screen |
 | **PG-002** | Chat (own conversation list + open conversation) | `#/chat`, `#/chat/:conversationRef` (`/chat`, `/chat/:conversationRef`) | D, L, E, NR, Er, Ed, S, SF — 8 HF. NP — reuse shared panel | AC-009 to AC-021 | **Yes — must.** FLOW-002 N1 to N5; F1, F2, C1, C2 | Chat column 760 / 720 / 720 / fills 648; gutters 36 / 28 / 28 / 20 | *(blank)* | **Not ready to draft** on copy only: `[TBD-UX]` M-06 dialog string. All 9 states are otherwise constructible. The Admin chat divergence changes the matrix, not this screen |
 | **PG-003** | Skills registry | `#/skills` (`/skills`) | D, L, Er — reuse. E — HF. NP — reuse. NR, Ed, S, SF — N/A | AC-022, AC-023, AC-026, AC-027 | **No page draft.** Reuse map §5; the Empty board is drawn | Grid 3 / 2 / 2 / 2 columns; card min 320 at 1440, 280 at 960 | *(blank)* | **Not ready to draft.** `[TBD-UX]` M-01 `TBD-BIZ-004` status; `[CONFLICT]` M-01 no-create rule; `[TBD-UX]` M-05 owner attribution |
 | **PG-004** | Skill record | `#/skills/:skillName` (`/skills/:skillName`) | D, L, NR, Er, NP — reuse. E, Ed, S, SF — N/A | AC-024, AC-025 | **No page draft.** Reuse map §5 only | 764+300 / 644+28+280 / stacked / stacked | *(blank)* | **Not ready to draft.** `[TBD-UX]` M-05 owner attribution; `[TBD-UX]` M-08 flow-context label; version label is proposed metadata per ID §3.2 |
@@ -122,7 +122,7 @@ One row per logical page. `States to cover` uses the nine state names from ID §
 **Table notes.**
 
 1. The prototype route is the hash route opened over `file://`; the parenthesised path is the route in ID §3.2 and is the construction route. The `#` fragment is a file-protocol artifact, not a product URL design.
-2. "Must" is a draft-ordering decision from R1, not an approval. Every row remains behind the Gate 1 and tool gates in §1.2.
+2. "Must" is a draft-ordering decision from R1, not an approval. Every row remains behind the independent-review and tool gates in §1.2.
 3. "No page draft" is not "no work": §4 still decides every state, and §5 names the components to reuse.
 4. No row marked "must" is justified by a proposed flow. PG-007 points to FLOW-003 N1, PG-008 to N1 to N3, PG-009 to N4 to N7.
 
@@ -400,7 +400,7 @@ These rows carry the flags. A page row affected by a flag MUST NOT be marked rea
 | M | Item | Side A | Side B | Status and handling | Affected rows |
 |---|---|---|---|---|---|
 | **M-01** | Who may author and publish, and whether the registries can be populated | BM Appendix B.3 grants ROLE-002 Admin `Skill.publish`, `TaskDefinition.publish`, all-run `Run.read`, and `Audit.read`; B.9 supersedes BM §6.1 and §6.2; REG records `TBD-BIZ-004` as **Resolved** with admin-only publication | ID §1.4 and §8.1 treat `TBD-BIZ-004` as **Open**; ID §2.1 calls Admin proposed with no effective grant; ID §2.2 denies every Admin cell; ID §3.2 marks PG-010 to PG-012 proposed and not effective; PRD §10.2 records the divergence with neither side chosen | `[TBD-UX]` + `[CONFLICT]`. This map renders the No Permission panel and no authoring form, chooses no side, and states that the Empty registries and the no-create rule are not settled | PG-003, PG-005, PG-007, PG-009, PG-010, PG-012 |
-| **M-02** | Gate 1 target revision | REG `TBD-BIZ-012` is titled "Gate 1 acceptance baseline of PRD v0.1" | The current PRD is v0.2 and §19 says it is not Gate 1-accepted | `[TBD-PRD]`. Quote as-is; no page impact, but the gate's target document is ambiguous | All rows (phase gate) |
+| **M-02** | Gate 1 target revision | REG `TBD-BIZ-012` is titled "Gate 1 acceptance baseline of PRD v0.1" | The resolution names PRD v0.2 and option (b); the title remains historical | `[TBD-PRD]`. Resolved by `CHG-021`; the resolution source names v0.2, so the target document is no longer ambiguous | All rows (phase gate) |
 | **M-03** | Auditor role | `CONFLICT-001` is Resolved toward the Admin-capability side; BM B.3 makes audit an Admin read | ROLE-004 remains proposed and denied in ID §2.1 and PRD §5.5 | `[CONFLICT]`, resolved at the registry level and cited as-is. No page depends on an Auditor, so no board is held by it. The Admin all-run grant is folded into M-01 | PG-009 (indirectly) |
 | **M-04** | What "Stage 5" denotes | `docs/00_setup/README.md` stage map assigns Stage 5 to Data Design | The product-owner Stage 5 contract produced `docs/01_product/business_model.md` | `[CONFLICT]`, Open. REG states no business rule is blocked. It constrains this document's stage label only | Document metadata |
 | **M-05** | Registry ownership and offboarding | `TBD-BIZ-013` is Open; ENT-006 and ENT-011 carry owner attribution marked PII | ID §2.3 omits owner names because `Account.read` is denied; no offboarding control exists | `[TBD-UX]`. Omit owner attribution; do not invent an ownership or transfer control. A resolution could add a fact row, not a new page | PG-003, PG-004, PG-007 |
@@ -535,7 +535,7 @@ These are reference values from a Draft prototype. They are **not** locked token
 
 ### 10.1 Reading the readiness column
 
-Two different things are separated here. The **phase gate** is global and closed: Gate 1 (`TBD-BIZ-012`), independent PRD review, high-fidelity asset, and tool selection (`TBD-INFRA-001`) are all unresolved. **Page construction readiness** is per row: "no page-level blocker" means the row adds no ambiguity of its own; it does not mean approved or ready to draft. Any row carrying `[TBD-UX]`, `[TBD-PRD]`, or `[CONFLICT]` is marked **Not ready to draft** and must not be scheduled as a final board. Of the five must-draft pages, only PG-001 has no page-level blocker; PG-002 and PG-008 are held by the dialog-copy flag alone.
+Two different things are separated here. The **phase gate** remains partly closed: independent PRD review, high-fidelity asset, and tool selection (`TBD-INFRA-001`) are unresolved; Gate 1 (`TBD-BIZ-012`) is accepted at the scope boundary (`CHG-021`). **Page construction readiness** is per row: "no page-level blocker" means the row adds no ambiguity of its own; it does not mean approved or ready to draft. Any row carrying `[TBD-UX]`, `[TBD-PRD]`, or `[CONFLICT]` is marked **Not ready to draft** and must not be scheduled as a final board. Of the five must-draft pages, only PG-001 has no page-level blocker; PG-002 and PG-008 are held by the dialog-copy flag alone.
 
 | PG | Page construction readiness | Page-level blockers | What can be constructed now |
 |---|---|---|---|
@@ -554,13 +554,12 @@ Two different things are separated here. The **phase gate** is global and closed
 
 ### 10.2 What must close before any board is treated as final
 
-1. `TBD-BIZ-012` — Gate 1 acceptance, with its target revision corrected from PRD v0.1 to the reviewed revision (M-02).
-2. Independent Verifier review of PRD v0.2, so that AC-001 to AC-057 are reviewed definitions rather than an unreviewed draft.
-3. `TBD-BIZ-004` / M-01 — whether Admin authoring is effective. This decides whether PG-010 and PG-012 stay denied, whether PG-003/005/007 keep a terminal Empty state, and whether a create affordance exists at all.
-4. `TBD-INFRA-001` — the frontend stack and, separately, whether any design tool is selected. Board IDs, handoff format, and any token pipeline depend on it.
-5. `TBD-BIZ-013` / M-05 — whether owner attribution or an offboarding state appears on registry records.
-6. The copy decision in M-06, so the shared dialog ships one string.
-7. `TBD-INFRA-004` — the Stage 1 baseline, before any visual-regression or browser verification command is named.
+1. Independent Verifier review of PRD v0.2, so that AC-001 to AC-057 are reviewed definitions rather than an unreviewed draft.
+2. `TBD-BIZ-004` / M-01 — whether Admin authoring is effective. This decides whether PG-010 and PG-012 stay denied, whether PG-003/005/007 keep a terminal Empty state, and whether a create affordance exists at all.
+3. `TBD-INFRA-001` — the frontend stack and, separately, whether any design tool is selected. Board IDs, handoff format, and any token pipeline depend on it.
+4. `TBD-BIZ-013` / M-05 — whether owner attribution or an offboarding state appears on registry records.
+5. The copy decision in M-06, so the shared dialog ships one string.
+6. `TBD-INFRA-004` — the Stage 1 baseline, before any visual-regression or browser verification command is named.
 
 ### 10.3 What does not block a board
 
@@ -578,14 +577,14 @@ Two different things are separated here. The **phase gate** is global and closed
 | 4 | AC coverage is traced and gaps reach the AC number | Pass | §6.1 ledger; §6.2 G-01 to G-17 each names its nearest AC; §6.3 lists covered outcomes | 11 pages have a check-mark No Permission state and no AC (G-01); that is a real PRD gap, not a transcription error |
 | 5 | Only components that appear in the table are listed | Pass | C-01 to C-17 are each used by at least one row in §3; §8 names what is excluded | A component may split once the visual pass starts, which would change the list |
 | 6 | Inherit and discard are separated; Porcelain Blue is a candidate only | Pass | §9.1 and §9.2 inherit behaviour and structure; §9.3 discards palette, type, shadow, radius, motion, and dark theme as locked values | The visual pass still has to choose every discarded value |
-| 7 | Gate status is stated | Pass | §1.2: Gate 1 not accepted, PRD review not performed, no high-fidelity asset, no tool, no Frozen asset, no baseline | The prototype's 174 and 67 checks are author-executed; no Verifier re-ran them for this map |
+| 7 | Gate status is stated | Pass | §1.2: Gate 1 scope boundary accepted, PRD review not performed, no high-fidelity asset, no tool, no Frozen asset, no baseline | The prototype's 174 and 67 checks are author-executed; no Verifier re-ran them for this map |
 | 8 | No new PG, navigation, capability, state, role, field, or tool; nothing below 960px | Pass | 12 PG rows only; §7.3 and §2.4; no tool named; no board ID assigned | None |
 | 9 | The `file://` prototype is not described as a high-fidelity draft or a design system | Pass | §1.1 rank 4, §1.2, §9.4 | None |
 | 10 | No existing file was modified and no Frozen asset was touched | Pass | Write set: two new files only; Frozen assets: none in the repository | `docs/03_design/README.md` and `docs/13_changes/README.md` do not yet list the new file; updating them would have modified an existing file and was therefore not done |
 
 ### 11.2 Residual limits
 
-- Gate 1 is not accepted and the PRD is unreviewed, so this map orders work; it does not authorize it.
+- Gate 1 is accepted at the scope boundary, but the PRD is unreviewed and the tool gate is open, so this map orders work; it does not authorize it.
 - `TBD-BIZ-004` is Resolved in the registry while the interaction design still treats it as Open. This map records both and resolves neither, which is why the registry and authoring rows stay flagged and only PG-001 has no page-level blocker.
 - The AC gap register describes the PRD as written. It does not propose new AC identifiers or amend the PRD.
 - The map uses the state names and N/A reasons of interaction design v0.1. If a state definition changes, every corresponding cell must be re-checked.

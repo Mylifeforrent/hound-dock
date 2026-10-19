@@ -24,7 +24,7 @@ Precedence, highest first:
 
 `hound-dock` is a self-hosted internal agent workspace for one team. A signed-in member chats with an internal AI, reads governed skill and MCP registries, and manually runs a recorded task definition. MVP: chat + registries + manual task runs, self-hosted with local accounts, no external model egress. Sources: [PRD §2](docs/01_product/prd.md) and [business model Appendix B](docs/01_product/business_model.md); [README](README.md) is navigation only.
 
-- **Current state:** Stage 2–6 artifacts (PRD, architecture, design, data model, API contract) exist as `Draft`; the Stage 1 baseline is missing; Stage 7 Development Setup has not started. Gate 1 is not accepted (`TBD-BIZ-012` Open). Implementation is not authorized.
+- **Current state:** Stage 2–6 artifacts (PRD, architecture, design, data model, API contract) exist as `Draft`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); the Stage 1 baseline is missing; Stage 7 Development Setup has not started. Implementation is not authorized.
 - **Scope authority:** [PRD §3 and §8](docs/01_product/prd.md) (capabilities and exclusions) and [business model §3 and Appendix B](docs/01_product/business_model.md). Do not add, remove, or promote a capability, role, page, state, field, endpoint, or metric absent from those documents.
 - **Explicitly out of scope:** search/citations, file context, a streaming commitment, cost/usage, scheduling/webhooks, automatic retry, approvals/HITL, MCP registration/invocation/runtime, account administration/SSO, mobile, dark theme. See PRD §8 and [architecture §9](docs/02_architecture/architecture.md).
 - **Open items:** the only source is `open_items.md`. Never define, redefine, resolve, or delete an ID elsewhere.

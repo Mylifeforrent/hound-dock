@@ -16,7 +16,7 @@ Contract owner: `docs/05_api/` — endpoints, paths, methods, status codes, requ
 | Effective rules | CAP-001 to CAP-005; FLOW-001 to FLOW-003; STATE-001 and STATE-002; BR-001 to BR-008; ROLE-001 and the 18-column matrix | `[SRC: CHG-010#Plan]` |
 | Proposed and reserved | FLOW-004 to FLOW-006; STATE-003 to STATE-006; ROLE-002 to ROLE-004; skill, MCP, and task authoring and registration paths | `[SRC: BM §4, §6, §7]` |
 | Contract status | `docs/05_api/` is `Draft` and owns the contract; this document is an input to it, not a contract | `[SRC: docs/05_api/README.md#Boundaries]` |
-| PRD acceptance | Not claimed; `TBD-BIZ-012` is Open | `[TBD-BIZ-012]` |
+| PRD acceptance | Not claimed by this document; Gate 1 scope boundary accepted (`TBD-BIZ-012` Resolved, `CHG-021`) | `[TBD-BIZ-012]` |
 
 ## 1. Purpose, scope, authority, and non-goals
 

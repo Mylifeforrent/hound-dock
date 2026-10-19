@@ -16,7 +16,7 @@ Interface authority: `docs/05_api/api_interface_spec.md` v0.1 (`Draft`) — endp
 Architecture references: `docs/02_architecture/architecture.md` v0.1 (`Draft`) and `docs/02_architecture/02_api_workflow_and_review.md` v0.1 (`Draft`) — IF-01 to IF-04 boundary, seven error classes, and state mapping.
 Coverage reference: `docs/03_design/prototype/README.md` — the ✓/N/A page-state coverage table and its N/A reasons.
 
-**Status note.** This is a `Draft` revision. It is not Gate 1-accepted. `TBD-BIZ-012` is Open. See §19.
+**Status note.** This is a `Draft` revision. The Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); roles, metrics, NFRs, and the execution model remain candidates. `TBD-BIZ-006` covers metrics, `TBD-BIZ-007` execution, and `TBD-BIZ-008` NFR thresholds; roles remain governed by the unresolved permission matrix and `CONFLICT-002`. Implementation is not authorized. See §19.
 
 **Identifier note.** `AC-001` to `AC-057` are document-local acceptance-criteria identifiers. This note is their first use and declaration; their definitions are in §7. They are not registry entries and create no `TBD`, `CONFLICT`, `CAP`, `BR`, `ENT`, `STATE`, or `NFR`. `OBJ`, `CAP`, `BR`, `FLOW`, `PG`, `API`, and `NFR` identifiers are references to the source documents; this PRD defines none of them.
 
@@ -39,7 +39,7 @@ It is a requirements document. It is not an architecture, API schema, data schem
 | Permissions | The `interaction_design.md` §2.2 matrix is quoted cell by cell, with default deny. The Admin divergence is marked `[CONFLICT]`. |
 | Interfaces | Every one of `API-001` to `API-015` is cited by at least one acceptance criterion, and an AC↔API↔PG coverage table is added. |
 | Removed material | `US-02` (search with citations), `US-07` (audit usage), `US-09` (model-provider configuration), and the old §13 permission matrix are not carried over. |
-| Acceptance | The old §19 acceptance conditions are withdrawn. This draft is not Gate 1-accepted; `TBD-BIZ-012` is Open. |
+| Acceptance | The old §19 acceptance conditions are withdrawn. Gate 1 scope boundary accepted (`TBD-BIZ-012` Resolved, `CHG-021`); the document remains `Draft` and authorizes no implementation. |
 
 ### 1.3 Reading guide and required-theme map
 
@@ -586,7 +586,7 @@ The canonical entries are in `docs/00_setup/open_items.md`. This table reference
 | **TBD-BIZ-008** | Open — NFR thresholds and measurement environment. | Every numeric NFR target remains proposed; no threshold is confirmed. |
 | **TBD-BIZ-009** | Resolved — audit in the MVP, append-only, Admin read-only, no export, 365 days. | `CAP-009` is in scope; the surface is blocked; no page or endpoint is added. See §10.3. |
 | **TBD-BIZ-011** | Resolved — strict MVP plus skill/task authoring and audit; search, file context, cost, chat-history actions, MCP registration/allowlisting, and account administration remain out. | Scope boundary cited; the authoring and audit surfaces remain `[CONFLICT]` or blocked, not effective. |
-| **TBD-BIZ-012** | Open — Gate 1 acceptance baseline. | This draft is not accepted; see §19. |
+| **TBD-BIZ-012** | Resolved — Gate 1 scope boundary accepted (option (b), `CHG-021`). | The scope is accepted; roles, metrics, NFRs, and the execution model remain candidates; see §19. |
 | **TBD-BIZ-013** | Open — registry ownership and offboarding. | No account disable, deletion, transfer, or offboarding requirement is written. |
 | **TBD-BIZ-014** | Open — legal, platform, or contractual constraints. | No compliance conclusion is issued; no result is claimed. |
 | **TBD-BIZ-015** | Open — state-model coverage interpretation. | No new state model or state diagram is added. |
@@ -683,7 +683,7 @@ No BR is without an AC. No AC carries more than one BR. `[SRC: business_model.md
 
 ### 11.4 Residual limits
 
-- This PRD is `Draft`; `TBD-BIZ-012` is Open. No Gate 1 acceptance is claimed.
+- This PRD is `Draft`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, `CHG-021`). No implementation authorization is claimed.
 - The Admin publication and audit-read surface is `[CONFLICT]`; no side is chosen.
 - `CAP-009` is blocked; audit cannot be accepted until a page and an interface exist.
 - `TBD-BIZ-007` leaves step execution semantics open; the run lifecycle is stated, but the executor is not.
@@ -718,7 +718,7 @@ v0.2 replaces v0.1 in place. The following v0.1 sections are not carried forward
 | §16 Risks and mitigations | Not carried as a requirement. §13 records the current limits and conflicts. |
 | §17 Stack decision inputs | Removed. This PRD selects no implementation stack, dependency, interface element, or deployment tool. |
 | §18 Open decisions | Replaced by §10, which references the canonical registry without redefining an entry. |
-| §19 PRD acceptance | Withdrawn. Replaced by the acceptance status in §19; this draft is not Gate 1-accepted. |
+| §19 PRD acceptance | Withdrawn. Replaced by the acceptance status in §19; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, `CHG-021`). |
 
 No text from `US-02`, `US-07`, `US-09`, or the old §13 matrix is retained as a requirement.
 
@@ -759,7 +759,7 @@ This revision is documentation-only. The CHG-014 verification record contains th
 
 No API, UI, model, MCP server, store, or browser was executed. No acceptance result is recorded. The independent Verifier review required by RULE-005 has not been performed for this revision. `[SRC: project_rules.md#RULE-005]`
 
-The document remains `Draft` and is not Gate 1-accepted. `TBD-BIZ-012` is Open. See §19.
+The document remains `Draft`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, `CHG-021`). See §19.
 
 ## 16. Document history
 
@@ -774,27 +774,27 @@ The glossary is `business_model.md` §12.3; this PRD does not redefine a term. I
 
 ## 18. Approval record
 
-No approval is recorded. The decision owner is the Product Owner. The change record for this revision is `CHG-014`. The independent review has not been performed. Gate 1 is not closed. `[TBD-BIZ-012]`
+The decision owner is the Product Owner. The Gate 1 scope boundary was accepted on 2026-10-19 (option (b)); the change record is `CHG-021`. The product owner/Tech Lead confirmed the change set and signed off `CHG-021` on 2026-10-20. The independent review of this PRD v0.2 revision (`CHG-014`) has not been performed; the Gate 1 acceptance change is reviewed separately at `CHG-021`. `[TBD-BIZ-012]`
 
 | Role | Decision | Date | Record |
 |---|---|---|---|
-| Product Owner | Not recorded | — | `TBD-BIZ-012` |
-| Tech Lead | Change-record review not recorded | — | `CHG-014` |
-| Independent Verifier | Review not performed | — | — |
+| Product Owner | Accepted the Gate 1 scope boundary (option (b)) | 2026-10-19 | `TBD-BIZ-012`; `CHG-021` |
+| Tech Lead | Approved `CHG-021` and the Gate 1 scope boundary (option (b)); signed off for commit | 2026-10-20 | `CHG-021` |
+| Independent Verifier | Review not performed for PRD v0.2 (`CHG-014`); the `CHG-021` Gate 1 acceptance review is separate | — | — |
 
 ## 19. Acceptance status
 
-**This PRD v0.2 is `Draft`. It is not Gate 1-accepted. `TBD-BIZ-012` is Open.**
+**This PRD v0.2 is `Draft`. The Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`). Implementation is not authorized.**
 
-The v0.1 §19 acceptance conditions are withdrawn. This revision does not replace them with a new acceptance test, because the acceptance baseline is the subject of `TBD-BIZ-012`. No statement in this document is a product-owner acceptance, an MVP approval, or an authorization to implement.
+The v0.1 §19 acceptance conditions are withdrawn. This revision does not add a new acceptance test. The Gate 1 decision accepts the MVP scope boundary only; roles, metrics, NFRs, and the execution model remain candidates. `TBD-BIZ-006` covers metrics, `TBD-BIZ-007` execution, and `TBD-BIZ-008` NFR thresholds; roles remain governed by the unresolved permission matrix and `CONFLICT-002`.
 
 | Field | Status |
 |---|---|
 | Document status | `Draft` |
 | Version | 0.2 |
-| Gate 1 | Not accepted |
-| `TBD-BIZ-012` | Open |
-| Independent review | Not performed |
-| Implementation authorization | None |
+| Gate 1 | Scope boundary accepted (option (b)) |
+| `TBD-BIZ-012` | Resolved |
+| Independent review | Not performed for PRD v0.2 (`CHG-014`); the `CHG-021` Gate 1 acceptance review is separate |
+| Implementation authorization | None — Stage 1/7 baseline and a separate implementation change remain required |
 
-Acceptance remains a product-owner decision recorded in `docs/00_setup/open_items.md`. Until `TBD-BIZ-012` closes, this PRD cannot authorize implementation, deployment, or data handling. `[TBD-BIZ-012]`
+Gate 1 acceptance is recorded in `docs/00_setup/open_items.md` and `CHG-021`. It does not authorize implementation, deployment, or data handling; the Stage 1 environment baseline (`TBD-INFRA-004`), verified commands (`TBD-INFRA-007`), and an implementation `CHG` remain required. `[TBD-BIZ-012]`

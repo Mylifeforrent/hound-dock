@@ -31,7 +31,7 @@ The architecture documents use four labels:
 
 | SRC-A | Input | Version / status | Use in this task | Limit |
 |---|---|---|---|---|
-| SRC-A01 | `docs/01_product/business_model.md` | v0.2, `Draft`, 1230 lines | Sole business authority; effective items are rules | Draft; `CONFLICT-001/002` open; `TBD-BIZ-012` open |
+| SRC-A01 | `docs/01_product/business_model.md` | v0.2, `Draft`, 1230 lines | Sole business authority; effective items are rules | Draft; `CONFLICT-001/002` open; `TBD-BIZ-012` was open at the time of this trace |
 | SRC-A02 | `docs/03_design/interaction_design.md` | v0.1, `Draft`, 1018 lines | Page states, exception feedback, route keys, display rules, unregistered gaps | Design input only; does not define backend behavior |
 | SRC-A03 | `docs/01_product/prd.md` | v0.1, `Draft`, 453 lines | Candidate capabilities and quality concerns | Not accepted; every statement is CAND |
 | SRC-A04 | `docs/00_setup/open_items.md` | `Draft`, 338 lines | Canonical TBD/CONFLICT register | Reference only; never redefined here |
@@ -102,8 +102,8 @@ The architecture documents use four labels:
 | C-01 | `CONFLICT-001` Auditor role | Open; ROLE-004 blocked | Keep the row `denied`; no audit read; no resolution |
 | C-02 | `CONFLICT-002` Stage 5 meaning | Open; metadata-only | Cite `business_model.md`; do not decide stage numbering |
 | C-03 | `README.md` "Chat with search" vs the business model's exclusion of search | `TBD-BIZ-011`; `CHL-005`; README is not P1 | Treat search as excluded; README is not a requirement source |
-| C-04 | PRD §8 MVP is broader than the five confirmed CAPs | `TBD-BIZ-012` open; PRD is Draft | Business model wins; no search, audit, model configuration, or account administration |
-| C-05 | Architecture is written before Gate 1 | `TBD-BIZ-012` open | All documents `Draft`; no accepted baseline claim; no irreversible stack choice |
+| C-04 | PRD §8 MVP is broader than the five confirmed CAPs | `TBD-BIZ-012` was open at authoring time; PRD is Draft | Business model wins; no search, audit, model configuration, or account administration |
+| C-05 | Architecture is written before Gate 1 | `TBD-BIZ-012` was open at authoring time | All documents `Draft`; no accepted baseline claim; no irreversible stack choice |
 | C-06 | RULE-001 file naming vs the hyphenated names in the stage request | RULE-001 has no documentation-naming exception | Use `snake_case` names; record the mapping in `CHG-010` and the folder README |
 
 ## 7. Gaps and open questions
@@ -207,7 +207,7 @@ No official HITL framework research is performed in this task, and no official l
 
 ## 11. Limitations
 
-- The business model is `Draft`; `TBD-BIZ-012` is unresolved, so this trace is not evidence of Gate 1 acceptance.
+- The business model is `Draft`; Gate 1 acceptance is recorded in `CHG-021`, but this trace is not evidence of it.
 - The interaction design is `Draft`; it is used for state and exception mapping, not as a backend specification.
 - The PRD is `Draft`; every PRD-only statement remains candidate material.
 - The MCP rendered site could not be fetched directly on 2026-10-18; the official repository source files were used. The rendered links are retained for verification.

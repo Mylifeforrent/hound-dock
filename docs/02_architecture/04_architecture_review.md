@@ -138,7 +138,7 @@ The conditions are product decisions, not design defects:
 
 ## 6. Residual limits and open items
 
-- The business model is `Draft`; `TBD-BIZ-012` is open. This review is not a Gate 1 acceptance.
+- The business model is `Draft`; Gate 1 acceptance is recorded in `CHG-021`. This review is not a Gate 1 acceptance.
 - `TBD-BIZ-003` and `TBD-BIZ-014` leave the data boundary, retention, PII, residency, and compliance unresolved.
 - `TBD-BIZ-004` leaves the registries without a confirmed writer; the confirmed MVP is not operable.
 - `TBD-BIZ-007` leaves step execution, retry, branching, and code execution unresolved.

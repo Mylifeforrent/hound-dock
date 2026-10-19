@@ -15,7 +15,7 @@ Refs: SRC-001, SRC-002, SRC-003, SRC-004, SRC-005, SRC-006; TBD-BIZ-003, TBD-BIZ
 |---|---|---|
 | Document | `docs/01_product/business_model.md` — business specification for the hound-dock internal agent workspace | `[SRC: SRC-006 §④]` |
 | Version | 0.3 (revises v0.2; Appendix B records the enterprise-internal baseline) | `[DERIVED: CHG-012 records the revision]` |
-| Status | `Draft`. `Reviewed` is not claimed while CONFLICT-002 is `Open` and TBD-BIZ-012 is unresolved. | `[TBD-BIZ-012]` |
+| Status | `Draft`. `Reviewed` is not claimed while CONFLICT-002 is `Open`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, `CHG-021`). | `[TBD-BIZ-012]` |
 | As-of date | 2026-10-18 | `[SRC: CHG-007]` |
 | Owner | Docs Agent (dormant); authored by the Tech Lead under the CHG-007 handoff | `[SRC: CHG-007#Task Brief]` |
 | Decision owner | Product Owner (user) for every `TBD-BIZ`, `CONFLICT`, permission grant, MVP trade-off, and numeric target | `[SRC: SRC-006 §⑧]` |
@@ -1069,7 +1069,7 @@ Every challenge has a disposition; none is silently dismissed. `Open` means the 
 
 | CHL | Question | Severity | Impact | Disposition | Rationale | Change location | Status | Tag |
 |---|---|---|---|---|---|---|---|---|
-| **CHL-001** | PRD v0.1 is `Draft` and its §19 acceptance criteria are unrecorded. Can this model treat its scope, roles, security stance, and NFRs as confirmed? | Blocker | All OBJ, CAP, BR; document status | Accept finding; convert to TBD-BIZ-012 | Only SRC-001 may source a BR. The PRD records the product owner's selections but is not an accepted document. | §1.1 SRC-002; §12.1 | Open | `[TBD-BIZ-012]` |
+| **CHL-001** | PRD v0.1 is `Draft` and its §19 acceptance criteria are unrecorded. Can this model treat its scope, roles, security stance, and NFRs as confirmed? | Blocker | All OBJ, CAP, BR; document status | Accept finding; convert to TBD-BIZ-012 | Only SRC-001 may source a BR. The PRD records the product owner's selections but is not an accepted document. | §1.1 SRC-002; §12.1 | Resolved — Gate 1 scope boundary accepted (option (b)); roles, metrics, NFRs, and execution remain candidates | `[TBD-BIZ-012]` |
 | **CHL-002** | The confirmed MVP includes three registries, but no role is confirmed to create, publish, register, or allowlist entries. Can the MVP operate? | Blocker | ROLE-002/003/004; §6; FLOW-004 to FLOW-006; CAP-002/003/004 | Accept; keep default `denied`; convert to TBD-BIZ-004; proposed grants in CAND-001/CAND-002 | A registry is confirmed, but authority is not. With no grant, no person can populate the registries, so the confirmed MVP is not operable. | §6.2 to §6.3; §12.1 | Open | `[TBD-BIZ-004]` |
 | **CHL-003** | No P3 legal, platform, or contractual constraint and no data classification, PII, or retention decision exist. Can the model set data-handling rules? | Blocker | NFR-006, NFR-008, NFR-009; CAND-021/022/023; CAP-003 | Accept; convert to TBD-BIZ-003 and TBD-BIZ-014; issue no compliance conclusion | A compliance conclusion needs a quoted P3 clause; none exists. Retention and PII rules would be invented. | §1.1 P3 missing; §5.1; §9; §12.1 | Open | `[TBD-BIZ-003]` `[TBD-BIZ-014]` |
 | **CHL-004** | Are the objectives measurable now? | Major | OBJ-001 to OBJ-003 | Accept; convert to TBD-BIZ-006, with TBD-BIZ-004 and TBD-BIZ-005 for denominators and first work | No baseline, target, time window, or frequency is confirmed. "Active member" and team size are undefined. | §2; §12.1 | Open | `[TBD-BIZ-006]` |
@@ -1103,7 +1103,7 @@ The canonical entries are in `docs/00_setup/open_items.md` under RULE-014. This 
 | **TBD-BIZ-009** | Is audit required, which events are recorded, and who reads or exports them? | (a) registry, tool, and run events; (b) add authentication and account events; (c) no audit in MVP; (d) export only | CAP-009; CAND-004; NFR-010; ROLE-004 | Product Owner | Gate 1 — before Stage 3 Architecture | Resolved | `[TBD-BIZ-009]` |
 | **TBD-BIZ-010** | Is cost visible, and is there a budget or quota? | (a) no cost display; (b) per-run token/cost; (c) monthly budget and alert; (d) hard quota | CAP-016, CAP-017; CAND-013/014 | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-010]` |
 | **TBD-BIZ-011** | Which supporting capabilities are in the MVP? | (a) strictly four capabilities plus local accounts and self-hosting; (b) add search; (c) add run/audit history and model configuration; (d) add file context and chat history actions; (e) a stated combination | CAP-008 to CAP-011; CAP-017 to CAP-021; CAP-024 to CAP-036; ROLE; NFR scope | Product Owner | Gate 1 — before Stage 3 Architecture | Resolved | `[TBD-BIZ-011]` |
-| **TBD-BIZ-012** | What PRD v0.1 baseline is accepted at Gate 1? | (a) accept §2 to §5, §8, §9, and §12 as written; (b) accept scope only and keep roles, metrics, NFRs, and execution as candidates; (c) revise and issue v0.2 | All OBJ, CAP, BR; document status | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-012]` |
+| **TBD-BIZ-012** | What PRD v0.1 baseline is accepted at Gate 1? | (a) accept §2 to §5, §8, §9, and §12 as written; (b) accept scope only and keep roles, metrics, NFRs, and execution as candidates; (c) revise and issue v0.2 | All OBJ, CAP, BR; document status | Product Owner | Gate 1 — before Stage 3 Architecture | Resolved — option (b), scope boundary, applied to PRD v0.2; `CHG-021` | `[TBD-BIZ-012]` |
 | **TBD-BIZ-013** | What happens to owned skills, tasks, and runs when an owner is disabled or leaves? | (a) transfer ownership to an Admin; (b) keep attribution and deprecate; (c) delete or retire; (d) no policy in MVP | ENT-006, ENT-011; STATE-003, STATE-005, STATE-006; ROLE-002; CAND-020 | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-013]` |
 | **TBD-BIZ-014** | What legal, platform, or contractual constraints apply? | (a) none apply; (b) internal policy applies; (c) external regulation or contract applies | NFR-006, NFR-008, NFR-009; CAND-021/022/023; any compliance BR | Product Owner | Gate 1 — before connecting internal data or external providers | Open | `[TBD-BIZ-014]` |
 | **TBD-BIZ-015** | Does the acceptance contract's "one state diagram per entity" accept the state-bearing-entity interpretation? | (a) accept the interpretation and keep six models; (b) require a diagram for every entity, including single-state diagrams; (c) add diagrams only where a lifecycle exists | STATE-001 to STATE-006; §7.0; self-check row 5 | Product Owner | Gate 1 — before Stage 3 Architecture | Open | `[TBD-BIZ-015]` |
@@ -1194,7 +1194,7 @@ Nothing in this appendix becomes a `BR` directly. These are proposals from Draft
 
 ## Appendix B — Enterprise-internal baseline (v0.3 amendment)
 
-**Status:** Effective amendment, `Draft`. **Decision source:** `CHG-012`, product-owner selection of 2026-10-18. **Reading rule:** where this appendix conflicts with an earlier section, this appendix wins. It does not accept the PRD (`TBD-BIZ-012`), resolve `CONFLICT-002`, or create a new `TBD`/`CONFLICT` ID.
+**Status:** Effective amendment, `Draft`. **Decision source:** `CHG-012`, product-owner selection of 2026-10-18. **Reading rule:** where this appendix conflicts with an earlier section, this appendix wins. It did not itself accept the PRD; Gate 1 acceptance is recorded separately in `TBD-BIZ-012`/`CHG-021`. It does not resolve `CONFLICT-002` or create a new `TBD`/`CONFLICT` ID.
 
 ### B.1 Deployment and data boundary
 
@@ -1363,10 +1363,10 @@ The out-of-scope register drops from 31 to **30 CAPs**: `CAP-009` is now in; `CA
 | 8 | Out-of-scope count met and each says what it displaces | Pass | §3.2: 31 out-of-scope CAPs; 31 ≥ 10 and 31 ≥ 2 × 5; every row has a `Displaces` cell naming a CAP-001 to CAP-005 item. §3.3 maps all 18 required topics. | None |
 | 9 | MVP ≤ 5, each has acceptance criteria | Pass | §3.1: exactly 5 CAPs; each has an acceptance-criteria cell and a `Covers BR` cell. | None |
 | 10 | No forbidden terms | Pass | CHG-007 records a scan for the ten banned terms; the only occurrence is in the §12.3 banned list. No normative statement uses a banned term. | None |
-| 11 | No TBD used as settled fact | Pass | Every `TBD` reference names an open decision; §2, §5.1, §9, and §12.1 label targets, classifications, and gates as open; no `TBD` appears in a BR `Source` field. | None |
+| 11 | No TBD used as settled fact | Pass | Every `TBD` reference names a decision and its status; §2, §5.1, §9, and §12.1 label targets, classifications, and gates by their current status; no `TBD` appears in a BR `Source` field. | None |
 | 12 | Source eligibility | Pass | §8: 8/8 BR `Source` fields cite SRC-001. SRC-002, SRC-003, SRC-004, and SRC-006 appear in CAP/CAND/CHL evidence, proposed NFRs, proposed entity or state notes, and as cited context in §1, §2, §4, and §8; no BR cites them. | None |
 
-**Verdict:** Pass 10 / Partial 1 / Unverified 1 / Fail 0 for the v0.2 base. Appendix B supersedes rows 4, 5, 9, and 11 where they conflict (permission matrix, state coverage, CAP count, and TBD status). The v0.3 document remains `Draft` because CONFLICT-002 and TBD-BIZ-012 are open. `[TBD-BIZ-012]`
+**Verdict:** Pass 10 / Partial 1 / Unverified 1 / Fail 0 for the v0.2 base. Appendix B supersedes rows 4, 5, 9, and 11 where they conflict (permission matrix, state coverage, CAP count, and TBD status). The v0.3 document remains `Draft` because CONFLICT-002 is open; Gate 1 acceptance is recorded in `TBD-BIZ-012`/`CHG-021`. `[TBD-BIZ-012]`
 
 **Residual verification limits:**
 
@@ -1379,12 +1379,11 @@ The out-of-scope register drops from 31 to **30 CAPs**: `CAP-009` is now in; `CA
 Status: Draft
 Self-check: Base v0.2 Pass 10 / Partial 1 / Unverified 1 / Fail 0; Appendix B Pass 7 / Partial 1 / Fail 0.
 Blocked: 0 Blocked BRs; CONFLICT-002 (Stage 5 definition). Skill and task registries are operable through Admin publication; the MCP registry remains read-only and reservation-bound.
-Decisions needed (ranked by impact, <=5):
-1. Accept or amend PRD v0.1 as the Gate 1 baseline — TBD-BIZ-012. This decides whether the candidate layer can be promoted.
-2. Supply the internal-policy reference for TBD-BIZ-014. The classification decision is recorded; the legal/compliance conclusion is not.
-3. Confirm the first integrations and first three tasks — TBD-BIZ-005. Without them the acceptance demo has no content.
-4. Confirm the execution model and retry policy — TBD-BIZ-007. Skill/task execution semantics remain unresolved.
-5. Confirm objectives, go-live threshold, and NFR targets — TBD-BIZ-006 and TBD-BIZ-008.
-Must close before Gate 1: TBD-BIZ-005, TBD-BIZ-006, TBD-BIZ-007, TBD-BIZ-008, TBD-BIZ-010, TBD-BIZ-012, TBD-BIZ-013, TBD-BIZ-014, TBD-BIZ-015; TBD-INFRA-004, TBD-INFRA-011. Stack, tooling, and command gates TBD-INFRA-001/002/005/007 remain implementation gates.
+Decisions still open after Gate 1 (ranked by impact, <=5):
+1. Supply the internal-policy reference for TBD-BIZ-014. The classification decision is recorded; the legal/compliance conclusion is not.
+2. Confirm the first integrations and first three tasks — TBD-BIZ-005. Without them the acceptance demo has no content.
+3. Confirm the execution model and retry policy — TBD-BIZ-007. Skill/task execution semantics remain unresolved.
+4. Confirm objectives, go-live threshold, and NFR targets — TBD-BIZ-006 and TBD-BIZ-008.
+Gate 1 accepted at the scope boundary on 2026-10-19 (TBD-BIZ-012 option (b), CHG-021). Open after Gate 1: TBD-BIZ-005, TBD-BIZ-006, TBD-BIZ-007, TBD-BIZ-008, TBD-BIZ-010, TBD-BIZ-013, TBD-BIZ-014, TBD-BIZ-015; TBD-INFRA-004, TBD-INFRA-005, TBD-INFRA-007, TBD-INFRA-011, TBD-INFRA-012, TBD-INFRA-013, TBD-INFRA-014. Stack, tooling, and command gates remain implementation gates.
 Deliverable: docs/01_product/business_model.md v0.3
 ```

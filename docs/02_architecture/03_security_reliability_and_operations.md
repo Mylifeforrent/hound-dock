@@ -10,7 +10,7 @@ Originating stage: Stage 3 — Architecture, under CHG-010
 Inputs: `docs/01_product/business_model.md` v0.2 (`Draft`); `docs/03_design/interaction_design.md` v0.1 (`Draft`); `docs/00_setup/open_items.md`; `docs/08_security/README.md`; `docs/09_deployment/README.md`; `docs/10_operations/README.md`
 Document-local IDs: SEC-01 to SEC-13 (security control objectives), RUN-01 to RUN-07 (reliability requirements), OPS-01 to OPS-05 (operations boundary items), MEAS-01 to MEAS-12 (measurement points), CGAP-01 to CGAP-13 (architecture gaps). These identifiers are declared architecture-local: they are not registered in `open_items.md`, are not `TBD`, `CONFLICT`, `CAP`, `BR`, `ENT`, `STATE`, or `NFR` identifiers, and carry no authority outside this document.
 
-**Status discipline.** This document is a draft architecture boundary, not an accepted security, reliability, or operations commitment. It does not claim `Reviewed`, does not claim PRD acceptance (`TBD-BIZ-012`), and closes no `TBD` or `CONFLICT`. `CONFLICT-002` concerns document routing, not a rule in this document; it is noted and not resolved.
+**Status discipline.** This document is a draft architecture boundary, not an accepted security, reliability, or operations commitment. It does not claim `Reviewed`, does not claim PRD acceptance, and closes no `TBD` or `CONFLICT`. `CONFLICT-002` concerns document routing, not a rule in this document; it is noted and not resolved.
 
 **Tag legend.** `[SRC: file#section]` is direct evidence. `[DERIVED: reasoning]` is a logical entailment of named evidence. `[ASSUMPTION: statement]` marks an architecture assumption that is not a decision and must be confirmed or removed before it is relied on. Local identifiers `SEC-`, `RUN-`, `OPS-`, `MEAS-`, and `CGAP-` are this document's own vocabulary, not business rules.
 
@@ -458,7 +458,7 @@ Each gap below is a boundary this document cannot complete without a product-own
 | `TBD-INFRA-011` | Keeps search and its egress excluded | Open |
 | `CONFLICT-001` | Keeps `ROLE-004` (Auditor) blocked and denies audit read | Open |
 
-**Table tag:** every row references an entry in `open_items.md`; no entry is redefined and no status is changed. `TBD-BIZ-012` blocks any claim that the PRD is accepted. `CONFLICT-002` affects document routing only and does not change a rule here. `[SRC: open_items.md#CONFLICT register]`
+**Table tag:** every row references an entry in `open_items.md`; no entry is redefined and no status is changed. `TBD-BIZ-012` is resolved at the scope boundary (`CHG-021`); this document still claims no PRD acceptance. `CONFLICT-002` affects document routing only and does not change a rule here. `[SRC: open_items.md#CONFLICT register]`
 
 ### 14.3 Tensions in the inputs
 
@@ -483,7 +483,7 @@ Each gap below is a boundary this document cannot complete without a product-own
 | Effective and proposed material separated | Pass | §1.2; `ROLE-002` to `ROLE-004` are denied; `FLOW-004` to `FLOW-006` and `STATE-003` to `STATE-006` are never used as guarantees |
 | Every claim traced | Pass | Every substantive assertion is tagged at paragraph level or by its table caption; local IDs are declared in the header |
 | No new `TBD`, `CONFLICT`, `CAP`, `BR`, `ENT`, `STATE`, or `NFR` identifier | Pass | Only `SEC-`, `RUN-`, `OPS-`, `MEAS-`, and `CGAP-` identifiers are introduced; all are declared architecture-local |
-| No `CONFLICT` resolved and no PRD acceptance claimed | Pass | `CONFLICT-001` and `CONFLICT-002` are referenced only; `TBD-BIZ-012` is stated as open |
+| No `CONFLICT` resolved and no PRD acceptance claimed | Pass | `CONFLICT-001` and `CONFLICT-002` are referenced only; `TBD-BIZ-012` is resolved at the scope boundary (`CHG-021`), and this document still claims no PRD acceptance |
 | Client-side checks are not treated as authority | Pass | `SEC-08`, §4.3; `NFR-007` is used as a proposed reference, not an adopted target |
 | No operational-readiness claim | Pass | §12.2; the registries are empty-valid, the gate is closed, and the baseline is missing |
 | No unqualified generic security slogan | Pass | Every boundary is stated as a specific crossing and control objective; no undefined industry label is invoked |
