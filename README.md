@@ -33,8 +33,9 @@ Status: Draft
 
 - **Stack selected at major-version level; no project toolchain is pinned.** Frontend React 19 + TypeScript 5 + Vite 7 and backend Python 3.12 + FastAPI + uv are recorded in [open_items.md](docs/00_setup/open_items.md) (`TBD-INFRA-001`/`TBD-INFRA-002` Resolved; see [CHG-019](docs/13_changes/CHG-019-frontend-backend-stack.md)). PostgreSQL remains the selected store (`TBD-INFRA-003`). Exact project pins, the frontend Node/pnpm pair, dependency tooling, and all commands remain open: `TBD-INFRA-005/007`.
 - **The Stage 1 environment baseline is recorded** at [docs/00_setup/environment_baseline.md](docs/00_setup/environment_baseline.md) (`TBD-INFRA-004` Resolved; [CHG-022](docs/13_changes/CHG-022-stage-1-environment-baseline.md)). It records the observed host and tool versions only; no project pin, install step, or command is authorized until Stage 7 verifies it.
-- **Install, start, build, and test commands: TBD.** They MUST NOT be stated until verified in the baseline and recorded in [docs/06_development/](docs/06_development/README.md) (RULE-017).
-- No dependency manifest, lockfile, or `.env.example` exists. Those MUST NOT be created as placeholders (RULE-017).
+- **Install, start, build, and test commands: TBD for agent-authored work.** They MUST NOT be stated by an agent until verified in the baseline and recorded in [docs/06_development/](docs/06_development/README.md) (RULE-017). User-supplied commands are approved (RULE-021).
+- **User-supplied files and code are pre-approved** ([RULE-021](docs/00_setup/project_rules.md#rule-021--user-supplied-work-is-pre-approved)). Gates are advisory for them; the agent may suggest, not block.
+- No dependency manifest, lockfile, or `.env.example` exists. Agent-authored placeholders MUST NOT be created (RULE-017); user-supplied files are approved.
 
 ## Rules and decisions
 

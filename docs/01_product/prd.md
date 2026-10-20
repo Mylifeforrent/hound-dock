@@ -795,6 +795,6 @@ The v0.1 §19 acceptance conditions are withdrawn. This revision does not add a 
 | Gate 1 | Scope boundary accepted (option (b)) |
 | `TBD-BIZ-012` | Resolved |
 | Independent review | Not performed for PRD v0.2 (`CHG-014`); the `CHG-021` Gate 1 acceptance review is separate |
-| Implementation authorization | None — Stage 7 commands and a separate implementation change remain required |
+| Implementation authorization | None for agent-authored implementation — Stage 7 commands and a separate implementation change remain required. User-supplied files and code are pre-approved under `RULE-021`. |
 
 Gate 1 acceptance is recorded in `docs/00_setup/open_items.md` and `CHG-021`. It does not authorize implementation, deployment, or data handling; the Stage 1 baseline is recorded (`TBD-INFRA-004` Resolved; `CHG-022`), but verified commands (`TBD-INFRA-007`) and an implementation `CHG` remain required. `[TBD-BIZ-012]`

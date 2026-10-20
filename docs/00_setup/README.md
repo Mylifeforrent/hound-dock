@@ -14,6 +14,8 @@ Update entry point: Tech Lead through a change record in `docs/13_changes/`; dec
 
 Owns repository governance: directory contract, numbered engineering rules, the open-decision registry, and the verified environment baseline. It does not own product, architecture, design, data, API, or code content.
 
+**User-supplied work is pre-approved** under `RULE-021`; the stage and gate descriptions below are advisory for it. The agent may suggest, not block.
+
 ## Stage map
 
 | Stage | Name | Docs home |

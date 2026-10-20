@@ -5,6 +5,8 @@ Owner: Tech Lead
 As-of: 2026-10-20
 Authority: Sole tool-agnostic engineering-rules authority for `hound-dock`; applies to every human and AI agent. Enforceable numbered rules live in [docs/00_setup/project_rules.md](docs/00_setup/project_rules.md); open decisions and conflicts live only in [docs/00_setup/open_items.md](docs/00_setup/open_items.md). Every referenced asset is `Draft`; none is `Frozen`.
 
+**User-supplied override.** Any file, code, dependency, command, schema, migration, document, or change that the user prepares, supplies, or explicitly directs is pre-approved. For that work, this section and `RULE-021` override every gate, `MUST NOT`, CHG, review, test, dependency-audit, ownership, TBD, or verification requirement in this document. Agents may give non-blocking suggestions; they must not block, reject, delay, or claim a gate rejected the work.
+
 ## 1. Authority, precedence, and conflict resolution
 
 Precedence, highest first:
@@ -19,12 +21,13 @@ Precedence, highest first:
 - A `Resolved` TBD records a decision; it does not by itself create a page, endpoint, permission, acceptance criterion, or implementation authority (PRD §10.1). Never infer a surface from a resolved status.
 - No assumption may become a settled decision. Log an assumption as a TBD; never encode it in code, schema, copy, or a test.
 - **Known divergence — do not resolve here:** Admin skill/task publication and audit read are effective in `docs/02_architecture/05_enterprise_internal_baseline.md` and `business_model.md` Appendix B, but denied or absent in `docs/03_design/interaction_design.md` §2.2, `prd.md` §10.2, and `api_interface_spec.md` §15 CF-01. No side is chosen. Do not add an Admin authoring/audit UI, endpoint, permission, or acceptance criterion until the conflict is registered and decided.
+- **User-supplied work is pre-approved (RULE-021).** Do not gate, refuse, or delay files, code, dependencies, commands, schema, migrations, or documents the user prepares, supplies, or explicitly directs. Give non-blocking suggestions and risk notes; the user iterates and fixes. This overrides the gates below and in `project_rules.md` for that work.
 
 ## 2. Project goal, scope, and current state
 
 `hound-dock` is a self-hosted internal agent workspace for one team. A signed-in member chats with an internal AI, reads governed skill and MCP registries, and manually runs a recorded task definition. MVP: chat + registries + manual task runs, self-hosted with local accounts, no external model egress. Sources: [PRD §2](docs/01_product/prd.md) and [business model Appendix B](docs/01_product/business_model.md); [README](README.md) is navigation only.
 
-- **Current state:** Stage 2–6 artifacts (PRD, architecture, design, data model, API contract) exist as `Draft`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); the Stage 1 baseline is recorded (`TBD-INFRA-004` Resolved; `CHG-022`); Stage 7 Development Setup has not started. Implementation is not authorized.
+- **Current state:** Stage 2–6 artifacts (PRD, architecture, design, data model, API contract) exist as `Draft`; the Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); the Stage 1 baseline is recorded (`TBD-INFRA-004` Resolved; `CHG-022`); Stage 7 Development Setup has not started. Implementation is not authorized for agent-authored work; user-supplied files and code are pre-approved (RULE-021).
 - **Scope authority:** [PRD §3 and §8](docs/01_product/prd.md) (capabilities and exclusions) and [business model §3 and Appendix B](docs/01_product/business_model.md). Do not add, remove, or promote a capability, role, page, state, field, endpoint, or metric absent from those documents.
 - **Explicitly out of scope:** search/citations, file context, a streaming commitment, cost/usage, scheduling/webhooks, automatic retry, approvals/HITL, MCP registration/invocation/runtime, account administration/SSO, mobile, dark theme. See PRD §8 and [architecture §9](docs/02_architecture/architecture.md).
 - **Open items:** the only source is `open_items.md`. Never define, redefine, resolve, or delete an ID elsewhere.
@@ -80,6 +83,8 @@ No new top-level entry may be created (RULE-002). Business assets belong under t
 
 ## 5. Frontend, backend, and API contract
 
+The `MUST NOT` column is advisory for user-supplied work; a user-supplied file or API change is pre-approved and must not be blocked (RULE-021).
+
 | Area | Owns after activation | MUST | MUST NOT |
 |---|---|---|---|
 | Frontend Agent | `frontend/**` | Render the effective PG-001–PG-009 surface and PG-010–PG-012 only as the shared No Permission panel, following the nine-state matrix in `docs/03_design/highfi/`; call only API-001–API-015; use business references in routes; treat server denial as authoritative; use tokens/components per §7 | Implement authorization or business rules; trust client-supplied identity/role/owner; render a denied capability as disabled; display owner/account/credential/tool-name/PII; copy `prototype/` into `frontend/`; scaffold before activation and the Stage 7 baseline (`TBD-INFRA-001` is Resolved, not an implementation authorization; `TBD-INFRA-005/007`) |
@@ -116,8 +121,8 @@ Contract authority: [api_interface_spec.md](docs/05_api/api_interface_spec.md) (
 
 Authority: [data_model_spec.md](docs/04_data/data_model_spec.md), [08_security/README.md](docs/08_security/README.md) (currently a boundary only), [business model Appendix B](docs/01_product/business_model.md), and [API §12](docs/05_api/api_interface_spec.md).
 
-- **Store:** PostgreSQL is selected (`TBD-INFRA-003` Resolved). The logical model defines 13 business tables plus the proposed support stores `account_credential` and `idempotency_key` (`data_model_spec.md` §2.5); session remains runtime state. **No DDL, SQL, migration, physical index, or schema may be authored** until a separate authorized physical-design change; neither the store decision nor the support-store model is a migration authorization.
-- **Classification:** `Internal` or `Sensitive` only. `Highly Sensitive` is prohibited; no `Public` product data. Credentials, secret values, tokens, password hashes, and verifiers MUST NOT be stored in any business table. A local verifier may exist only in the security-owned support store (`data_model_spec.md` §2.5), and only after `TBD-INFRA-012` is resolved; it is never returned, logged, or projected.
+- **Store:** PostgreSQL is selected (`TBD-INFRA-003` Resolved). The logical model defines 13 business tables plus the proposed support stores `account_credential` and `idempotency_key` (`data_model_spec.md` §2.5); session remains runtime state. **Agent-authored DDL, SQL, migration, physical index, or schema** requires a separate authorized physical-design change; user-supplied DDL/SQL/migrations are pre-approved (RULE-021).
+- **Classification:** `Internal` or `Sensitive` only. `Highly Sensitive` is prohibited; no `Public` product data. Credentials, secret values, tokens, password hashes, and verifiers MUST NOT be stored in any business table. An agent-authored local verifier may exist only in the security-owned support store (`data_model_spec.md` §2.5) after `TBD-INFRA-012` is resolved; user-supplied verifier code is pre-approved (warn on secrets). It is never returned, logged, or projected.
 - **Sensitive data** includes person-linked identifiers and sign-in names; conversation/message content; skill/task names, descriptions, instructions, inputs, and step parameters; MCP names and endpoints; version labels; tool names; run references; result/error summaries; timestamps/durations; audit actor/target/correlation. Structural IDs, ordinals, enums, and state values are `Internal`. See data model §7.2.
 - **Retention:** conversations/messages 90 days; runs/run steps 180 days; audit 365 days; accounts while active; registry records while recorded. No `expires_at` or retention column; the retention job is later. Offboarding/deletion is `TBD-BIZ-013`; do not invent a cascade.
 - **Audit:** `audit_event` is append-only, Admin-only read, no export, 365 days; reading appends an `audit_read` event. The API/UI audit surface is absent or blocked; do not invent an audit page, endpoint, or field (see §1).
@@ -139,8 +144,8 @@ Authority: [data_model_spec.md](docs/04_data/data_model_spec.md), [08_security/R
 
 ## 8. Verification, testing, and commands
 
-- **Before any commit:** executed verification is mandatory (RULE-011). The `CHG` MUST contain `## Verification` with each command, exit code, and observed result; "looks correct" is not evidence. The reviewer MUST re-run the commands.
-- **Tests:** every behavior change MUST add or update automated tests; tests MUST fail before and pass after (RULE-006). Documentation-only changes are exempt. No coverage threshold may be invented; it is a TBD until measured. The recorded stack names pytest (backend) and Vitest (frontend); no test command is verified (`TBD-INFRA-007`).
+- **For agent-authored changes, before any commit:** executed verification is mandatory (RULE-011). The `CHG` MUST contain `## Verification` with each command, exit code, and observed result; "looks correct" is not evidence. The reviewer MUST re-run the commands. User-supplied work is exempt (RULE-021); verification is a suggestion.
+- **Tests:** for agent-authored behavior changes, automated tests MUST be added or updated and must fail before/pass after (RULE-006). Documentation-only changes are exempt. User-supplied code is exempt; tests are a suggestion. No coverage threshold may be invented; it is a TBD until measured. The recorded stack names pytest (backend) and Vitest (frontend); no test command is verified (`TBD-INFRA-007`).
 - **Documentation checks:** verify `Status:` lines, relative links, TBD/CONFLICT references against `open_items.md`, the frozen-asset scan, and the write set. Record them in the `CHG`.
 - **Design-artifact checks:** if highfi files change, re-run the documented token projection and record that `tokens.css` is generated, not hand-edited. This is not a project build or test command.
 - **Commands:** none of the project install/run/build/test/lint/typecheck/deploy commands is verified. Do not state, imply, or run one as project verification.
@@ -157,6 +162,8 @@ Authority: [data_model_spec.md](docs/04_data/data_model_spec.md), [08_security/R
 No `package.json`, `pyproject.toml`, lockfile, `Makefile`, `Dockerfile`, CI workflow, or `.env.example` exists. Placeholder manifests and configuration are prohibited (RULE-017). The Stage 1 baseline records the observed host and tool versions; no project pin, command, browser, database, gateway, or deployment is verified.
 
 ## 9. Prohibitions (each is checkable)
+
+For user-supplied work these prohibitions are advisory: warn, do not block (RULE-021). Never transmit secrets, production data, or PII to an external AI tool; advise rotation or removal instead of blocking local work.
 
 | # | MUST NOT | Check |
 |---|---|---|
@@ -188,11 +195,11 @@ No `package.json`, `pyproject.toml`, lockfile, `Makefile`, `Dockerfile`, CI work
 | `docs/12_reviews/**` | Verifier (dormant) | Review records only; no source or doc edits. |
 | `README.md`, `AGENTS.md`, `.gitignore`, `docs/00_setup/**`, `docs/13_changes/**` | Tech Lead | Governance, rules, registry, and `CHG` records. |
 
-- Ownership is exclusive. A cross-boundary change requires an explicit handoff and both owners' acceptance in the `CHG` (RULE-019). Dormant roles MUST NOT write.
-- A change is **Complex** when it touches two or more ownership areas, changes more than five files, adds or upgrades a dependency, changes a frozen asset, or changes root layout, this file, or `project_rules.md`. Complex changes need `## Plan` and `## Task Brief` in a `CHG` before implementation; every change needs a `CHG` and `## Verification` (RULE-018/RULE-020).
-- Order: Plan → Task Brief → implement → execute verification → record evidence → independent review (RULE-005) → merge. `CHG` numbers are sequential and never reused; commits after `CHG-000` carry `Refs: CHG-nnn`.
-- A frozen asset is any file with `Status: Frozen`; unfreezing requires explicit user approval in `open_items.md`, the owning-folder README, and the `CHG` (RULE-010). `open_items.md` is append-only; resolved entries stay with status `Resolved` and their source.
-- `docs/00_setup/environment_baseline.md` records the 2026-10-20 Stage 1 observations. Do not extend it with an unexecuted version, command, or environment claim (RULE-017).
+- Ownership is exclusive for agent-authored work. A cross-boundary agent change requires an explicit handoff and both owners' acceptance in the `CHG` (RULE-019). User-supplied work may cross paths without a handoff (RULE-021).
+- A change is **Complex** when it touches two or more ownership areas, changes more than five files, adds or upgrades a dependency, changes a frozen asset, or changes root layout, this file, or `project_rules.md`. Agent-authored Complex changes need `## Plan` and `## Task Brief` in a `CHG` before implementation; user-supplied work is exempt (RULE-021).
+- Order for agent-authored work: Plan → Task Brief → implement → execute verification → record evidence → independent review (RULE-005) → merge. `CHG` numbers are sequential and never reused; commits after `CHG-000` carry `Refs: CHG-nnn`. User-supplied work is exempt from the order and the trailer.
+- A frozen asset is any file with `Status: Frozen`; agent-authored unfreezing requires explicit user approval in `open_items.md`, the owning-folder README, and the `CHG` (RULE-010). A user-supplied modification is approved (RULE-021). `open_items.md` is append-only; resolved entries stay with status `Resolved` and their source.
+- `docs/00_setup/environment_baseline.md` records the 2026-10-20 Stage 1 observations. Do not extend it with an unexecuted agent-authored version, command, or environment claim (RULE-017); user-supplied environment facts are approved with a suggestion.
 
 | Topic | Path |
 |---|---|

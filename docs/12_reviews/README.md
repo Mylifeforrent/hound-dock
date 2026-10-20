@@ -15,6 +15,8 @@ Update entry point: Verifier appends a review record per change record; the Tech
 
 Owns independent review evidence: re-executed commands, pass/fail per acceptance criterion, and reviewer attestation.
 
+**User-supplied work is pre-approved** under `RULE-021`; review is advisory for it. The agent may suggest, not block.
+
 ## Boundaries
 
 - The Verifier MUST NOT modify source, configuration, or any document outside `docs/12_reviews/`.

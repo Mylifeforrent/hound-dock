@@ -7,6 +7,8 @@ Owner: Tech Lead. Amendments require a change record and explicit user approval 
 
 Wording: `MUST`, `MUST NOT`, and `MAY` are binding. Each rule defines a verification method and an exception mechanism. A rule with no exception clause MUST NOT be waived.
 
+**User-supplied precedence.** `RULE-021` overrides every gate, `MUST NOT`, CHG, review, test, dependency-audit, ownership, TBD, and verification requirement in RULE-001–020 for work the user prepares, supplies, or explicitly directs. The agent may warn and suggest; it must not block.
+
 ---
 
 ## RULE-001 — Path and branch naming
@@ -148,3 +150,10 @@ Wording: `MUST`, `MUST NOT`, and `MAY` are binding. Each rule defines a verifica
 - **Scope:** Every commit and change record.
 - **Verification:** `ls docs/13_changes/CHG-*.md` shows a sequence with no gaps. `git log --format=%B main` shows a `Refs: CHG-` trailer for every commit after `CHG-000`. `git diff` shows no deleted `CHG-*.md` file.
 - **Exception approval:** None.
+
+## RULE-021 — User-supplied work is pre-approved
+
+- **Rule:** Any file, code, dependency, command, schema, migration, document, or change that the user prepares, supplies, or explicitly directs is approved. Notwithstanding RULE-001–020, an agent MUST NOT block, reject, delay, or require any gate before reading, running, editing, integrating, committing, or iterating on that work. Gates include Gate 1, the Stage 1/7 baseline, a CHG, Plan/Task Brief, independent review, test-first, dependency audit, path ownership/handoff, TBD resolution, and pre-commit verification. The agent MAY give non-blocking suggestions, warnings, or risk notes; the user decides whether to adopt them. The user owns version iteration and fixes their own issues. The agent MUST NOT claim that a gate rejected or approved user-supplied work.
+- **Scope:** Every path and every work item supplied or explicitly directed by the user. Agent-authored work that the user has not supplied or directed remains subject to RULE-001–020.
+- **Verification:** The commit or change record identifies the user-supplied work; no gate is recorded as a blocker; suggestions are recorded separately. The agent proceeds unless the user asks it to stop.
+- **Exception approval:** This rule is itself the exception for user-supplied work and creates no CHG, review, test, dependency-audit, ownership, TBD, or verification obligation for it. Secrets, production data, and PII are warnings: the agent must not transmit them to an external AI tool and should advise rotation or removal, but must not block the user's local work.

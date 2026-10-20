@@ -21,6 +21,8 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 | `TBD-INFRA` | 8 | 6 |
 | `CONFLICT` | 1 | 1 |
 
+**Policy note (2026-10-20):** `RULE-021` makes user-supplied work pre-approved. The Open entries below are advisory for user-supplied files and code; they do not block that work. They remain relevant to agent-authored work.
+
 ---
 
 ## TBD-BIZ-001 — Product goal and one-sentence description

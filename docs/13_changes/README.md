@@ -37,6 +37,8 @@ Every `CHG-nnn-<kebab-slug>.md` file MUST contain:
 5. `## Dependency audit` — required when any dependency is added or upgraded; otherwise state `None`.
 6. `## Decision and conflict log` — decisions made, TBD/CONFLICT references, and approvals.
 
+**User-supplied work is pre-approved** under `RULE-021` and does not require a `CHG`. A `CHG` for it is optional and, if present, is advisory.
+
 The Complexity threshold and the review requirement are defined by RULE-018 and RULE-005; this folder MUST NOT redefine them.
 
 ## Numbering
