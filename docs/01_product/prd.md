@@ -16,7 +16,7 @@ Interface authority: `docs/05_api/api_interface_spec.md` v0.1 (`Draft`) — endp
 Architecture references: `docs/02_architecture/architecture.md` v0.1 (`Draft`) and `docs/02_architecture/02_api_workflow_and_review.md` v0.1 (`Draft`) — IF-01 to IF-04 boundary, seven error classes, and state mapping.
 Coverage reference: `docs/03_design/prototype/README.md` — the ✓/N/A page-state coverage table and its N/A reasons.
 
-**Status note.** This is a `Draft` revision. The Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); roles, metrics, NFRs, and the execution model remain candidates. `TBD-BIZ-006` covers metrics, `TBD-BIZ-007` execution, and `TBD-BIZ-008` NFR thresholds; roles remain governed by the unresolved permission matrix and `CONFLICT-002`. Implementation is not authorized. See §19.
+**Status note.** This is a `Draft` revision. The Gate 1 scope boundary is accepted (`TBD-BIZ-012` Resolved, option (b); `CHG-021`); roles and metrics remain candidates. The execution model is resolved: `TBD-BIZ-007` selected prompt-only skills with linear steps limited to skill invocation (2026-10-20, `CHG-025`), superseding this revision's option-(b) proposal. NFR thresholds are resolved: `TBD-BIZ-008` confirmed the performance targets with `NFR-001` restated as a non-streaming metric, the Stage 1 host as the measurement environment, the 24-hour idempotency window, and the proposed rate-limit set (2026-10-20, `CHG-026`). `TBD-BIZ-006` covers metrics; roles remain governed by the unresolved permission matrix and `CONFLICT-002`. Implementation is not authorized. See §19.
 
 **Identifier note.** `AC-001` to `AC-057` are document-local acceptance-criteria identifiers. This note is their first use and declaration; their definitions are in §7. They are not registry entries and create no `TBD`, `CONFLICT`, `CAP`, `BR`, `ENT`, `STATE`, or `NFR`. `OBJ`, `CAP`, `BR`, `FLOW`, `PG`, `API`, and `NFR` identifiers are references to the source documents; this PRD defines none of them.
 
@@ -545,11 +545,11 @@ The v0.1 search citation requirement, audit page, model configuration surface, s
 
 ### 9.1 NFR register
 
-The NFR identifiers and targets are cited as-is from `business_model.md` §9. No target is confirmed. Numeric targets are proposals under `TBD-BIZ-008`; `NFR-004`, `NFR-005`, and `NFR-009` use a registered `TBD` target plus a suggested baseline that is not a commitment. `[SRC: business_model.md#§9; TBD-BIZ-008]`
+The NFR identifiers and targets are cited as-is from `business_model.md` §9. `TBD-BIZ-008` is Resolved (2026-10-20, `CHG-026`): the performance targets (`NFR-001` as restated, `NFR-002`, `NFR-003`) are confirmed and measured on the Stage 1 baseline host; capacity (`NFR-004`) and availability (`NFR-005`) keep their suggested baselines as best-effort targets without a hard MVP threshold; `NFR-011` keeps its conformance targets as audit-verified design targets. `NFR-009`'s retention numbers are confirmed by `TBD-BIZ-003`; the retention job remains deferred. No measurement command, benchmark, or load result is verified yet. `[SRC: business_model.md#§9; TBD-BIZ-008]`
 
 | NFR | Area | Metric | Target and status |
 |---|---|---|---|
-| **NFR-001** | Performance | Time from message submit to first streamed assistant token, p95. | ≤ 3,000 ms (proposed); not accepted; `[TBD-BIZ-008]`. |
+| **NFR-001** | Performance | Time from message submit to the completed assistant turn being retrievable via `API-006` (non-streaming; restated by `TBD-BIZ-008`, `CHG-026`), p95. | ≤ 3,000 ms (confirmed 2026-10-20, `CHG-026`); measurement on the Stage 1 baseline host. |
 | **NFR-002** | Performance | Registry list read response, p95. | ≤ 500 ms for 500 items (proposed); not accepted; `[TBD-BIZ-008]`. |
 | **NFR-003** | Performance | Delay from a run-step state change to its visible update, p95. | ≤ 2,000 ms (proposed); not accepted; `[TBD-BIZ-008]`. |
 | **NFR-004** | Capacity | Concurrent accounts, conversations, and runs supported without error. | `[TBD-BIZ-004]` and `[TBD-BIZ-008]`; suggested baseline 50 accounts, 20 concurrent sessions, 10 concurrent runs (not a commitment); not accepted. |
@@ -564,7 +564,7 @@ The NFR identifiers and targets are cited as-is from `business_model.md` §9. No
 
 ### 9.2 Acceptance status
 
-No NFR is accepted. `TBD-BIZ-008` is Open, so every numeric threshold remains proposed. `TBD-INFRA-004` is Resolved and the Stage 1 baseline records the local environment, but no measurement command, benchmark, or load result is verified. `NFR-004`, `NFR-005`, and `NFR-009` keep a `TBD` target plus a suggested baseline; the suggested value is not an acceptance threshold. `[TBD-BIZ-008; TBD-INFRA-004]`
+`TBD-BIZ-008` is Resolved (2026-10-20, `CHG-026`): the performance thresholds are confirmed, capacity and availability remain best-effort baselines, and no threshold has been measured yet. `TBD-INFRA-004` is Resolved and the Stage 1 baseline records the local environment, but no measurement command, benchmark, or load result is verified. `[TBD-BIZ-008; TBD-INFRA-004]`
 
 `NFR-009` cites the retention periods recorded in Appendix B.2 for the persisted records. It does not create a retention rule, a deletion job, or a compliance conclusion. `TBD-BIZ-014` remains Open. `[TBD-BIZ-014]`
 
@@ -582,8 +582,8 @@ The canonical entries are in `docs/00_setup/open_items.md`. This table reference
 | **TBD-BIZ-004** | Resolved — admin-only skill and task publication; MCP registration/allowlisting and account administration remain out; role assignments are provisioned out of band. | Publisher authority is referenced as-is; the Resolved status does not settle the design or API surface, which is `[CONFLICT]`; see §10.2. |
 | **TBD-BIZ-005** | Open — first MCP integrations and first three tasks. | No specific integration or task is required by an AC; the acceptance demo content remains undefined. |
 | **TBD-BIZ-006** | Open — metrics, baselines, targets, time windows, and go-live threshold. | Every `OBJ` target remains `TBD-BIZ-006`; the suggested values are not commitments. |
-| **TBD-BIZ-007** | Open — execution model and retry policy. | `FLOW-003` is confirmed only for initiation and outcome; no step type, branching, or retry requirement is written. |
-| **TBD-BIZ-008** | Open — NFR thresholds and measurement environment. | Every numeric NFR target remains proposed; no threshold is confirmed. |
+| **TBD-BIZ-007** | Resolved — prompt-only skills; linear steps limited to skill invocation; no MCP/tool invocation, code execution, branching, or retry (2026-10-20, `CHG-025`). | Supersedes this revision's option-(b) proposal; `FLOW-003` remains limited to initiation and outcome; see [open_items.md](../00_setup/open_items.md). |
+| **TBD-BIZ-008** | Resolved — performance thresholds confirmed (`NFR-001` restated non-streaming ≤ 3,000 ms; `NFR-002` ≤ 500 ms/500 items; `NFR-003` ≤ 2,000 ms), Stage 1 host as measurement environment, 24-h idempotency window, proposed rate-limit set confirmed; capacity/availability remain best-effort (2026-10-20, `CHG-026`). | See [open_items.md](../00_setup/open_items.md); no result has been measured yet. |
 | **TBD-BIZ-009** | Resolved — audit in the MVP, append-only, Admin read-only, no export, 365 days. | `CAP-009` is in scope; the surface is blocked; no page or endpoint is added. See §10.3. |
 | **TBD-BIZ-011** | Resolved — strict MVP plus skill/task authoring and audit; search, file context, cost, chat-history actions, MCP registration/allowlisting, and account administration remain out. | Scope boundary cited; the authoring and audit surfaces remain `[CONFLICT]` or blocked, not effective. |
 | **TBD-BIZ-012** | Resolved — Gate 1 scope boundary accepted (option (b), `CHG-021`). | The scope is accepted; roles, metrics, NFRs, and the execution model remain candidates; see §19. |

@@ -17,8 +17,8 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 
 | Prefix | Open | Resolved |
 |---|---|---|
-| `TBD-BIZ` | 8 | 7 |
-| `TBD-INFRA` | 8 | 6 |
+| `TBD-BIZ` | 6 | 9 |
+| `TBD-INFRA` | 5 | 9 |
 | `CONFLICT` | 1 | 1 |
 
 **Policy note (2026-10-20):** `RULE-021` makes user-supplied work pre-approved. The Open entries below are advisory for user-supplied files and code; they do not block that work. They remain relevant to agent-authored work.
@@ -94,24 +94,29 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-BIZ-007 — Skill and task execution model in v1
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Stage 2 close-out (PRD review)
 - **Impact:** Determines whether v1 skills are prompt-only or include API/code execution, and whether task steps are linear or branching. Affects security controls, sandbox requirements, and MVP effort. PRD §5 and §7 currently propose prompt-only skills and linear steps.
 - **Candidate options:** (a) prompt-only skills and task steps limited to skill invocation; (b) prompt skills plus MCP tool steps, linear execution (current proposal); (c) code-execution skills and branching/loops.
 - **Decision criteria:** user value; security risk; build and operating effort.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected candidate (a) on 2026-10-20 (Asia/Shanghai), declining the PRD's option-(b) proposal: v1 skills are prompt-only; a task run executes linear steps, each step invoking one skill (prompt + one internal-gateway model call) through the model port (`TBD-INFRA-009`); no MCP/tool invocation, no code execution, no branching or loops — consistent with ADR-003/ADR-004 (MCP metadata-only) and ADR-002 (immutable run/step terminal states, no retry). Task steps that would require writing to an external system (e.g. ticket creation) produce generated draft text only in v1; real integration is a post-MVP change that reopens this entry. Recorded in `CHG-025`.
 
 ## TBD-BIZ-008 — NFR thresholds and measurement environment
 
 - **Category:** Business boundary
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User
 - **Must confirm by:** Gate 1 — before Stage 3 Architecture; measurement environment at Stage 7 — Development Setup
 - **Impact:** All NFRs in `docs/01_product/business_model.md` are proposals without a confirmed threshold. Performance, capacity, availability, and accessibility cannot be accepted, tested, or compared without a target and a measurement environment.
 - **Candidate options:** (a) adopt the PRD §12 proposals: p95 first streamed token ≤ 3 s; registry list ≤ 500 ms for 500 items; run status visible within 2 s; (b) set different numeric thresholds; (c) mark performance and availability N/A for the MVP and accept best-effort operation.
 - **Decision criteria:** user-perceived usefulness; measurement cost on a single internal machine; operating cost.
-- **Resolution source:** —
+- **Resolution source:** Product owner adopted the proposals with one correction on 2026-10-20 (Asia/Shanghai), recorded in `CHG-026`:
+  - **Confirmed performance thresholds (p95, measured on the Stage 1 baseline single host):** `NFR-002` registry list read ≤ 500 ms at 500 items; `NFR-003` run-step state change to visible update ≤ 2,000 ms; `NFR-001` adopted as a non-streaming metric — time from message submit to the completed assistant turn being retrievable via `API-006` ≤ 3,000 ms (replaces the unmeasurable "first streamed token" wording; streaming remains not a requirement).
+  - **Measurement environment:** the Stage 1 baseline host recorded in `docs/00_setup/environment_baseline.md`.
+  - **Idempotency-key retention window:** 24 hours (closes the window reference in `TBD-INFRA-014`); expired keys and replay payloads are purged by the later retention job.
+  - **Rate limits:** the proposed set recorded in `backend/app/config.py` is confirmed (sign-in 20/IP/15 min and 5/name/15 min; conversation create 30/hour; message append 30/min; reply 30/min; run start 10/hour; reads 120/min).
+  - **Capacity and availability (`NFR-004`, `NFR-005`) keep their suggested baselines** (50 accounts / 20 concurrent sessions / 10 concurrent runs; 99.0% per 30-day month) as non-binding best-effort targets; no hard MVP threshold is set. **Accessibility (`NFR-011`)** keeps its proposed conformance targets (0 critical violations, keyboard-completable FLOW-001–003, ≥ 4.5:1 text and ≥ 3:1 controls) as design targets verified by audit; no certification is claimed. These treatments are part of this resolution and may be amended by a later `CHG`.
 
 ## TBD-BIZ-009 — Audit obligation and evidence scope
 
@@ -241,6 +246,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Owner:** User; Tech Lead records the result in `docs/06_development/`
 - **Must confirm by:** Stage 7 — Development Setup
 - **Impact:** Lockfiles, audit commands, and reproducible installs cannot be defined. `TBD-INFRA-002` is Resolved (Python 3.12 + FastAPI + uv); this entry remains Open for the frontend Node/pnpm toolchain and the lockfile/audit policy.
+- **Update (2026-10-20, CHG-024):** Backend portion settled by executed Stage 7: `uv` with a committed `backend/uv.lock`, `uv sync` and `uv run pytest` verified with exit code 0, and the dependency audit recorded in `CHG-024`. Still open: the frontend Node toolchain (the baseline observes pnpm 11.2.2, while the user-level default prefers npm), and any further lockfile/audit policy refinement.
 - **Candidate options:** (a) uv if Python is confirmed; (b) pnpm or npm if Node is confirmed; (c) Maven or Gradle if Java is confirmed; (d) Go modules if Go is confirmed.
 - **Decision criteria:** fit with the chosen stack; reproducibility; operating cost.
 - **Resolution source:** —
@@ -263,6 +269,7 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 - **Owner:** Tech Lead after TBD-INFRA-004 and TBD-INFRA-005 are resolved
 - **Must confirm by:** Stage 7 — Development Setup
 - **Impact:** README, AGENTS, and change records cannot name a standard verification suite. Commands MUST NOT be invented in the meantime.
+- **Update (2026-10-20, CHG-024):** Backend install and test commands verified with exit code 0 and recorded in `docs/06_development/`: `uv --directory backend sync` and `uv --directory backend run pytest`. Still open: dev-run, build, lint (ruff executed once with exit 1 on user-supplied files, advisory under RULE-021), typecheck, and deploy commands; none may be treated as the standard suite until recorded here.
 - **Candidate options:** None until the baseline and the tooling decision are confirmed (`TBD-INFRA-004/005`).
 - **Decision criteria:** commands MUST be executed successfully in the verified baseline; no unverified command may be recorded.
 - **Resolution source:** —
@@ -314,38 +321,38 @@ Scope: Single registry for unconfirmed engineering decisions (`TBD-INFRA-*`), un
 ## TBD-INFRA-012 — Local credential verification and verifier protection
 
 - **Category:** Engineering decision / security
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User; Tech Lead records the result in `docs/08_security/` and `docs/04_data/`
 - **Must confirm by:** Stage 9 — Security, before `API-001` is implemented
 - **Impact:** `API-001` cannot be implemented end to end. `account` has no verifier field (`data_model_spec.md` §4.2), AGENTS.md §6 forbids storing a verifier in a business table, SSO is excluded in the MVP (`CAP-007`), and no hidden seed path is allowed. A security-owned support store is modeled as proposed in `data_model_spec.md` §2.5; the algorithm and parameters are not selected.
 - **Candidate options:** (a) Argon2id in a security-owned support store, with parameters recorded per row; (b) scrypt; (c) PBKDF2-HMAC-SHA256; (d) an external identity provider (excluded in the MVP; post-MVP `TBD-INFRA-010`).
 - **Decision criteria:** resistance to offline guessing; Python library maturity and maintenance; cost of parameter tuning on the target host; rehash-on-sign-in migration path.
 - **Recommendation (non-binding):** (a) Argon2id with per-row parameters, so a future parameter or algorithm change rehashes at sign-in. This is a recommendation, not a decision.
-- **Resolution source:** —
+- **Resolution source:** Product owner selected candidate (c) on 2026-10-20 (Asia/Shanghai), declining the non-binding Argon2id recommendation: PBKDF2-HMAC-SHA256 via the standard library (`hashlib.pbkdf2_hmac`, no third-party dependency), stored only in the security-owned support store `account_credential` with per-row algorithm and iteration parameters. Initial deployment parameters, recorded from executed timing on the Stage 1 host (CHG-024): 210,000 iterations (≈281 ms per hash+verify; 600,000 iterations measured ≈2,352 ms and rejected for sign-in latency), 16-byte random salt, 32-byte derived key, constant-time comparison. Rehash-on-sign-in is retained so parameters can be raised without a password reset. Recorded in `CHG-024`.
 
 ## TBD-INFRA-013 — Session lifetime, cookie flags, and termination
 
 - **Category:** Engineering decision / security
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User; Tech Lead records the result in `docs/08_security/`
 - **Must confirm by:** Stage 9 — Security, before `API-001` is implemented
 - **Impact:** `api_interface_spec.md` §4.1 requires a server-set opaque `HttpOnly` cookie; `CF-08` and `AGAP-01` leave the cookie name, flags, lifetime, refresh, revocation, CSRF, and sign-out open. `data_model_spec.md` §2.4 and §6.5 record session as runtime state with no table; an in-process store ends sessions on restart (`40102`) and cannot serve multiple workers.
 - **Candidate options:** (a) in-memory opaque token, single process, idle and absolute timeout, `HttpOnly; Secure; SameSite=Lax`, restart invalidates; (b) a durable session support store (multi-worker, explicit revocation); (c) a stateless signed cookie (no server store, no revocation); (d) an external store such as Redis (new infrastructure).
 - **Decision criteria:** tolerance for session loss on restart; multi-worker need; revocation; CSRF exposure; operating cost.
 - **Recommendation (non-binding):** (a) for the single-process MVP, with the timeout and flags recorded here on resolution; a future multi-worker need reopens the decision. This is a recommendation, not a decision.
-- **Resolution source:** —
+- **Resolution source:** Product owner adopted recommendation (a) on 2026-10-20 (Asia/Shanghai): in-process opaque token (256-bit random), single process, restart invalidates every session (`40102`), explicit revocation at sign-out. Recorded cookie parameters, matching the `backend/app/config.py` defaults: cookie name `hound_dock_session`; `HttpOnly`; `SameSite=Lax`; `Secure` effective in production (plain-HTTP development permitted); idle timeout 30 minutes; absolute timeout 8 hours. A multi-worker or durable-revocation need reopens this decision. Recorded in `CHG-024`.
 
 ## TBD-INFRA-014 — Idempotency-key persistence and replay payload
 
 - **Category:** Engineering decision
-- **Status:** Open
+- **Status:** Resolved
 - **Owner:** User; Tech Lead records the result in `docs/04_data/` and `docs/05_api/`
 - **Must confirm by:** Stage 7 — Development Setup, before `API-002`, `API-005`, `API-006`, and `API-013` are implemented
 - **Impact:** `api_interface_spec.md` §9 requires the server to store `(actor, key)` with a request fingerprint and to replay the original result; `data_model_spec.md` §12.3 records "no idempotency key". A process-local store loses replays on restart; a support table adds a persisted structure outside the 13 business tables.
 - **Candidate options:** (a) support store `idempotency_key` with a hash fingerprint, a minimal replay payload, and the proposed 24-hour window; (b) in-process memory (no restart durability, single worker only); (c) no store (rejected: it contradicts `api_interface_spec.md` §9).
 - **Decision criteria:** replay durability across restart; no duplication of `Sensitive` content; purge cost; fit with the single-process MVP.
 - **Recommendation (non-binding):** (a); the retention window remains `TBD-BIZ-008`. This is a recommendation, not a decision.
-- **Resolution source:** —
+- **Resolution source:** Product owner adopted recommendation (a) on 2026-10-20 (Asia/Shanghai): durable support store `idempotency_key` keyed on (actor, key) with a SHA-256 request fingerprint and a minimal replay payload, durable across restart and correct for a single worker. The retention window stays proposed at 24 hours pending `TBD-BIZ-008`; the purge job is a later change. Recorded in `CHG-024`.
 
 ---
 

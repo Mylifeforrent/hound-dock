@@ -1,0 +1,43 @@
+[project]
+name = "hound-dock-backend"
+version = "0.1.0"
+description = "hound-dock backend: FastAPI implementation of the API-001..API-015 contract"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.135.1",
+    "pydantic==2.12.5",
+    "pydantic-settings==2.13.0",
+    "sqlalchemy==2.0.51",
+    "psycopg[binary]==3.2.12",
+    "alembic==1.17.2",
+    "uvicorn==0.42.0",
+    "argon2-cffi==25.1.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.0.2",
+    "httpx==0.28.1",
+    "ruff==0.15.4",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+extend-exclude = ["migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+# E501 handled by line-length; B008 (function call in argument default) is
+# accepted: FastAPI Depends/Query defaults in route signatures.
+ignore = ["B008"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]

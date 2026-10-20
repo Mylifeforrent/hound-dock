@@ -5,3 +5,10 @@
 
 # OS metadata
 .DS_Store
+
+# Python virtualenvs and tool caches (backend Stage 7 toolchain, CHG-024)
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.uv-cache/

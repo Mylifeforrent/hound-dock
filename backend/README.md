@@ -2,7 +2,7 @@
 
 Status: Draft
 Owner after activation: Backend Agent (see [AGENTS.md](../AGENTS.md))
-Current state: **empty of code** — backend stack recorded as Python 3.12 + FastAPI + uv; no scaffold, dependency manifest, lockfile, or runnable command.
+Current state: **Stage 7 toolchain baseline recorded (`CHG-024`)** — user-supplied manifest (`pyproject.toml`), lockfile (`uv.lock`), and `.python-version` are present and pre-approved under `RULE-021`; `uv sync` is verified in [docs/06_development/](../docs/06_development/README.md). The initial `app/` modules and tests were removed at the owner's direction on 2026-10-20 (`CHG-027`); there is no application code. No endpoint of `API-001`–`API-015` is implemented.
 
 ## Purpose
 
@@ -21,8 +21,11 @@ Reserved for the future backend application. This README is a boundary document,
 
 - Backend stack: `TBD-INFRA-002` — Resolved (Python 3.12 + FastAPI + uv; exact versions `TBD-INFRA-004`; see [CHG-019](../docs/13_changes/CHG-019-frontend-backend-stack.md)).
 - Data store: `TBD-INFRA-003` — Resolved (PostgreSQL; physical schema, indexes, and migrations are not authored).
-- Package manager and dependency tooling: `TBD-INFRA-005` (uv recorded; lockfile and audit policy open).
-- Verified commands: `TBD-INFRA-007`.
+- Credential verifier: `TBD-INFRA-012` — Resolved (PBKDF2-HMAC-SHA256 in the security-owned support store; see [CHG-024](../docs/13_changes/CHG-024-stage-7-backend-decisions-and-toolchain.md)).
+- Session: `TBD-INFRA-013` — Resolved (in-process opaque token; parameters recorded in `CHG-024`).
+- Idempotency store: `TBD-INFRA-014` — Resolved (support store `idempotency_key`; retention window pending `TBD-BIZ-008`).
+- Package manager and dependency tooling: `TBD-INFRA-005` — backend portion settled (`uv` + committed `uv.lock`); frontend toolchain still open.
+- Verified commands: `TBD-INFRA-007` — backend install/test verified; dev-run/build/lint/typecheck/deploy still open.
 
 ## Rules
 
