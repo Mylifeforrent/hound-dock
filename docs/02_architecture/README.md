@@ -10,6 +10,9 @@ Authoritative assets:
 - `docs/02_architecture/03_security_reliability_and_operations.md` — trust boundaries, security/data boundaries, reliability, observability, operations.
 - `docs/02_architecture/04_architecture_review.md` — independent architecture review.
 - `docs/02_architecture/05_enterprise_internal_baseline.md` — authoritative supplement for the enterprise-internal baseline (CHG-012): Admin skill/task authoring, audit, STATE-003/005 effective, PostgreSQL, internal gateway.
+- `docs/02_architecture/06_frontend_architecture.md` — frontend technical architecture: routes, state, API client, rendering and accessibility obligations (CHG-028).
+- `docs/02_architecture/07_backend_technical_design.md` — backend implementation design translating the resolved identity/session, idempotency, execution, and NFR decisions (CHG-028).
+- `docs/02_architecture/08_frontend_backend_boundary.md` — the single frontend/backend integration boundary, consolidated by reference (CHG-028).
 - `docs/02_architecture/adr/README.md` and `adr_001_*` … `adr_005_*` — architecture decision records.
 Allowed status: Draft / Reviewed / Frozen. `Frozen` requires explicit user approval recorded in the Frozen assets section below.
 Update entry point: Docs Agent through a change record in `docs/13_changes/`; open decisions only via `docs/00_setup/open_items.md`.
@@ -36,6 +39,9 @@ Owns architecture: system structure, component responsibilities, technology deci
 | `03_security_reliability_and_operations.md` | Security, reliability and operations | Draft |
 | `04_architecture_review.md` | Independent review of the set | Draft |
 | `05_enterprise_internal_baseline.md` | Enterprise-internal architecture supplement (CHG-012) | Draft |
+| `06_frontend_architecture.md` | Frontend technical architecture (CHG-028) | Draft |
+| `07_backend_technical_design.md` | Backend technical design (CHG-028) | Draft |
+| `08_frontend_backend_boundary.md` | Frontend–backend integration boundary (CHG-028) | Draft |
 | `adr/` | Decision records for high-cost-to-reverse choices | Draft |
 
 ## Naming note

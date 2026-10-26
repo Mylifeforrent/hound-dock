@@ -23,6 +23,7 @@ Authoritative assets:
 - `docs/13_changes/CHG-025-task-execution-model-prompt-only.md` — `TBD-BIZ-007` resolved to option (a): prompt-only skills, linear steps limited to skill invocation, no MCP/tool execution or retry; PRD option-(b) proposal superseded.
 - `docs/13_changes/CHG-026-nfr-thresholds-idempotency-window-rate-limits.md` — `TBD-BIZ-008` resolved: performance thresholds confirmed (`NFR-001` restated non-streaming), Stage 1 host as measurement environment, 24-hour idempotency window, proposed rate-limit set confirmed; capacity/availability best-effort.
 - `docs/13_changes/CHG-027-backend-code-removal.md` — owner-directed removal of `backend/app/` and `backend/tests/`; toolchain baseline (`pyproject.toml`, `uv.lock`, `.python-version`) retained.
+- `docs/13_changes/CHG-028-architecture-supplements.md` — three by-reference supplements in `docs/02_architecture/`: frontend technical architecture (06), backend technical design (07), frontend–backend boundary (08); no new identifiers.
 Allowed status: Draft / Reviewed / Frozen. A merged record MUST be `Reviewed` before the next change lands; `CHG-000` remains `Draft` until the user's Stage 0 sign-off. `Frozen` is reserved for a record locked at a stage gate. Records MUST NOT be deleted; corrections MUST be appended.
 Update entry point: Tech Lead opens every change record; other owners supply evidence through the Task Brief handoff and do not edit this folder.
 
