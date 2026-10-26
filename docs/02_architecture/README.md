@@ -13,6 +13,7 @@ Authoritative assets:
 - `docs/02_architecture/06_frontend_architecture.md` — frontend technical architecture: routes, state, API client, rendering and accessibility obligations (CHG-028).
 - `docs/02_architecture/07_backend_technical_design.md` — backend implementation design translating the resolved identity/session, idempotency, execution, and NFR decisions (CHG-028).
 - `docs/02_architecture/08_frontend_backend_boundary.md` — the single frontend/backend integration boundary, consolidated by reference (CHG-028).
+- `docs/02_architecture/09_core_interaction_chains.md` — the three confirmed core flows walked end to end (prototype behavior → frontend state → API call → backend modules → outcome), by reference (CHG-029).
 - `docs/02_architecture/adr/README.md` and `adr_001_*` … `adr_005_*` — architecture decision records.
 Allowed status: Draft / Reviewed / Frozen. `Frozen` requires explicit user approval recorded in the Frozen assets section below.
 Update entry point: Docs Agent through a change record in `docs/13_changes/`; open decisions only via `docs/00_setup/open_items.md`.
@@ -42,6 +43,7 @@ Owns architecture: system structure, component responsibilities, technology deci
 | `06_frontend_architecture.md` | Frontend technical architecture (CHG-028) | Draft |
 | `07_backend_technical_design.md` | Backend technical design (CHG-028) | Draft |
 | `08_frontend_backend_boundary.md` | Frontend–backend integration boundary (CHG-028) | Draft |
+| `09_core_interaction_chains.md` | Core interaction chains, end to end (CHG-029) | Draft |
 | `adr/` | Decision records for high-cost-to-reverse choices | Draft |
 
 ## Naming note
